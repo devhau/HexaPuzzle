@@ -11,5 +11,5 @@ export abstract class FichaFactory<
 
     public abstract generate(): FichaType;
 
-    constructor(private readonly numberOfPiezas: number) { }
+    constructor(protected readonly numberOfPiezas: number) { }
 }

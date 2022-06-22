@@ -1,6 +1,11 @@
+export { Casilla } from './Casilla';
+export { CasillaTriangular } from './CasillaTriangular';
 export { Ficha } from './Ficha';
-export { Pieza } from './Pieza';
 export { FichaFactory } from './FichaFactory';
 export { FichaHexagonalFactory } from './FichaHexagonalFactory';
 export { FichaHexagonal } from './FichaHexagonal';
+export { FichaHexagonalInventory } from './FichaHexagonalInventory';
+export { Inventory } from './FichaInventory';
+export { Pieza } from './Pieza';
 export { PiezaTriangular } from './PiezaTriangular';
+export { Tablero } from './Tablero';

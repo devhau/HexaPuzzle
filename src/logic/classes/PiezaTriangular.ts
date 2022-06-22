@@ -1,16 +1,9 @@
 import { Pieza } from './';
-import { RotationTriangular,PositionHexagonal,AdyacenciaTriangular } from '../types';
-
-type Props<AdyacenciaType,PositionType,RotationType> = {
-    active: boolean,
-    adyacentes: AdyacenciaType, 
-    position: PositionType, 
-    rotacion: RotationType
-}
+import { RotationTriangular,PositionHexagonal,AdyacenciaTriangular, PiezaProps } from '../types';
 
 export class PiezaTriangular extends Pieza<RotationTriangular,PositionHexagonal,AdyacenciaTriangular> {
 
-    constructor(piezaProps: Props<AdyacenciaTriangular,PositionHexagonal,RotationTriangular>) {
+    constructor(piezaProps: PiezaProps<AdyacenciaTriangular,PositionHexagonal,RotationTriangular>) {
         super(piezaProps);
     }
     

@@ -1,5 +1,6 @@
 import { Factory } from '../interfaces';
-import { Ficha,Pieza } from './';
+import { Ficha } from './Ficha';
+import { Pieza } from './Pieza';
 
 export abstract class FichaFactory<
     FichaType extends Ficha<PiezaType,RotationType,PositionType,AdyacenciaType>, 

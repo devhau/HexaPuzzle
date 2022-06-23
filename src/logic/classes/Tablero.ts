@@ -5,8 +5,4 @@ export abstract class Tablero<
     AdyacenciaType,RotationType>
 {
     protected casillas: CasillaType[] = [];
-
-    constructor(protected numberOfCasillas: number) {
-        
-    }
 }

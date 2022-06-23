@@ -1,6 +1,6 @@
 import { CasillaProps, Color } from '../types';
 
-export abstract class Casilla <RotationType,AdyacenciaType>{
+export abstract class Casilla <AdyacenciaType,RotationType>{
     protected adyacentes: AdyacenciaType;
     protected color?: Color;
     protected id: number;

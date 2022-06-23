@@ -1,11 +1,12 @@
-import { Inventory } from './FichaInventory';
 import { FichaHexagonal } from './FichaHexagonal';
 import { FichaHexagonalFactory } from './FichaHexagonalFactory';
+import { Inventory } from './Inventory';
+
 
 export class FichaHexagonalInventory extends Inventory<FichaHexagonal> {
 
-    constructor(factory: FichaHexagonalFactory) {
-        super(factory);
+    constructor(factory: FichaHexagonalFactory, numberOfItems: number) {
+        super(factory, numberOfItems);
     }
 
     public add(): void {

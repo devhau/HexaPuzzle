@@ -1,5 +1,5 @@
 import { Color } from '../types';
-import { Pieza } from './';
+import { Pieza } from './Pieza';
 
 export abstract class Ficha<PiezaType extends Pieza<RotationType,PositionType,AdyacenciaType>, RotationType, PositionType, AdyacenciaType > {
     protected piezas: PiezaType[] = [];

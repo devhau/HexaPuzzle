@@ -1,7 +1,8 @@
 import { AdyacenciaTriangular, Color, PositionHexagonal, RotationTriangular } from '../types';
-import { Ficha,PiezaTriangular } from './';
+import { Ficha } from './Ficha';
+import { PiezaTriangular } from './PiezaTriangular';
 
-export class FichaHexagonal extends Ficha<PiezaTriangular, RotationTriangular, PositionHexagonal, AdyacenciaTriangular> {
+export class FichaHexagonal extends Ficha<PiezaTriangular, RotationTriangular, PositionHexagonal, AdyacenciaTriangular<PiezaTriangular>> {
 
     constructor(color: Color) {
         super(color);

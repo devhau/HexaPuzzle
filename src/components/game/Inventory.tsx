@@ -19,7 +19,7 @@ export const Inventory = () => {
     >
       {items.map((item,i) => (
         <Grid item key={i} xs={12/items.length}>
-          <Ficha ficha={item}/>
+          <Ficha fichaInfo={item}/>
         </Grid>
       ))}
     </Grid>

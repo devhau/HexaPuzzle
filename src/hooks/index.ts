@@ -1,2 +1,2 @@
+export { useFicha } from './useFicha';
 export { useInventory } from './useInventory';
-export { useTablero } from './useTablero';

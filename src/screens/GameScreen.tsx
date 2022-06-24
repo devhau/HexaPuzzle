@@ -5,7 +5,10 @@ import { Tablero } from '../components/game/Tablero'
 export const GameScreen = () => {
   return (
     <Box
-        display="flex"
+        display={{
+          xs: 'none',
+          md: 'flex',
+        }}
         gap={2}
         flexDirection="column"
         width="100vw"

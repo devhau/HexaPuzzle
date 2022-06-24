@@ -7,5 +7,6 @@ export abstract class Ficha<PiezaType extends Pieza<RotationType,PositionType,Ad
     constructor(protected readonly color: Color) { }
 
     public getColor = () => this.color;
+    public getPiezas = () => this.piezas;
     public abstract rotar(): void;
 }

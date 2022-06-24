@@ -16,6 +16,6 @@ export class FichaHexagonalFactory extends FichaFactory<
     }
 
     public generate(): FichaHexagonal {
-        return new FichaHexagonal('amarillo');
+        return new FichaHexagonal('amarillo',Math.floor(Math.random() * 4) + 1);
     }
 }

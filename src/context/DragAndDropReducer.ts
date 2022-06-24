@@ -10,14 +10,14 @@ export const DragAndDropReducer = (state: DragAndDropState, action: DragAndDropA
         case 'startDragging':
             return {
                 ...state,
-                dragging: true,
-                ficha: action.payload
+                isDragging: true,
+                fichaDragging: action.payload
             }
         case 'stopDragging':
             return {
                 ...state,
-                dragging: false,
-                ficha: null
+                isDragging: false,
+                fichaDragging: null
             }
         default:
             return state;

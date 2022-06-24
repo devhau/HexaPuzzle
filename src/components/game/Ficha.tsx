@@ -1,9 +1,9 @@
 import { FC, useContext } from 'react';
-import { Card, CardContent, CardMedia } from '@mui/material';
+import { Card, CardMedia } from '@mui/material';
 import { DragAndDropContext } from '../../context';
-import { useFicha } from '../../hooks/useFicha';
+import { useFicha } from '../../hooks';
 import { FichaHexagonal } from '../../logic/classes/FichaHexagonal';
-import TableroImg from '../../assets/tablero.jpeg';
+import TableroImg from '../../assets/ficha.png';
 
 interface Props {
   fichaInfo: FichaHexagonal;

@@ -18,7 +18,7 @@ export const Inventory = () => {
       }}
     >
       {items.map((item,i) => (
-        <Grid item key={i} xs={12/items.length}>
+        <Grid item key={i} xs={12/items.length} justifyContent='center' display='flex'>
           <Ficha fichaInfo={item}/>
         </Grid>
       ))}

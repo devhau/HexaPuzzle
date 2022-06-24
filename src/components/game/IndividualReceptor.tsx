@@ -10,9 +10,9 @@ export const IndividualReceptor = () => {
       onDrop={onDrop} 
       onDragOver={allowDrop}
       style={{
-          width: '30px',
-          height: '75px',
-          backgroundColor: 'red',
+        width: '30px',
+        height: '75px',
+        backgroundColor: 'red',
       }}
     >a</div>
   )

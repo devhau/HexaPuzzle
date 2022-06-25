@@ -1,6 +1,5 @@
 export type CasillaProps<AdyacenciaType,RotationType> = {
-    active: boolean,
     id: number,
-    adyacentes: AdyacenciaType,
+    adyacentes?: AdyacenciaType,
     rotacion: RotationType
 }

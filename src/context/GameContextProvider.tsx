@@ -1,5 +1,6 @@
-import { FC, useEffect, useReducer } from 'react';
+import { FC, useEffect, useReducer, useMemo } from 'react';
 import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
+import { TableroHexagonalFactory } from '../logic/classes/TableroHexagonalFactory';
 import { GameContext,GameReducer } from './';
 
 export interface GameState {
@@ -16,10 +17,21 @@ interface Props {
     children: JSX.Element | JSX.Element[];
 }
 
+const tableroFormat = {
+    1: 7,
+    2: 9,
+    3: 11,
+    4: 11,
+    5: 9,
+    6: 7
+}
+
 export const GameContextProvider: FC<Props> = ({children}) => {
+    const tableroFactory = useMemo(() => new TableroHexagonalFactory(tableroFormat), []);
+    const tablero = useMemo(() => tableroFactory.generate(), []);
     const [state,dispatch] = useReducer(GameReducer, initialState);
     useEffect(() => {
-      //crear tablero
+      dispatch({type: 'setTablero', payload: tablero});
     }, [])
     return (
         <GameContext.Provider value={{...state}}>

@@ -1,14 +1,16 @@
 import { Factory } from '../interfaces';
 import { Casilla } from './Casilla';
-import { Tablero } from './Tablero';
+
+type TableroFormat = {
+    [rowIndex: number]: number
+}
 
 export abstract class TableroFactory<
-    TableroType extends Tablero<CasillaType,AdyacenciaType,RotationType>,
     CasillaType extends Casilla<AdyacenciaType,RotationType>,
     AdyacenciaType,RotationType
-> implements Factory<TableroType>{
+> implements Factory<CasillaType[]>{
 
-    constructor(protected readonly numberOfCasillas: number) { }
+    constructor(protected readonly format: TableroFormat) { }
 
-    public abstract generate(): TableroType;
+    public abstract generate(): CasillaType[];
 }

@@ -1,1 +1,1 @@
-export type Color = 'rojo' | 'azul' | 'verde' | 'amarillo' | 'morado';
+export type Color = 'rojo' | 'azul' | 'cyan' | 'naranja' | 'morado';

@@ -1,7 +1,7 @@
 import { FC, useState, useEffect, useRef } from 'react';
 import { Theme, ThemeProvider } from '@mui/material';
 import Cookies from 'js-cookie';
-import { ThemeContext, ThemeString } from './ThemeContext';
+import { ThemeContext, ThemeMode, ThemeString } from './ThemeContext';
 import { lightTheme, darkTheme } from '../themes/';
 
 type ThemeState = Theme;
@@ -12,6 +12,7 @@ interface Props {
 
 export const ThemeContextProvider: FC<Props> = ({children}) => {
     const [themeString, setThemeString] = useState<ThemeString>('');
+    const [mode, setMode] = useState<ThemeMode>('');
     const [theme, setTheme] = useState<ThemeState>(darkTheme);
     useEffect(() => {
         setTheme(
@@ -24,23 +25,26 @@ export const ThemeContextProvider: FC<Props> = ({children}) => {
         setThemeString(Cookies.get('theme') as ThemeString || 'system');
     }, []);
     useEffect(() => {
+        setMode(theme === lightTheme ? 'light' : 'dark');
+    }, [theme]);
+    useEffect(() => {
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => changeTheme('system'))
     }, []);
-    const changeTheme = (theme: ThemeString) => {
-        if(theme === themeString) return;
-        if(theme === 'system') {
+    const changeTheme = (newTheme: ThemeString) => {
+        if(newTheme === themeString) return;
+        if(newTheme === 'system') {
             setTheme(
                 window.matchMedia("(prefers-color-scheme: dark)").matches ? darkTheme
                 : lightTheme
             )
         }else{
-            setTheme(theme === 'light' ? lightTheme : darkTheme);
+            setTheme(newTheme === 'light' ? lightTheme : darkTheme);
         }
-        Cookies.set('theme', theme);
-        setThemeString(theme);
+        Cookies.set('theme', newTheme);
+        setThemeString(newTheme);
     }
     return (
-        <ThemeContext.Provider value={{theme,changeTheme,currentTheme: themeString}}>
+        <ThemeContext.Provider value={{theme,mode,changeTheme,currentTheme: themeString}}>
             <ThemeProvider theme={theme}>
                 {children}
             </ThemeProvider>

@@ -1,11 +1,14 @@
 import { useContext, useMemo } from 'react';
 import { Box, Grid } from '@mui/material';
-import TableroImg from '../../assets/tablero.png';
 import { GroupReceptor } from './GroupReceptor';
 import { IndividualReceptor } from './IndividualReceptor';
 import { DragAndDropContext } from '../../context';
+import { ThemeContext } from '../../context/ThemeContext';
+import TableroLight from '../../assets/tablero-light.png';
+import TableroDark from '../../assets/tablero-dark.png';
 
 export const Tablero = () => {
+  const {mode} = useContext(ThemeContext);
   const {isDragging,fichaDragging} = useContext(DragAndDropContext);
   const showIndividualReceptor = useMemo(() => 
     isDragging && fichaDragging && fichaDragging!.getNumberOfActivePiezas() <= 3,
@@ -19,7 +22,7 @@ export const Tablero = () => {
     <Grid container
       sx={{
           backgroundColor: 'transparent',
-          backgroundImage: `url(${TableroImg})`,
+          backgroundImage: `url(${mode === 'light' ? TableroLight : TableroDark})`,
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

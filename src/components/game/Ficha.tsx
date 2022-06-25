@@ -3,7 +3,6 @@ import { Card, CardMedia } from '@mui/material';
 import { DragAndDropContext } from '../../context';
 import { useFicha } from '../../hooks';
 import { FichaHexagonal } from '../../logic/classes/FichaHexagonal';
-import TableroImg from '../../assets/ficha.png';
 
 interface Props {
   fichaInfo: FichaHexagonal;
@@ -11,7 +10,7 @@ interface Props {
 
 export const Ficha: FC<Props> = ({fichaInfo}) => {
 
-  const {ficha, rotar} = useFicha(fichaInfo);
+  const {ficha, rotar, imagePath} = useFicha(fichaInfo);
   const rotate = () => rotar();
 
   const {startDragging,stopDragging} = useContext(DragAndDropContext);
@@ -26,16 +25,17 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       sx={{
-        width: '80%',
-        height: '100%'
+        width: ficha.getNumberOfActivePiezas() === 1 ? '37.5%' : 
+          ficha.getNumberOfActivePiezas() === 2 ? '37.5%' : 
+          ficha.getNumberOfActivePiezas() === 3 ? '80%' :
+          ficha.getNumberOfActivePiezas() === 4 ? '60%' : '80%'
       }}
     >
       <CardMedia
         alt="Ficha"
         component='img'
-        image={TableroImg}
-        height='100%'
-      />
+        image={`../../${imagePath}`}
+      /> 
     </Card>
   )
 }

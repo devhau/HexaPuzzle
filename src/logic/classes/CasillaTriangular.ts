@@ -5,10 +5,10 @@ export class CasillaTriangular extends Casilla<AdyacenciaTriangular<CasillaTrian
     constructor(casillaProps: CasillaProps<AdyacenciaTriangular<CasillaTriangular>,RotationTriangular>) {
         super(casillaProps);
         this.adyacentes = {
-            adyUp: null,
-            adyBottom: null,
-            adyLeft: null,
-            adyRight: null
+            top: undefined,
+            bottom: undefined,
+            left: undefined,
+            right: undefined
         }
     }
 }

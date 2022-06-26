@@ -8,5 +8,6 @@ export abstract class Ficha<PiezaType extends Pieza<RotationType,PositionType,Ad
 
     public getColor = () => this.color;
     public getPiezas = () => this.piezas;
+    public setPiezas = (piezas: PiezaType[]) => this.piezas = piezas;
     public abstract rotar(): void;
 }

@@ -1,6 +1,6 @@
 export type AdyacenciaTriangular<T> = {
-    adyUp: T | null,
-    adyBottom: T | null,
-    adyLeft: T | null,
-    adyRight: T | null
+    top?: T,
+    bottom?: T,
+    left?: T,
+    right?: T 
 }

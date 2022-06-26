@@ -48,10 +48,10 @@ export class TableroHexagonalFactory extends TableroFactory<
         const { format } = this;
         for (const casilla of tablero) {
             const adyacentes: AdyacenciaTriangular<CasillaTriangular> = {
-                adyUp: null,
-                adyBottom: null,
-                adyLeft: null,
-                adyRight: null
+                top: undefined,
+                bottom: undefined,
+                left: undefined,
+                right: undefined
             }
             const id = casilla.getId();
             let rowIndex = 0;
@@ -62,18 +62,18 @@ export class TableroHexagonalFactory extends TableroFactory<
             }
             if(casilla.getRotacion() === 'VERTEXUP'){
                 if(rowIndex < Object.keys(format).length){
-                    adyacentes.adyBottom = tablero[id + Math.floor((format[rowIndex] + format[rowIndex + 1])/2) - 1];
+                    adyacentes.bottom = tablero[id + Math.floor((format[rowIndex] + format[rowIndex + 1])/2) - 1];
                 }
             }else if(casilla.getRotacion() === 'VERTEXDOWN'){
                 if(rowIndex > 1){
-                    adyacentes.adyUp = tablero[id - Math.floor((format[rowIndex] + format[rowIndex - 1])/2) - 1];
+                    adyacentes.top = tablero[id - Math.floor((format[rowIndex] + format[rowIndex - 1])/2) - 1];
                 }
             }
             if(id > cont - format[rowIndex] + 1){
-                adyacentes.adyLeft = tablero[id - 2];
+                adyacentes.left = tablero[id - 2];
             }
             if(id < cont){
-                adyacentes.adyRight = tablero[id];
+                adyacentes.right = tablero[id];
             }
             casilla.setAdyacentes(adyacentes);
         }

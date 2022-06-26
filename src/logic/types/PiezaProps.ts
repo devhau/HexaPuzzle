@@ -1,6 +1,6 @@
 export type PiezaProps<AdyacenciaType,PositionType,RotationType> = {
     active: boolean,
-    adyacentes: AdyacenciaType, 
+    adyacentes?: AdyacenciaType, 
     position: PositionType, 
     rotacion: RotationType
 }

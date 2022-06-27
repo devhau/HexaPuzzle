@@ -1,6 +1,7 @@
 import { createContext } from 'react';
+import { GameState } from './';
 
-interface ContextProps {
+interface ContextProps extends GameState {
     
 }
 

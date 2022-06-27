@@ -1,16 +1,16 @@
 import { Factory } from '../interfaces';
 
-export abstract class Inventory<T>{
-    protected items: T[] = [];
+export class Inventory<T> implements Inventory<T> {
+    private items: T[] = [];
 
-    constructor(protected factory: Factory<T>, protected numberOfItems: number) { 
+    constructor(protected readonly factory: Factory<T>, protected readonly numberOfItems: number) { 
         for (let i = 0; i < numberOfItems; i++) {
             this.add();
         }
     }
 
-    public abstract add(): void;
-    public abstract remove(item: T): void;
+    public add = () => this.items.push(this.factory.generate());;
+    public remove = (item: T) => this.items = this.items.filter(i => i !== item);
     public getItems = (): T[] => this.items;
     
 }

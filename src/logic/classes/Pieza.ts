@@ -1,18 +1,15 @@
 import { PiezaProps } from '../types';
 
-export abstract class Pieza<RotationType, PositionType, AdyacenciaType> {
-    protected active: boolean;
-    protected adyacentes: AdyacenciaType = {} as AdyacenciaType;
-    protected position: PositionType;
+export abstract class Pieza<RotationType, AdyacenciaType> {
+    protected adyacentes: AdyacenciaType;
     protected rotacion: RotationType;
 
-    constructor({active, position, rotacion}: PiezaProps<AdyacenciaType,PositionType,RotationType>) {
-        this.active = active;
-        this.position = position;
+    constructor({rotacion,adyacentes}: PiezaProps<AdyacenciaType,RotationType>) {
+        this.adyacentes = adyacentes || {} as AdyacenciaType;
         this.rotacion = rotacion;
     }
 
-    public isActive = (): boolean => this.active;
+    public abstract rotar(): void;
     public getRotacion = (): RotationType => this.rotacion;
     public setAdyacentes = (adyacentes: AdyacenciaType) => this.adyacentes = adyacentes;
 

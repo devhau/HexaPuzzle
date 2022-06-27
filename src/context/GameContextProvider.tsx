@@ -6,15 +6,7 @@ import { GameContext,GameReducer } from './';
 export interface GameState {
     tablero: CasillaTriangular[];
     points: number;
-}
-
-const initialState: GameState = {
-    tablero: [],
-    points: 0
-}
-
-interface Props {
-    children: JSX.Element | JSX.Element[];
+    tableroFormat: {[key: number]: number};
 }
 
 const tableroFormat = {
@@ -25,6 +17,17 @@ const tableroFormat = {
     5: 9,
     6: 7
 }
+
+const initialState: GameState = {
+    tablero: [],
+    points: 0,
+    tableroFormat
+}
+
+interface Props {
+    children: JSX.Element | JSX.Element[];
+}
+
 
 export const GameContextProvider: FC<Props> = ({children}) => {
     const tableroFactory = useMemo(() => new TableroHexagonalFactory(tableroFormat), []);

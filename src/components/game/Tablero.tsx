@@ -1,23 +1,26 @@
 import { useContext, useMemo } from 'react';
 import { Box, Grid } from '@mui/material';
-import { GroupReceptor } from './GroupReceptor';
-import { IndividualReceptor } from './IndividualReceptor';
-import { DragAndDropContext } from '../../context';
+import { Casilla } from './Casilla';
 import { ThemeContext } from '../../context/ThemeContext';
 import TableroLight from '../../assets/tablero-light.png';
 import TableroDark from '../../assets/tablero-dark.png';
+import { GameContext } from '../../context/GameContext';
 
 export const Tablero = () => {
   const {mode} = useContext(ThemeContext);
-  const {isDragging,fichaDragging} = useContext(DragAndDropContext);
-  const showIndividualReceptor = useMemo(() => 
-    isDragging && fichaDragging && fichaDragging!.getNumberOfActivePiezas() <= 3,
-    [isDragging,fichaDragging]
-  )
-  const showGroupReceptor = useMemo(() => 
-    isDragging && fichaDragging && fichaDragging!.getNumberOfActivePiezas() >= 4,
-    [isDragging,fichaDragging]
-  )
+  const {tableroFormat} = useContext(GameContext);
+
+  const tableroIdsArray = useMemo(() =>{
+    const array: number[][] = [];
+    for(let i = 1; i <= Object.keys(tableroFormat).length; i++){
+      array[i] = [];
+      for(let j = 1; j <= tableroFormat[i]; j++){
+        array[i].push(i*j);
+      }
+    }
+    return array;
+  }, []);
+
   return (
     <Grid container
       sx={{
@@ -31,245 +34,95 @@ export const Tablero = () => {
       }}
       spacing={0}
     >
-      {
-        showIndividualReceptor && 
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={2.5}
-          >
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-          </Box>
-        </Grid>
-      }
+      <Grid item xs={12} display='flex' justifyContent='center'>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          gap={2.5}
+        >
+          {
+            tableroIdsArray[1].map(id => <Casilla key={id}/>)
+          }
+        </Box>
+      </Grid>
 
-      {
-        showGroupReceptor &&
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={5}
-          >
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-          </Box>
-        </Grid>
-      }
+      <Grid item xs={12} display='flex' justifyContent='center'>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          gap={2.5}
+        >
+          {
+            tableroIdsArray[2].map(id => <Casilla key={id}/>)
+          }
+        </Box>
+      </Grid>
 
-      { 
-        showIndividualReceptor && 
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={2.5}
-          >
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-          </Box>
-        </Grid>
-      }
+      <Grid item xs={12} display='flex' justifyContent='center'>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          gap={2.5}
+        >
+          {
+            tableroIdsArray[3].map(id => <Casilla key={id}/>)
+          }
+        </Box>
+      </Grid>
 
-      {
-        showGroupReceptor &&
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={5}
-          >
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-          </Box>
-        </Grid>
-      }
+      <Grid item xs={12} display='flex' justifyContent='center'>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          gap={2.5}
+        >
+          {
+            tableroIdsArray[4].map(id => <Casilla key={id}/>)
+          }
+        </Box>
+      </Grid>
 
-      {
-        showIndividualReceptor &&  
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={2.5}
-          >
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-          </Box>
-        </Grid>
-      }
+      <Grid item xs={12} display='flex' justifyContent='center'>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          gap={2.5}
+        >
+          {
+            tableroIdsArray[5].map(id => <Casilla key={id}/>)
+          }
+        </Box>
+      </Grid>
 
-      {
-        showGroupReceptor &&
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={5}
-          >
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-          </Box>
-        </Grid>
-    }
-
-      {
-        showIndividualReceptor && 
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={2.5}
-          >
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-          </Box>
-        </Grid>
-      }
-
-      {
-        showGroupReceptor &&
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={5}
-          >
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-          </Box>
-        </Grid>
-      }
-
-      {
-        showIndividualReceptor && 
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={2.5}
-          >
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-          </Box>
-        </Grid>
-      }
-
-      {
-        showGroupReceptor &&
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              width: '30%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={5}
-          >
-            <GroupReceptor/>
-            <GroupReceptor/>
-            <GroupReceptor/>
-          </Box>
-        </Grid>
-      }
-
-      {
-        showIndividualReceptor && 
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            gap={2.5}
-          >
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-            <IndividualReceptor/>
-          </Box>
-        </Grid>
-      }
+      <Grid item xs={12} display='flex' justifyContent='center'>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          gap={2.5}
+        >
+          {
+            tableroIdsArray[6].map(id => <Casilla key={id}/>)
+          }
+        </Box>
+      </Grid>
 
     </Grid>
   )

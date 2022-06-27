@@ -1,13 +1,11 @@
 import { useMemo } from 'react';
 import { Grid } from '@mui/material'
 import { Ficha } from './Ficha';
-import { FichaHexagonalFactory } from '../../logic/classes/FichaHexagonalFactory';
 import { FichaHexagonalInventory } from '../../logic/classes/FichaHexagonalInventory';
 import { useInventory } from '../../hooks';
 
 export const Inventory = () => {
-  const factory = useMemo(() => new FichaHexagonalFactory(),[]);
-  const inventory = useMemo(() => new FichaHexagonalInventory(factory,3),[]);
+  const inventory = useMemo(() => new FichaHexagonalInventory(3),[]);
   const {items} = useInventory(inventory);
   return (
     <Grid 

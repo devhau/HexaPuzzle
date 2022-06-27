@@ -7,3 +7,235 @@ html, body {
 body {
     transition: all ease .25s;
 }
+
+.rotar0to180-anim{
+    animation: rotate0to180 .5s;
+   -webkit-animation: rotate0to180 .5s;
+   -moz-animation: rotate0to180 .5s;    
+}
+.rotar0to180{
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+}
+@keyframes rotate0to180 {
+    from {
+      -webkit-transform: rotate(0deg)
+    }
+    to {
+      -webkit-transform: rotate(180deg)
+    }
+}
+@-webkit-keyframes rotate0to180 {
+    from {
+      -webkit-transform: rotate(0deg)
+    }
+    to {
+      -webkit-transform: rotate(180deg)
+    }
+}
+
+.rotar180to360-anim{
+    animation: rotate180to360 .5s;
+   -webkit-animation: rotate180to360 .5s;
+   -moz-animation: rotate180to360 .5s;    
+}
+.rotar180to360{
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+}
+@keyframes rotate180to360 {
+    from {
+      -webkit-transform: rotate(180deg)
+    }
+    to {
+      -webkit-transform: rotate(360deg)
+    }
+}
+@-webkit-keyframes rotate180to360 {
+    from {
+      -webkit-transform: rotate(180deg)
+    }
+    to {
+      -webkit-transform: rotate(360deg)
+    }
+}
+
+.rotar0to60-anim{
+    animation: rotate0to60 .35s;
+   -webkit-animation: rotate0to60 .35s;
+   -moz-animation: rotate0to60 .35s;    
+}
+.rotar0to60{
+    transform: rotate(60deg);
+    -webkit-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    -o-transform: rotate(60deg);
+    -ms-transform: rotate(60deg);
+}
+@keyframes rotate0to60 {
+    from {
+      -webkit-transform: rotate(0deg)
+    }
+    to {
+      -webkit-transform: rotate(60deg)
+    }
+}
+@-webkit-keyframes rotate0to60 {
+    from {
+      -webkit-transform: rotate(0deg)
+    }
+    to {
+      -webkit-transform: rotate(60deg)
+    }
+}
+
+.rotar60to120-anim{
+    animation: rotate60to120 .35s;
+   -webkit-animation: rotate60to120 .35s;
+   -moz-animation: rotate60to120 .35s;    
+}
+.rotar60to120{
+    transform: rotate(120deg);
+    -webkit-transform: rotate(120deg);
+    -moz-transform: rotate(120deg);
+    -o-transform: rotate(120deg);
+    -ms-transform: rotate(120deg);
+}
+@keyframes rotate60to120 {
+    from {
+      -webkit-transform: rotate(60deg)
+    }
+    to {
+      -webkit-transform: rotate(120deg)
+    }
+}
+@-webkit-keyframes rotate60to120 {
+    from {
+      -webkit-transform: rotate(60deg)
+    }
+    to {
+      -webkit-transform: rotate(120deg)
+    }
+}
+
+.rotar120to180-anim{
+    animation: rotate120to180 .35s;
+   -webkit-animation: rotate120to180 .35s;
+   -moz-animation: rotate120to180 .35s;    
+}
+.rotar120to180{
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+}
+@keyframes rotate120to180 {
+    from {
+      -webkit-transform: rotate(120deg)
+    }
+    to {
+      -webkit-transform: rotate(180deg)
+    }
+}
+@-webkit-keyframes rotate120to180 {
+    from {
+      -webkit-transform: rotate(120deg)
+    }
+    to {
+      -webkit-transform: rotate(180deg)
+    }
+}
+
+.rotar180to240-anim{
+    animation: rotate180to240 .35s;
+   -webkit-animation: rotate180to240 .35s;
+   -moz-animation: rotate180to240 .35s;    
+}
+.rotar180to240{
+    transform: rotate(240deg);
+    -webkit-transform: rotate(240deg);
+    -moz-transform: rotate(240deg);
+    -o-transform: rotate(240deg);
+    -ms-transform: rotate(240deg);
+}
+@keyframes rotate180to240 {
+    from {
+      -webkit-transform: rotate(180deg)
+    }
+    to {
+      -webkit-transform: rotate(240deg)
+    }
+}
+@-webkit-keyframes rotate180to240 {
+    from {
+      -webkit-transform: rotate(180deg)
+    }
+    to {
+      -webkit-transform: rotate(240deg)
+    }
+}
+
+.rotar240to300-anim{
+    animation: rotate240to300 .35s;
+   -webkit-animation: rotate240to300 .35s;
+   -moz-animation: rotate240to300 .35s;    
+}
+.rotar240to300{
+    transform: rotate(300deg);
+    -webkit-transform: rotate(300deg);
+    -moz-transform: rotate(300deg);
+    -o-transform: rotate(300deg);
+    -ms-transform: rotate(300deg);
+}
+@keyframes rotate240to300 {
+    from {
+      -webkit-transform: rotate(240deg)
+    }
+    to {
+      -webkit-transform: rotate(300deg)
+    }
+}
+@-webkit-keyframes rotate240to300 {
+    from {
+      -webkit-transform: rotate(240deg)
+    }
+    to {
+      -webkit-transform: rotate(300deg)
+    }
+}
+
+.rotar300to360-anim{
+    animation: rotate300to360 .35s;
+   -webkit-animation: rotate300to360 .35s;
+   -moz-animation: rotate300to360 .35s;    
+}
+.rotar300to360{
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+}
+@keyframes rotate300to360 {
+    from {
+      -webkit-transform: rotate(300deg)
+    }
+    to {
+      -webkit-transform: rotate(360deg)
+    }
+}
+@-webkit-keyframes rotate300to360 {
+    from {
+      -webkit-transform: rotate(300deg)
+    }
+    to {
+      -webkit-transform: rotate(360deg)
+    }
+}

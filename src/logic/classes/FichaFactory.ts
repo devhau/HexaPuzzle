@@ -3,10 +3,9 @@ import { Ficha } from './Ficha';
 import { Pieza } from './Pieza';
 
 export abstract class FichaFactory<
-    FichaType extends Ficha<PiezaType,RotationType,PositionType,AdyacenciaType>, 
-    PiezaType extends Pieza<RotationType,PositionType,AdyacenciaType>, 
+    FichaType extends Ficha<PiezaType,RotationType,AdyacenciaType>, 
+    PiezaType extends Pieza<RotationType,AdyacenciaType>, 
     RotationType, 
-    PositionType, 
     AdyacenciaType
 > implements Factory<FichaType> {
 

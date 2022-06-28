@@ -8,14 +8,16 @@ import { GameContext } from '../../context/GameContext';
 
 export const Tablero = () => {
   const {mode} = useContext(ThemeContext);
-  const {tableroFormat} = useContext(GameContext);
+  const {tablero,tableroFormat} = useContext(GameContext);
 
   const tableroIdsArray = useMemo(() =>{
     const array: number[][] = [];
+    let cont = 1;
     for(let i = 1; i <= Object.keys(tableroFormat).length; i++){
       array[i] = [];
       for(let j = 1; j <= tableroFormat[i]; j++){
-        array[i].push(i*j);
+        array[i].push(cont);
+        cont++;
       }
     }
     return array;
@@ -34,92 +36,86 @@ export const Tablero = () => {
       }}
       spacing={0}
     >
-      <Grid item xs={12} display='flex' justifyContent='center'>
+      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
-          gap={2.5}
         >
           {
-            tableroIdsArray[1].map(id => <Casilla key={id}/>)
+            tableroIdsArray[1].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
           }
         </Box>
       </Grid>
 
-      <Grid item xs={12} display='flex' justifyContent='center'>
+      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
           }}
-          gap={2.5}
         >
           {
-            tableroIdsArray[2].map(id => <Casilla key={id}/>)
+            tableroIdsArray[2].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
           }
         </Box>
       </Grid>
 
-      <Grid item xs={12} display='flex' justifyContent='center'>
+      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
           }}
-          gap={2.5}
         >
           {
-            tableroIdsArray[3].map(id => <Casilla key={id}/>)
+            tableroIdsArray[3].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
           }
         </Box>
       </Grid>
 
-      <Grid item xs={12} display='flex' justifyContent='center'>
+      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
           }}
-          gap={2.5}
         >
           {
-            tableroIdsArray[4].map(id => <Casilla key={id}/>)
+            tableroIdsArray[4].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
           }
         </Box>
       </Grid>
 
-      <Grid item xs={12} display='flex' justifyContent='center'>
+      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
           }}
-          gap={2.5}
         >
           {
-            tableroIdsArray[5].map(id => <Casilla key={id}/>)
+            tableroIdsArray[5].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
           }
         </Box>
       </Grid>
 
-      <Grid item xs={12} display='flex' justifyContent='center'>
+      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
           }}
-          gap={2.5}
         >
           {
-            tableroIdsArray[6].map(id => <Casilla key={id}/>)
+            tableroIdsArray[6].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
           }
         </Box>
       </Grid>

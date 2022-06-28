@@ -10,10 +10,12 @@ interface Props {
 }
 
 export const Ficha: FC<Props> = ({fichaInfo}) => {
+  const {startDragging,stopDragging} = useContext(DragAndDropContext);
+  const {ficha, rotar, imagePath} = useFicha(fichaInfo);
+
   const refImg = useRef<HTMLImageElement>(null);
   const isRotating = useRef(false);
 
-  const {ficha, rotar, imagePath} = useFicha(fichaInfo);
   const rotate = () => {
     if(isRotating.current) return;
     isRotating.current = true;
@@ -31,15 +33,13 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
     rotar();
   };
 
-  const {startDragging,stopDragging} = useContext(DragAndDropContext);
-
   const onDragStart = (e: React.DragEvent<HTMLImageElement>) => startDragging(ficha);
 
   const getCoordsSelected = (e: any) => {
     var rect = e.target.getBoundingClientRect();
     var x = e.clientX - rect.left; //x position within the element.
     var y = e.clientY - rect.top;  //y position within the element.
-    console.log("Left? : " + x + " ; Top? : " + y + ".");
+    //console.log("Left? : " + x + " ; Top? : " + y + ".");
   }
 
   const onDragEnd = (e: React.DragEvent<HTMLImageElement>) => stopDragging();

@@ -1,12 +1,10 @@
-import { useMemo } from 'react';
+import { useContext } from 'react';
 import { Grid } from '@mui/material'
+import { GameContext } from '../../context/GameContext';
 import { Ficha } from './Ficha';
-import { FichaHexagonalInventory } from '../../logic/classes/FichaHexagonalInventory';
-import { useInventory } from '../../hooks';
 
 export const Inventory = () => {
-  const inventory = useMemo(() => new FichaHexagonalInventory(3),[]);
-  const {items} = useInventory(inventory);
+  const {fichas} = useContext(GameContext);
   return (
     <Grid 
       container 
@@ -15,8 +13,12 @@ export const Inventory = () => {
         height: '10%'
       }}
     >
-      {items.map((item,i) => (
-        <Grid item key={i} xs={12/items.length} justifyContent='center' display='flex'>
+      {fichas.map((item,i) => (
+        <Grid item key={i} 
+          xs={12/fichas.length} 
+          justifyContent='center' 
+          display='flex'
+        >
           <Ficha fichaInfo={item}/>
         </Grid>
       ))}

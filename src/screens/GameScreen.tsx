@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import { Box } from '@mui/material'
 import { Inventory } from '../components/game/Inventory'
 import { Tablero } from '../components/game/Tablero'
+import { GameContext } from '../context';
 
 export const GameScreen = () => {
+  const {tablero} = useContext(GameContext);
   return (
     <Box
         display={{

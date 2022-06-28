@@ -1,15 +1,18 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { DragAndDropContext } from '../../context/DragAndDropContext';
+import { CasillaTriangular } from '../../logic/classes/CasillaTriangular';
 
-export const Casilla = () => {
+interface Props {
+  casilla: CasillaTriangular;
+}
+
+export const Casilla: FC<Props> = ({casilla}) => {
   const {isDragging} = useContext(DragAndDropContext);
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     
   }
-  const allowDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  }
+  const allowDrop = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 
   if (!isDragging) return <></>;
   return (
@@ -17,10 +20,13 @@ export const Casilla = () => {
       onDrop={onDrop} 
       onDragOver={allowDrop}
       style={{
-        width: '30px',
-        height: '75px',
+        clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+        rotate: isDragging && casilla.getRotacion() === 'VERTEXDOWN' ? '180deg' : '0deg',
+        width: '90px',
+        height: '80px',
         backgroundColor: 'red',
+        margin: '0 -20px'
       }}
-    >a</div>
+    ></div>
   )
 }

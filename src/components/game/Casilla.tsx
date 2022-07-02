@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react';
 import { DragAndDropContext } from '../../context/DragAndDropContext';
 import { CasillaTriangular } from '../../logic/classes/CasillaTriangular';
+import { ThemeContext } from '../../context/ThemeContext';
 
 interface Props {
   casilla: CasillaTriangular;
@@ -23,9 +24,9 @@ export const Casilla: FC<Props> = ({casilla}) => {
         clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
         rotate: isDragging && casilla.getRotacion() === 'VERTEXDOWN' ? '180deg' : '0deg',
         width: '90px',
-        height: '77.5px',
+        height: '80px',
         backgroundColor: 'red',
-        margin: '0 -21px'
+        margin: '0 -20.5px',
       }}
     ></div>
   )

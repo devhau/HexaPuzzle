@@ -23,9 +23,9 @@ export const Casilla: FC<Props> = ({casilla}) => {
         clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
         rotate: isDragging && casilla.getRotacion() === 'VERTEXDOWN' ? '180deg' : '0deg',
         width: '90px',
-        height: '80px',
+        height: '77.5px',
         backgroundColor: 'red',
-        margin: '0 -20px'
+        margin: '0 -21px'
       }}
     ></div>
   )

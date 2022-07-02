@@ -136,6 +136,12 @@ export class FichaHexagonal extends Ficha<PiezaTriangular, RotationTriangular, A
                 this.piezas[2].setAdyacentes({left: this.piezas[0], right: this.piezas[3]});
                 this.piezas[3].setAdyacentes({left: this.piezas[2], bottom: this.piezas[4]});
                 this.piezas[4].setAdyacentes({top: this.piezas[3]});
+            }else{
+                this.piezas[0].setAdyacentes({right: this.piezas[1]});
+                this.piezas[1].setAdyacentes({left: this.piezas[0], right: this.piezas[2]});
+                this.piezas[2].setAdyacentes({left: this.piezas[1], bottom: this.piezas[3]});
+                this.piezas[3].setAdyacentes({top: this.piezas[2], left: this.piezas[4]});
+                this.piezas[4].setAdyacentes({right: this.piezas[3]});
             }
         }
     }

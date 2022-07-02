@@ -4,6 +4,7 @@ import { DragAndDropContext } from '../../context';
 import { useFicha } from '../../hooks';
 import { FichaHexagonal } from '../../logic/classes/FichaHexagonal';
 import { getFichaAnimation } from '../../helpers/FichaAnimations';
+import { getPiezaSelected } from '../../helpers/PiezaSelected';
 
 interface Props {
   fichaInfo: FichaHexagonal;
@@ -29,7 +30,6 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
       refImg.current?.classList.remove(animation);
       isRotating.current = false;
     },miliseconds);
-
     rotar();
   };
 
@@ -39,7 +39,7 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
     var rect = e.target.getBoundingClientRect();
     var x = e.clientX - rect.left; //x position within the element.
     var y = e.clientY - rect.top;  //y position within the element.
-    //console.log("Left? : " + x + " ; Top? : " + y + ".");
+    console.log(getPiezaSelected(ficha,x,y))
   }
 
   const onDragEnd = (e: React.DragEvent<HTMLImageElement>) => stopDragging();

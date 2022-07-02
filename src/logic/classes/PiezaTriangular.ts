@@ -1,14 +1,14 @@
 import { Pieza } from './Pieza';
-import { RotationTriangular,AdyacenciaTriangular, PiezaProps } from '../types';
+import { RotationTriangular,AdyacenciaTriangular } from '../types';
 
-export class PiezaTriangular extends Pieza<RotationTriangular,AdyacenciaTriangular<PiezaTriangular>> {
+export class PiezaTriangular extends Pieza<AdyacenciaTriangular,RotationTriangular> {
 
-    constructor(piezaProps: PiezaProps<AdyacenciaTriangular<PiezaTriangular>,RotationTriangular>) {
-        super(piezaProps);
+    constructor(piezaArgs: {rotacion: RotationTriangular,adyacentes?: AdyacenciaTriangular}) {
+        super(piezaArgs);
     }
 
     public rotar(): void {
-        this.rotacion = (this.rotacion === 'VERTEXUP') ? 'VERTEXDOWN' : 'VERTEXUP';
+        this.rotacion = this.rotacion === 'VERTEXUP' ? 'VERTEXDOWN' : 'VERTEXUP';
     }
     
 }

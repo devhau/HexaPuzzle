@@ -1,5 +1,4 @@
-import { FC, useContext, useRef, useState } from 'react';
-import { Card, CardMedia } from '@mui/material';
+import { FC, useContext, useRef } from 'react';
 import { DragAndDropContext } from '../../context';
 import { useFicha } from '../../hooks';
 import { FichaHexagonal } from '../../logic/classes/FichaHexagonal';
@@ -55,10 +54,10 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       style={{
-        width: ficha.getNumberOfPiezas() === 1 ? '37.5%' : 
-        ficha.getNumberOfPiezas() === 2 ? '37.5%' : 
-        ficha.getNumberOfPiezas() === 3 ? '80%' :
-        ficha.getNumberOfPiezas() === 4 ? '60%' : '80%',
+        width: ficha.numberOfPiezas === 1 ? '37.5%' : 
+        ficha.numberOfPiezas === 2 ? '37.5%' : 
+        ficha.numberOfPiezas === 3 ? '80%' :
+        ficha.numberOfPiezas === 4 ? '60%' : '80%',
         objectFit: 'contain',
         cursor: 'pointer'
       }}

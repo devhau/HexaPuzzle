@@ -1,9 +1,10 @@
 import { FC, useEffect, useReducer, useMemo } from 'react';
-import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
-import { FichaHexagonalInventory } from '../logic/classes/FichaHexagonalInventory';
-import { TableroHexagonalFactory } from '../logic/classes/TableroHexagonalFactory';
 import { GameContext,GameReducer } from './';
+import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
+import { TableroHexagonalFactory } from '../logic/classes/TableroHexagonalFactory';
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
+import { Inventory } from '../logic/classes/Inventory';
+import { FichaHexagonalFactory } from '../logic/classes/FichaHexagonalFactory';
 
 export interface GameState {
     tablero: CasillaTriangular[];
@@ -38,14 +39,14 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     const tableroFactory = useMemo(() => new TableroHexagonalFactory(tableroFormat), []);
     const tablero = useMemo(() => tableroFactory.generate(), []);
 
-    const inventory = useMemo(() => new FichaHexagonalInventory(3),[]);
+    const inventory = useMemo(() => new Inventory<FichaHexagonal>(new FichaHexagonalFactory(),3),[]);
     const generateFicha = () => {
-        inventory.add();
-        dispatch({type: 'setFichas', payload: inventory.getItems()});
+        inventory.addItem();
+        dispatch({type: 'setFichas', payload: inventory.items});
     }
     const removeFicha = (ficha: FichaHexagonal) => {
-        inventory.remove(ficha);
-        dispatch({type: 'setFichas', payload: inventory.getItems()});
+        inventory.removeItem(ficha);
+        dispatch({type: 'setFichas', payload: inventory.items});
     }
 
     const [state,dispatch] = useReducer(GameReducer, initialState);
@@ -54,7 +55,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
       dispatch({type: 'setTablero', payload: tablero});
     }, [])
     useEffect(() => {
-        dispatch({type: 'setFichas', payload: inventory.getItems()});
+        dispatch({type: 'setFichas', payload: inventory.items});
     }, [])
     return (
         <GameContext.Provider value={{

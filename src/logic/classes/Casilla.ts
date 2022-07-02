@@ -1,20 +1,43 @@
-import { CasillaProps, Color } from '../types';
+import { Color } from '../types';
+import { Pieza } from './Pieza';
+import { CasillaType } from '../types/Casilla';
 
-export abstract class Casilla <AdyacenciaType,RotationType>{
-    protected adyacentes: AdyacenciaType;
-    protected color?: Color;
-    protected id: number;
-    protected rotacion: RotationType;
+export abstract class Casilla <A,R> implements CasillaType {
+    private _adyacentes: A;
+    private _color?: Color;
+    private readonly _id: number;
+    private readonly _rotacion: R;
 
-    constructor({id, rotacion,adyacentes}: CasillaProps<AdyacenciaType,RotationType>) {
-        this.adyacentes = adyacentes || {} as AdyacenciaType;
-        this.id = id;
-        this.rotacion = rotacion;
+    constructor({id,rotacion,adyacentes}: {id: number,rotacion: R,adyacentes?: A}) {
+        this._adyacentes = adyacentes || {} as A;
+        this._id = id;
+        this._rotacion = rotacion;
     }
 
-    public setAdyacentes = (adyacentes: AdyacenciaType) => this.adyacentes = adyacentes;
-    public getAdyacentes = (): AdyacenciaType | undefined => this.adyacentes || undefined;
-    public getColor = (): Color | undefined => this.color || undefined;
-    public getId = (): number => this.id;
-    public getRotacion = (): RotationType => this.rotacion;
+    public abstract puedeInsertar(pieza: Pieza<A,R>): boolean;
+    public abstract insertar(pieza: Pieza<A,R>): void;
+
+    public estaVacia = (): boolean => !this._color;
+
+    set adyacentes(adyacentes: A){
+        this._adyacentes = adyacentes;
+    }
+    get adyacentes(){
+        return this._adyacentes;
+    }
+
+    get color(){
+        return this._color;
+    }
+    set color(color: Color | undefined){
+        this._color = color;
+    }
+
+    get id(){
+        return this._id;
+    }
+
+    get rotacion(){
+        return this._rotacion;
+    }
 }

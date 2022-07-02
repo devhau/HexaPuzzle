@@ -1,13 +1,20 @@
-import { Color } from '../types';
-import { Pieza } from './Pieza';
+import { Color, FichaType, PiezaType } from '../types';
 
-export abstract class Ficha<PiezaType extends Pieza<RotationType,AdyacenciaType>, RotationType, AdyacenciaType > {
-    protected piezas: PiezaType[] = [];
+export abstract class Ficha<P extends PiezaType> implements FichaType {
+    private _piezas: P[] = [];
     
-    constructor(protected readonly color: Color) { }
-
-    public getColor = () => this.color;
-    public getPiezas = () => this.piezas;
-    public setPiezas = (piezas: PiezaType[]) => this.piezas = piezas;
+    constructor(private readonly _color: Color) { }
+    
     public abstract rotar(): void;
+
+    get color(): Color{
+        return this._color;
+    }
+    
+    get piezas(){
+        return this._piezas;
+    }
+    set piezas(piezas: P[]){
+        this._piezas = piezas;
+    }
 }

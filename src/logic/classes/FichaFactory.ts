@@ -1,15 +1,7 @@
 import { Factory } from '../interfaces';
-import { Ficha } from './Ficha';
-import { Pieza } from './Pieza';
+import { FichaType } from '../types';
 
-export abstract class FichaFactory<
-    FichaType extends Ficha<PiezaType,RotationType,AdyacenciaType>, 
-    PiezaType extends Pieza<RotationType,AdyacenciaType>, 
-    RotationType, 
-    AdyacenciaType
-> implements Factory<FichaType> {
-
-    public abstract generate(): FichaType;
-
+export abstract class FichaFactory<F extends FichaType> implements Factory<F> {
+    public abstract generate(): F;
     constructor(protected readonly numberOfPiezas: number) { }
 }

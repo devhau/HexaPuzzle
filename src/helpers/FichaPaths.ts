@@ -27,9 +27,9 @@ import FichaNaranja5 from '../assets/Fichas-naranja/5.png';
 
 export const getFichaPath = (ficha: FichaHexagonal): string => {
 
-    switch (ficha.getColor()) {
+    switch (ficha.color) {
         case 'azul':
-            switch (ficha.getNumberOfPiezas()) {
+            switch (ficha.numberOfPiezas) {
                 case 1:
                     return FichaAzul1;
                 case 2:
@@ -44,7 +44,7 @@ export const getFichaPath = (ficha: FichaHexagonal): string => {
                     return '';
             }
         case 'rojo':
-            switch (ficha.getNumberOfPiezas()) {
+            switch (ficha.numberOfPiezas) {
                 case 1:
                     return FichaRoja1;
                 case 2:                         
@@ -59,7 +59,7 @@ export const getFichaPath = (ficha: FichaHexagonal): string => {
                     return '';
             }
         case 'cyan':
-            switch (ficha.getNumberOfPiezas()) {
+            switch (ficha.numberOfPiezas) {
                 case 1:
                     return FichaCyan1;
                 case 2:
@@ -74,7 +74,7 @@ export const getFichaPath = (ficha: FichaHexagonal): string => {
                     return '';
             }
         case 'morado':
-            switch (ficha.getNumberOfPiezas()) {
+            switch (ficha.numberOfPiezas) {
                 case 1:
                     return FichaMorado1;
                 case 2:
@@ -89,7 +89,7 @@ export const getFichaPath = (ficha: FichaHexagonal): string => {
                     return '';
             }
         case 'naranja':
-            switch (ficha.getNumberOfPiezas()) {
+            switch (ficha.numberOfPiezas) {
                 case 1:
                     return FichaNaranja1;
                 case 2:

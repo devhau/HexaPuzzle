@@ -1,16 +1,19 @@
 import { Factory } from '../interfaces';
+import { InventoryType } from '../types';
 
-export class Inventory<T> implements Inventory<T> {
-    private items: T[] = [];
+export class Inventory<T> implements InventoryType<T> {
+    private _items: T[] = [];
 
-    constructor(protected readonly factory: Factory<T>, protected readonly numberOfItems: number) { 
+    constructor(private readonly factory: Factory<T>, protected readonly numberOfItems: number) { 
         for (let i = 0; i < numberOfItems; i++) {
-            this.add();
+            this.addItem();
         }
     }
 
-    public add = () => this.items.push(this.factory.generate());;
-    public remove = (item: T) => this.items = this.items.filter(i => i !== item);
-    public getItems = (): T[] => this.items;
-    
+    public addItem = () => this._items.push(this.factory.generate());;
+    public removeItem = (item: T) => this._items = this._items.filter(i => i !== item);
+
+    get items(): T[]{
+        return this._items
+    };
 }

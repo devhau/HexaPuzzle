@@ -1,10 +1,18 @@
-import { AdyacenciaTriangular, CasillaProps, RotationTriangular } from '../types';
+import { AdyacenciaTriangular, RotationTriangular } from '../types';
 import { Casilla } from './Casilla';
+import { PiezaTriangular } from './PiezaTriangular';
 
-export class CasillaTriangular extends Casilla<AdyacenciaTriangular<CasillaTriangular>,RotationTriangular>{
-
-    constructor(casillaProps: CasillaProps<AdyacenciaTriangular<CasillaTriangular>,RotationTriangular>) {
+export class CasillaTriangular extends Casilla<AdyacenciaTriangular,RotationTriangular>{
+    
+    constructor(casillaProps: {id: number,rotacion: RotationTriangular,adyacentes?: AdyacenciaTriangular}) {
         super(casillaProps);
     }
+    
+    public puedeInsertar(pieza: PiezaTriangular): boolean {
+        return true;
+    }
 
+    public insertar(pieza: PiezaTriangular): void {
+        
+    }
 }

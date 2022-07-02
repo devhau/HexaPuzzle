@@ -1,5 +1,7 @@
-export type { AdyacenciaTriangular } from './AdyacenciaTriangular';
-export type { CasillaProps } from './CasillaProps';
-export type { Color } from './Color';
-export type { PiezaProps } from './PiezaProps';
-export type { RotationTriangular } from './RotationTriangular';
+export * from './AdyacenciaTriangular';
+export * from './Casilla';
+export * from './Color';
+export * from './Ficha';
+export * from './Inventory';
+export * from './Pieza';
+export * from './RotationTriangular';

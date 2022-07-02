@@ -1,14 +1,9 @@
-import { AdyacenciaTriangular, Color, RotationTriangular } from '../types';
+import { Color, RotationTriangular } from '../types';
 import { FichaFactory } from './FichaFactory';
 import { FichaHexagonal } from './FichaHexagonal';
 import { PiezaTriangular } from './PiezaTriangular';
 
-export class FichaHexagonalFactory extends FichaFactory<
-    FichaHexagonal,
-    PiezaTriangular,
-    RotationTriangular,
-    AdyacenciaTriangular<PiezaTriangular>
->{
+export class FichaHexagonalFactory extends FichaFactory<FichaHexagonal>{
 
     constructor() {
         super(6);
@@ -35,22 +30,22 @@ export class FichaHexagonalFactory extends FichaFactory<
             break;
         }
         const ficha = new FichaHexagonal(color!,numberOfPiezas as 1 | 2 | 3 | 4 | 5);
-        ficha.setPiezas(this.generatePiezas(ficha));
+        ficha.piezas = this.generatePiezas(ficha);
         return ficha;
     }
 
     private generatePiezas(ficha: FichaHexagonal): PiezaTriangular[] {
         const piezas: PiezaTriangular[] = [];
 
-        if(ficha.getNumberOfPiezas() === 1){
+        if(ficha.numberOfPiezas === 1){
             piezas.push(new PiezaTriangular({
                 rotacion: 'VERTEXUP'
             }));
             return piezas;
         }
 
-        let rotacion: RotationTriangular = ficha.getNumberOfPiezas() === 2 ? 'VERTEXUP' : 'VERTEXDOWN';
-        for(let i = 1; i <= ficha.getNumberOfPiezas(); i++){
+        let rotacion: RotationTriangular = ficha.numberOfPiezas === 2 ? 'VERTEXUP' : 'VERTEXDOWN';
+        for(let i = 1; i <= ficha.numberOfPiezas; i++){
             piezas.push(new PiezaTriangular({
                 rotacion: rotacion
             }));
@@ -64,26 +59,26 @@ export class FichaHexagonalFactory extends FichaFactory<
     private setAdyacentes(piezas: PiezaTriangular[]): void {
         switch(piezas.length){
             case 2:
-                piezas[0].setAdyacentes({bottom: piezas[1]});
-                piezas[1].setAdyacentes({top: piezas[0]});
+                piezas[0].adyacentes = {bottom: piezas[1]};
+                piezas[1].adyacentes = {top: piezas[0]};
             break;
             case 3:
-                piezas[0].setAdyacentes({right: piezas[1]});
-                piezas[1].setAdyacentes({left: piezas[0], right: piezas[2]});
-                piezas[2].setAdyacentes({left: piezas[1]});
+                piezas[0].adyacentes = {right: piezas[1]};
+                piezas[1].adyacentes = {left: piezas[0], right: piezas[2]};
+                piezas[2].adyacentes = {left: piezas[1]};
             break;
             case 4:
-                piezas[0].setAdyacentes({right: piezas[1]});
-                piezas[1].setAdyacentes({left: piezas[0], bottom: piezas[2]});
-                piezas[2].setAdyacentes({top: piezas[1], left: piezas[3]});
-                piezas[3].setAdyacentes({right: piezas[2]});
+                piezas[0].adyacentes = {right: piezas[1]};
+                piezas[1].adyacentes = {left: piezas[0], bottom: piezas[2]};
+                piezas[2].adyacentes = {top: piezas[1], left: piezas[3]};
+                piezas[3].adyacentes = {right: piezas[2]};
             break;
             case 5:
-                piezas[0].setAdyacentes({right: piezas[1]});
-                piezas[1].setAdyacentes({left: piezas[0], bottom: piezas[2]});
-                piezas[2].setAdyacentes({top: piezas[1], left: piezas[3]});
-                piezas[3].setAdyacentes({right: piezas[2], left: piezas[4]});
-                piezas[4].setAdyacentes({right: piezas[3]});
+                piezas[0].adyacentes = {right: piezas[1]};
+                piezas[1].adyacentes = {left: piezas[0], bottom: piezas[2]};
+                piezas[2].adyacentes = {top: piezas[1], left: piezas[3]};
+                piezas[3].adyacentes = {right: piezas[2], left: piezas[4]};
+                piezas[4].adyacentes = {right: piezas[3]};
             break;
         }
     }

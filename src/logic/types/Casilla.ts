@@ -6,7 +6,7 @@ export type CasillaType = {
     color?: Color;
     id: number;
     rotacion: any;
-    puedeInsertar(pieza: PiezaType): boolean;
-    insertar(pieza: PiezaType): void;
+    canInsert(pieza: PiezaType): boolean;
+    insertPieza(pieza: PiezaType): void;
     estaVacia(): boolean;
 }

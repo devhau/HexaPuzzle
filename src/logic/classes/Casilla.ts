@@ -14,8 +14,8 @@ export abstract class Casilla <A,R> implements CasillaType {
         this._rotacion = rotacion;
     }
 
-    public abstract puedeInsertar(pieza: Pieza<A,R>): boolean;
-    public abstract insertar(pieza: Pieza<A,R>): void;
+    public abstract canInsert(pieza: Pieza<A,R>): boolean;
+    public abstract insertPieza(pieza: Pieza<A,R>): void;
 
     public estaVacia = (): boolean => !this._color;
 

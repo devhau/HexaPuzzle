@@ -5,7 +5,7 @@ html, body {
     padding: 0;
 }
 body {
-    transition: all ease .25s;
+  transition: all ease .25s;
 }
 
 .rotar0to180-anim{

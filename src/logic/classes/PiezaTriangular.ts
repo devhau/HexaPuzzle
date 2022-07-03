@@ -1,9 +1,9 @@
 import { Pieza } from './Pieza';
-import { RotationTriangular,AdyacenciaTriangular } from '../types';
+import { RotationTriangular,AdyacenciaTriangular, Color } from '../types';
 
 export class PiezaTriangular extends Pieza<AdyacenciaTriangular,RotationTriangular> {
 
-    constructor(piezaArgs: {rotacion: RotationTriangular,adyacentes?: AdyacenciaTriangular}) {
+    constructor(piezaArgs: {rotacion: RotationTriangular,adyacentes?: AdyacenciaTriangular, color: Color}) {
         super(piezaArgs);
     }
 

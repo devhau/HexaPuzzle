@@ -1,21 +1,17 @@
 import { useContext, useMemo } from 'react';
-import { Box, Grid } from '@mui/material';
-import { Casilla } from './Casilla';
-import { ThemeContext } from '../../context/ThemeContext';
-import TableroLight from '../../assets/tablero-light.png';
-import TableroDark from '../../assets/tablero-dark.png';
+import { Grid } from '@mui/material';
 import { GameContext } from '../../context/GameContext';
+import { TableroRow } from './TableroRow';
 
 export const Tablero = () => {
-  const {mode} = useContext(ThemeContext);
-  const {tablero,tableroFormat} = useContext(GameContext);
+  const { tablero, tableroFormat } = useContext(GameContext);
 
-  const tableroIdsArray = useMemo(() =>{
+  const tableroIdsArray = useMemo(() => {
     const array: number[][] = [];
     let cont = 1;
-    for(let i = 1; i <= Object.keys(tableroFormat).length; i++){
+    for (let i = 1; i <= Object.keys(tableroFormat).length; i++) {
       array[i] = [];
-      for(let j = 1; j <= tableroFormat[i]; j++){
+      for (let j = 1; j <= tableroFormat[i]; j++) {
         array[i].push(cont);
         cont++;
       }
@@ -26,100 +22,17 @@ export const Tablero = () => {
   return (
     <Grid container
       sx={{
-          backgroundColor: 'transparent',
-          backgroundImage: `url(${mode === 'light' ? TableroLight : TableroDark})`,
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          width: '90%',
-          height: '50%',
+        width: '90%',
+        height: '50%',
       }}
-      spacing={0}
+      direction='column'
     >
-      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {
-            tableroIdsArray[1].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
-          }
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          {
-            tableroIdsArray[2].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
-          }
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          {
-            tableroIdsArray[3].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
-          }
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          {
-            tableroIdsArray[4].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
-          }
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          {
-            tableroIdsArray[5].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
-          }
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          {
-            tableroIdsArray[6].map(id => <Casilla key={id} casilla={tablero[id-1]}/>)
-          }
-        </Box>
-      </Grid>
-
+      <TableroRow row={tableroIdsArray[1]} tablero={tablero}/>
+      <TableroRow row={tableroIdsArray[2]} tablero={tablero}/>
+      <TableroRow row={tableroIdsArray[3]} tablero={tablero}/>
+      <TableroRow row={tableroIdsArray[4]} tablero={tablero}/>
+      <TableroRow row={tableroIdsArray[5]} tablero={tablero}/>
+      <TableroRow row={tableroIdsArray[6]} tablero={tablero}/>
     </Grid>
   )
 }

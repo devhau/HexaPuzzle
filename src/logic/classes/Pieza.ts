@@ -1,11 +1,13 @@
-import { PiezaType } from '../types';
+import { Color, PiezaType } from '../types';
 
 export abstract class Pieza<A,R> implements PiezaType{
     private _adyacentes: A;
+    private _color: Color;
     private _rotacion: R;
 
-    constructor({rotacion,adyacentes}: {rotacion: R,adyacentes?: A}) {
+    constructor({rotacion,adyacentes,color}: {rotacion: R,adyacentes?: A, color: Color}) {
         this._adyacentes = adyacentes || {} as A;
+        this._color = color;
         this._rotacion = rotacion;
     }
 
@@ -24,4 +26,12 @@ export abstract class Pieza<A,R> implements PiezaType{
     get adyacentes(): A{
         return this._adyacentes;
     }
+
+    set color (color: Color) {
+        this._color = color;
+    }
+    get color(): Color{
+        return this._color;
+    }
+    
 }

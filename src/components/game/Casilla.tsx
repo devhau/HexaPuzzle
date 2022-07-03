@@ -1,5 +1,7 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useState, useEffect } from 'react';
+import { GameContext, ThemeContext } from '../../context';
 import { DragAndDropContext } from '../../context/DragAndDropContext';
+import { Colors } from '../../helpers';
 import { CasillaTriangular } from '../../logic/classes/CasillaTriangular';
 
 interface Props {
@@ -7,26 +9,40 @@ interface Props {
 }
 
 export const Casilla: FC<Props> = ({casilla}) => {
-  const {isDragging} = useContext(DragAndDropContext);
+  const {mode} = useContext(ThemeContext);
+  const {piezaSelected,fichaDragging} = useContext(DragAndDropContext);
+  const {insertFicha} = useContext(GameContext);
+  const [color, setColor] = useState('grey');
 
+  useEffect(() => {
+    if(casilla?.color) setColor(Colors[casilla?.color]);
+    else setColor(Colors[mode === 'dark' ? 'darkGrey' : 'lightGrey'])
+  }, [casilla?.color]);
+  useEffect(() => {
+    if(!casilla?.color)
+    setColor(Colors[mode === 'dark' ? 'darkGrey' : 'lightGrey']);
+  }, [mode]);
+  
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    
+    if(casilla.color) return;
+    if(piezaSelected && fichaDragging) insertFicha(fichaDragging,piezaSelected,casilla);
   }
   const allowDrop = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 
-  if (!isDragging) return <></>;
   return (
     <div
       onDrop={onDrop} 
       onDragOver={allowDrop}
       style={{
         clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-        rotate: isDragging && casilla.rotacion === 'VERTEXDOWN' ? '180deg' : '0deg',
-        width: '87.5px',
-        height: '80px',
-        backgroundColor: 'red',
-        margin: '0 -18.65px',
+        transform: casilla?.rotacion === 'VERTEXDOWN' ? 'rotate(180deg)' : 'rotate(0deg)',
+        width: '85.5px',
+        height: '75px',
+        backgroundColor: color,
+        margin: '0 -19px',
+        transition: 'background-color ease .25s'
       }}
     ></div>
   )
+  
 }

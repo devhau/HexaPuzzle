@@ -8,11 +8,28 @@ export class CasillaTriangular extends Casilla<AdyacenciaTriangular,RotationTria
         super(casillaProps);
     }
     
-    public puedeInsertar(pieza: PiezaTriangular): boolean {
-        return true;
+    public canInsert(pieza: PiezaTriangular,visitados: CasillaTriangular[] = []): boolean {
+        if(!this.estaVacia()) return false;
+        if(this.rotacion !== pieza.rotacion) return false;
+        visitados.push(this);
+        let encaja: boolean = true;
+        for(let adyacente of Object.keys(pieza.adyacentes)) {
+            if(adyacente === 'bottom' || adyacente === 'top' || adyacente === 'left' || adyacente === 'right') {
+                if(visitados.includes(this.adyacentes[adyacente])) continue;
+                encaja = this.adyacentes[adyacente].canInsert(pieza.adyacentes[adyacente],visitados);
+                if(!encaja) break;
+            }
+        }
+        return encaja;
     }
 
-    public insertar(pieza: PiezaTriangular): void {
-        
+    public insertPieza(pieza: PiezaTriangular): void {
+        this.color = pieza.color;
+        for(let adyacente of Object.keys(pieza.adyacentes)) {
+            if(adyacente === 'bottom' || adyacente === 'top' || adyacente === 'left' || adyacente === 'right') {
+                if(!this.adyacentes[adyacente].color) 
+                this.adyacentes[adyacente].insertPieza(pieza.adyacentes[adyacente]);
+            }
+        }
     }
 }

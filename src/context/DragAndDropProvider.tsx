@@ -1,15 +1,18 @@
 import { FC, useReducer } from 'react';
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { DragAndDropContext,DragAndDropReducer } from './';
+import { PiezaTriangular } from '../logic/classes/PiezaTriangular';
 
 export interface DragAndDropState {
     isDragging: boolean;
     fichaDragging: FichaHexagonal | null;
+    piezaSelected: PiezaTriangular | null;
 }
 
 const initialState: DragAndDropState = {
     isDragging: false,
-    fichaDragging: null
+    fichaDragging: null,
+    piezaSelected: null
 }
 
 interface Props {
@@ -18,10 +21,13 @@ interface Props {
 
 export const DragAndDropProvider: FC<Props> = ({children}) => {
     const [state, dispatch] = useReducer(DragAndDropReducer, initialState);
-    const startDragging = (ficha: FichaHexagonal) => {
+    const startDragging = (ficha: FichaHexagonal,pieza: PiezaTriangular) => {
         dispatch({
             type: 'startDragging',
-            payload: ficha
+            payload: {
+                ficha,
+                pieza
+            }
         });
     }
     const stopDragging = () => dispatch({type: 'stopDragging'});

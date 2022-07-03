@@ -39,7 +39,8 @@ export class FichaHexagonalFactory extends FichaFactory<FichaHexagonal>{
 
         if(ficha.numberOfPiezas === 1){
             piezas.push(new PiezaTriangular({
-                rotacion: 'VERTEXUP'
+                rotacion: 'VERTEXUP',
+                color: ficha.color
             }));
             return piezas;
         }
@@ -47,7 +48,8 @@ export class FichaHexagonalFactory extends FichaFactory<FichaHexagonal>{
         let rotacion: RotationTriangular = ficha.numberOfPiezas === 2 ? 'VERTEXUP' : 'VERTEXDOWN';
         for(let i = 1; i <= ficha.numberOfPiezas; i++){
             piezas.push(new PiezaTriangular({
-                rotacion: rotacion
+                rotacion: rotacion,
+                color: ficha.color
             }));
             rotacion = (rotacion === 'VERTEXUP') ? 'VERTEXDOWN' : 'VERTEXUP';
         }

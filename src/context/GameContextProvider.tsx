@@ -5,6 +5,7 @@ import { TableroHexagonalFactory } from '../logic/classes/TableroHexagonalFactor
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { Inventory } from '../logic/classes/Inventory';
 import { FichaHexagonalFactory } from '../logic/classes/FichaHexagonalFactory';
+import { PiezaTriangular } from '../logic/classes/PiezaTriangular';
 
 export interface GameState {
     tablero: CasillaTriangular[];
@@ -40,13 +41,14 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     const tablero = useMemo(() => tableroFactory.generate(), []);
 
     const inventory = useMemo(() => new Inventory<FichaHexagonal>(new FichaHexagonalFactory(),3),[]);
-    const generateFicha = () => {
+
+    const insertFicha = (ficha: FichaHexagonal,pieza: PiezaTriangular, casilla: CasillaTriangular) => {
+        if(!casilla.canInsert(pieza)) return;
+        casilla.insertPieza(pieza);
+        inventory.removeItem(ficha);
         inventory.addItem();
         dispatch({type: 'setFichas', payload: inventory.items});
-    }
-    const removeFicha = (ficha: FichaHexagonal) => {
-        inventory.removeItem(ficha);
-        dispatch({type: 'setFichas', payload: inventory.items});
+        dispatch({type: 'setTablero', payload: tablero});
     }
 
     const [state,dispatch] = useReducer(GameReducer, initialState);
@@ -60,8 +62,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     return (
         <GameContext.Provider value={{
             ...state,
-            generateFicha,
-            removeFicha
+            insertFicha
         }}>
             {children}
         </GameContext.Provider>

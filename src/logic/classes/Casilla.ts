@@ -1,10 +1,12 @@
-import { Color } from '../types';
+import { Color,CasillaType } from '../types';
+import { Subscription } from '../interfaces';
 import { Pieza } from './Pieza';
-import { CasillaType } from '../types/Casilla';
+import { CasillaRestriction } from './CasillaRestriction';
 
-export abstract class Casilla <A,R> implements CasillaType {
+export abstract class Casilla <A,R> implements CasillaType, Subscription {
     private _adyacentes: A;
     private _color?: Color;
+    private _restrictions: CasillaRestriction[] = [];
     private readonly _id: number;
     private readonly _rotacion: R;
 
@@ -13,11 +15,20 @@ export abstract class Casilla <A,R> implements CasillaType {
         this._id = id;
         this._rotacion = rotacion;
     }
-
+    
     public abstract canInsert(pieza: Pieza<A,R>): boolean;
     public abstract insertPieza(pieza: Pieza<A,R>): void;
-
+    
     public estaVacia = (): boolean => !this._color;
+    public vaciar = (): void => this._color = undefined;
+
+    public notify(): void {
+        this._restrictions.forEach(restriction => restriction.update());
+    }
+
+    public addRestriction(restriction: CasillaRestriction){
+        this._restrictions.push(restriction);
+    }
 
     set adyacentes(adyacentes: A){
         this._adyacentes = adyacentes;
@@ -39,5 +50,9 @@ export abstract class Casilla <A,R> implements CasillaType {
 
     get rotacion(){
         return this._rotacion;
+    }
+
+    get restrictions(){
+        return this._restrictions;
     }
 }

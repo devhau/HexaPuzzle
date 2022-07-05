@@ -15,16 +15,16 @@ export const Casilla: FC<Props> = ({casilla}) => {
   const [color, setColor] = useState('grey');
 
   useEffect(() => {
-    if(casilla?.color) setColor(Colors[casilla?.color]);
+    if(!casilla?.estaVacia()) setColor(Colors[casilla?.color!]);
     else setColor(Colors[mode === 'dark' ? 'darkGrey' : 'lightGrey'])
   }, [casilla?.color]);
   useEffect(() => {
-    if(!casilla?.color)
+    if(casilla?.estaVacia())
     setColor(Colors[mode === 'dark' ? 'darkGrey' : 'lightGrey']);
   }, [mode]);
   
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    if(casilla.color) return;
+    if(!casilla.estaVacia()) return;
     if(piezaSelected && fichaDragging) insertFicha(fichaDragging,piezaSelected,casilla);
   }
   const allowDrop = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();

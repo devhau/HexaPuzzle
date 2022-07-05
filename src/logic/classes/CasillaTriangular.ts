@@ -31,5 +31,6 @@ export class CasillaTriangular extends Casilla<AdyacenciaTriangular,RotationTria
                 this.adyacentes[adyacente].insertPieza(pieza.adyacentes[adyacente]);
             }
         }
+        this.notify();
     }
 }

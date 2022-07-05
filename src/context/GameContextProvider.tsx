@@ -6,6 +6,7 @@ import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { Inventory } from '../logic/classes/Inventory';
 import { FichaHexagonalFactory } from '../logic/classes/FichaHexagonalFactory';
 import { PiezaTriangular } from '../logic/classes/PiezaTriangular';
+import { useGame } from '../hooks';
 
 export interface GameState {
     tablero: CasillaTriangular[];
@@ -37,10 +38,8 @@ interface Props {
 
 export const GameContextProvider: FC<Props> = ({children}) => {
 
-    const tableroFactory = useMemo(() => new TableroHexagonalFactory(tableroFormat), []);
-    const tablero = useMemo(() => tableroFactory.generate(), []);
-
-    const inventory = useMemo(() => new Inventory<FichaHexagonal>(new FichaHexagonalFactory(),3),[]);
+    const [state,dispatch] = useReducer(GameReducer, initialState);
+    const {inventory,tablero} = useGame(tableroFormat);
 
     const insertFicha = (ficha: FichaHexagonal,pieza: PiezaTriangular, casilla: CasillaTriangular) => {
         if(!casilla.canInsert(pieza)) return;
@@ -51,14 +50,13 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         dispatch({type: 'setTablero', payload: tablero});
     }
 
-    const [state,dispatch] = useReducer(GameReducer, initialState);
-
     useEffect(() => {
       dispatch({type: 'setTablero', payload: tablero});
     }, [])
     useEffect(() => {
         dispatch({type: 'setFichas', payload: inventory.items});
     }, [])
+    
     return (
         <GameContext.Provider value={{
             ...state,

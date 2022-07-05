@@ -39,7 +39,7 @@ interface Props {
 export const GameContextProvider: FC<Props> = ({children}) => {
 
     const [state,dispatch] = useReducer(GameReducer, initialState);
-    const {inventory,tablero} = useGame(tableroFormat);
+    const {inventory,tablero,pointsManager} = useGame(tableroFormat);
 
     const insertFicha = (ficha: FichaHexagonal,pieza: PiezaTriangular, casilla: CasillaTriangular) => {
         if(!casilla.canInsert(pieza)) return;
@@ -49,14 +49,16 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         dispatch({type: 'setFichas', payload: inventory.items});
         dispatch({type: 'setTablero', payload: tablero});
     }
-
+    
     useEffect(() => {
       dispatch({type: 'setTablero', payload: tablero});
     }, [])
     useEffect(() => {
         dispatch({type: 'setFichas', payload: inventory.items});
     }, [])
-    
+    useEffect(() => {
+        dispatch({type: 'setPoints', payload: pointsManager.points});
+    }, [pointsManager.points])
     return (
         <GameContext.Provider value={{
             ...state,

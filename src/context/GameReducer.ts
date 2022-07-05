@@ -5,6 +5,7 @@ import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 type GameAction =
 |{ type: 'setTablero', payload: CasillaTriangular[] }
 |{ type: 'setFichas', payload: FichaHexagonal[] }
+|{ type: 'setPoints', payload: number }
 
 export const GameReducer = (state: GameState, action: GameAction) => {
     switch (action.type) {
@@ -17,6 +18,11 @@ export const GameReducer = (state: GameState, action: GameAction) => {
             return {
                 ...state,
                 fichas: action.payload
+            }
+        case 'setPoints':
+            return {
+                ...state,
+                points: action.payload
             }
         default:
             return state;

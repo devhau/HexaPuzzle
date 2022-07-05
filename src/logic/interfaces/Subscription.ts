@@ -1,7 +1,9 @@
+import { Event } from '../types';
+
 export interface Subscription {
     notify(): void;
 }
 
 export interface Subscriber {
-    update(): void;
+    update(event?: Event): void;
 }

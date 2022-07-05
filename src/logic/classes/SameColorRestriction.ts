@@ -1,6 +1,6 @@
 import { CasillaRestriction } from './CasillaRestriction';
 import { RestrictionManager } from './RestrictionManager';
-import { CasillaType } from '../types';
+import { CasillaType, Event } from '../types';
 
 export class SameColorRestriction extends CasillaRestriction {
 
@@ -10,6 +10,10 @@ export class SameColorRestriction extends CasillaRestriction {
 
     get cumple(): boolean {
         return this.isSameColor();
+    }
+
+    get eventType(): Event['type'] {
+        return 'make_hexagon';
     }
     
     private isSameColor(): boolean {

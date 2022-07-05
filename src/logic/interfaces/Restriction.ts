@@ -1,7 +1,9 @@
+import { Event } from '../types';
 import { Subscriber } from './Subscription';
 
 export interface Restriction extends Subscriber{
     cumple: boolean;
+    eventType?: Event['type'];
     triggerAction(): void;
 }
 

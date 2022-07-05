@@ -1,8 +1,7 @@
-import { FC, useContext, useEffect, useRef } from 'react';
+import { FC, useContext } from 'react';
 import { DragAndDropContext } from '../../context';
 import { useFicha } from '../../hooks';
 import { FichaHexagonal } from '../../logic/classes/FichaHexagonal';
-import { getFichaAnimation } from '../../helpers/FichaAnimations';
 import { getPiezaSelected } from '../../helpers/PiezaSelected';
 
 interface Props {
@@ -14,9 +13,12 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
   const {ficha, rotate, imagePath, refImg} = useFicha(fichaInfo);
   
   const onDragStart = (e: any) => {
-    let rect = e.target.getBoundingClientRect();
-    let x = e.clientX - rect.left; 
-    let y = e.clientY - rect.top; 
+    const rect = e.target.getBoundingClientRect();
+    const width = ficha.numberOfPiezas <= 2 ? 85.5 : 
+    ficha.numberOfPiezas === 3 || ficha.numberOfPiezas === 5 ? 171 : 128.25;
+    const height = ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? 75 : 150;
+    const x = (e.clientX/width - rect.left/width) * 100; 
+    const y = (e.clientY/height - rect.top/height) * 100; 
     startDragging(fichaInfo,getPiezaSelected(ficha,x,y));
   }
 
@@ -32,10 +34,11 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       style={{
-        width: ficha.numberOfPiezas === 1 ? '37.5%' : 
-        ficha.numberOfPiezas === 2 ? '37.5%' : 
-        ficha.numberOfPiezas === 3 ? '80%' :
-        ficha.numberOfPiezas === 4 ? '60%' : '80%',
+        width: ficha.numberOfPiezas === 1 ? '85.5px' : 
+        ficha.numberOfPiezas === 2 ? '85.5px' : 
+        ficha.numberOfPiezas === 3 ? '171px' :
+        ficha.numberOfPiezas === 4 ? '128.25px' : '171px',
+        height: ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? '75px' : '150px',
         objectFit: 'contain',
         cursor: 'pointer'
       }}

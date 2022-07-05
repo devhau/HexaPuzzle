@@ -14,15 +14,16 @@ export const Inventory = () => {
       container 
       sx={{
         width: '40%',
-        height: '10%'
+        height: '7.5%'
       }}
     >
       {
         fichaList.map((item,i) => (
           <Grid item key={i} 
-            xs={12/fichaList.length} 
-            justifyContent='center' 
+            xs={12/fichaList.length}
             display='flex'
+            alignItems='center' 
+            justifyContent='center' 
           >
             <Ficha fichaInfo={item}/>
           </Grid>

@@ -22,17 +22,17 @@ export const Tablero = () => {
   return (
     <Grid container
       sx={{
-        width: '90%',
-        height: '50%',
+        width: '100%',
+        height: '57.5%'
       }}
       direction='column'
     >
-      <TableroRow row={tableroIdsArray[1]} />
-      <TableroRow row={tableroIdsArray[2]} />
-      <TableroRow row={tableroIdsArray[3]} />
-      <TableroRow row={tableroIdsArray[4]} />
-      <TableroRow row={tableroIdsArray[5]} />
-      <TableroRow row={tableroIdsArray[6]} />
+      <TableroRow row={tableroIdsArray[1]}/>
+      <TableroRow row={tableroIdsArray[2]}/>
+      <TableroRow row={tableroIdsArray[3]}/>
+      <TableroRow row={tableroIdsArray[4]}/>
+      <TableroRow row={tableroIdsArray[5]}/>
+      <TableroRow row={tableroIdsArray[6]}/>
     </Grid>
   )
 }

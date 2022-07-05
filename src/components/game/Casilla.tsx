@@ -39,7 +39,7 @@ export const Casilla: FC<Props> = ({casilla}) => {
         width: '85.5px',
         height: '75px',
         backgroundColor: color,
-        margin: '0 -19px',
+        margin: '0 -20px',
         transition: 'background-color ease .25s'
       }}
     ></div>

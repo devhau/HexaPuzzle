@@ -47,7 +47,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         inventory.removeItem(ficha);
         inventory.addItem();
         dispatch({type: 'setFichas', payload: inventory.items});
-        dispatch({type: 'setTablero', payload: tablero});
+        setTimeout(() => dispatch({type: 'setTablero', payload: tablero}),200);
     }
     
     useEffect(() => {

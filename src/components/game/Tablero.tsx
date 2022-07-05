@@ -4,7 +4,7 @@ import { GameContext } from '../../context/GameContext';
 import { TableroRow } from './TableroRow';
 
 export const Tablero = () => {
-  const { tablero, tableroFormat } = useContext(GameContext);
+  const { tableroFormat } = useContext(GameContext);
 
   const tableroIdsArray = useMemo(() => {
     const array: number[][] = [];
@@ -27,12 +27,12 @@ export const Tablero = () => {
       }}
       direction='column'
     >
-      <TableroRow row={tableroIdsArray[1]} tablero={tablero}/>
-      <TableroRow row={tableroIdsArray[2]} tablero={tablero}/>
-      <TableroRow row={tableroIdsArray[3]} tablero={tablero}/>
-      <TableroRow row={tableroIdsArray[4]} tablero={tablero}/>
-      <TableroRow row={tableroIdsArray[5]} tablero={tablero}/>
-      <TableroRow row={tableroIdsArray[6]} tablero={tablero}/>
+      <TableroRow row={tableroIdsArray[1]} />
+      <TableroRow row={tableroIdsArray[2]} />
+      <TableroRow row={tableroIdsArray[3]} />
+      <TableroRow row={tableroIdsArray[4]} />
+      <TableroRow row={tableroIdsArray[5]} />
+      <TableroRow row={tableroIdsArray[6]} />
     </Grid>
   )
 }

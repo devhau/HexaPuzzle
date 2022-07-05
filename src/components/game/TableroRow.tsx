@@ -1,14 +1,14 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react';
 import { Grid } from '@mui/material';
-import { CasillaTriangular } from '../../logic/classes/CasillaTriangular';
 import { Casilla } from './Casilla';
+import { GameContext } from '../../context';
 
 interface Props {
-    row: number[];
-    tablero: CasillaTriangular[];
+  row: number[];
 }
 
-export const TableroRow: FC<Props> = ({row, tablero}) => {
+export const TableroRow: FC<Props> = ({row}) => {
+  const {tablero} = useContext(GameContext);
   return (
     <Grid item display='flex' justifyContent='center' alignItems='center' height='75px' margin='2.5px 0'>
         {

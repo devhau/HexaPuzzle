@@ -1,14 +1,13 @@
 import { Color,CasillaType } from '../types';
-import { Subscription } from '../interfaces';
+import { PointsManagerType, Subscription } from '../interfaces';
 import { Pieza } from './Pieza';
 import { CasillaRestriction } from './CasillaRestriction';
-import { PointsManager } from './PointsManager';
 
 export abstract class Casilla <A,R> implements CasillaType, Subscription {
     private _adyacentes: A;
     private _color?: Color;
     private _restrictions: CasillaRestriction[] = [];
-    private _pointsManager?: PointsManager;
+    private _pointsManager?: PointsManagerType;
     private readonly _id: number;
     private readonly _rotacion: R;
 
@@ -33,7 +32,7 @@ export abstract class Casilla <A,R> implements CasillaType, Subscription {
         this._restrictions.push(restriction);
     }
 
-    set pointsManager(pointsManager: PointsManager){
+    set pointsManager(pointsManager: PointsManagerType){
         this._pointsManager = pointsManager;
     }
 

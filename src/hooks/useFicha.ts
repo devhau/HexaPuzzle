@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { getFichaPath } from '../helpers/FichaPaths';
 import { getFichaAnimation } from '../helpers';

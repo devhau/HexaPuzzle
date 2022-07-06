@@ -1,7 +1,7 @@
-import { Subscriber } from '../interfaces/Subscription';
+import { Comodin, PointsManagerType } from '../interfaces';
 import { Event } from '../types';
 
-export class PointsManager implements Subscriber{
+export class PointsManager implements PointsManagerType{
     private _points: number = 0;
 
     constructor(
@@ -20,7 +20,15 @@ export class PointsManager implements Subscriber{
                 ? this._pointsPerHexagon * event.payload * this._bonusRate : 0;
                 this._points += this._pointsPerHexagon * event.payload + bonus;
             break;
+            case 'use_comodin':
+                if(this.canUse(event.payload))
+                this._points -= event.payload.costo;
+            break;
         }
+    }
+
+    public canUse(comodin: Comodin): boolean {
+        return this._points >= comodin.costo;
     }
 
     get points(): number {

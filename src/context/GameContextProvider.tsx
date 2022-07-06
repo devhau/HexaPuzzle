@@ -1,18 +1,18 @@
-import { FC, useEffect, useReducer, useMemo } from 'react';
+import { FC, useEffect, useReducer } from 'react';
 import { GameContext,GameReducer } from './';
 import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
-import { TableroHexagonalFactory } from '../logic/classes/TableroHexagonalFactory';
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
-import { Inventory } from '../logic/classes/Inventory';
-import { FichaHexagonalFactory } from '../logic/classes/FichaHexagonalFactory';
 import { PiezaTriangular } from '../logic/classes/PiezaTriangular';
 import { useGame } from '../hooks';
+import { Comodin } from '../logic/interfaces';
 
 export interface GameState {
     tablero: CasillaTriangular[];
     points: number;
     tableroFormat: {[key: number]: number};
     fichas: FichaHexagonal[];
+    isUsingHammer: boolean;
+    isUsingDelete: boolean;
 }
 
 const tableroFormat = {
@@ -28,18 +28,20 @@ const initialState: GameState = {
     tablero: [],
     points: 0,
     tableroFormat,
-    fichas: []
+    fichas: [],
+    isUsingHammer: false,
+    isUsingDelete: false
 }
 
 interface Props {
     children: JSX.Element | JSX.Element[];
 }
 
-
 export const GameContextProvider: FC<Props> = ({children}) => {
 
     const [state,dispatch] = useReducer(GameReducer, initialState);
-    const {inventory,tablero,pointsManager} = useGame(tableroFormat);
+    const {inventory,tablero,pointsManager,comodines} = useGame(tableroFormat);
+    const {hammerComodin, deleteComodin} = comodines;
 
     const insertFicha = (ficha: FichaHexagonal,pieza: PiezaTriangular, casilla: CasillaTriangular) => {
         if(!casilla.canInsert(pieza)) return;
@@ -48,6 +50,31 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         inventory.addItem();
         dispatch({type: 'setFichas', payload: inventory.items});
         setTimeout(() => dispatch({type: 'setTablero', payload: tablero}),200);
+    }
+    const useHammerComodin = (casilla: CasillaTriangular) => {
+        if(!pointsManager.canUse(hammerComodin)) return;
+        hammerComodin.use(casilla);
+        pointsManager.update({type: 'use_comodin', payload: hammerComodin});
+        dispatch({type: 'toggleHammer'});
+        dispatch({type: 'setTablero', payload: tablero});
+    }
+    const useDeleteComodin = (ficha: FichaHexagonal) => {
+        if(!pointsManager.canUse(deleteComodin)) return;
+        deleteComodin.use(ficha);
+        pointsManager.update({type: 'use_comodin', payload: deleteComodin});
+        dispatch({type: 'toggleDelete'});
+        dispatch({type: 'setFichas', payload: inventory.items});
+    }
+    const toggleHammer = () => {
+        if(!pointsManager.canUse(hammerComodin)) return;
+        dispatch({type: 'toggleHammer'});
+    }
+    const toggleDelete = () => {
+        if(!pointsManager.canUse(deleteComodin)) return;
+        dispatch({type: 'toggleDelete'});
+    }
+    const canUseComodin = (comodin: Comodin) => {
+        return pointsManager.canUse(comodin);
     }
     
     useEffect(() => {
@@ -59,10 +86,17 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     useEffect(() => {
         dispatch({type: 'setPoints', payload: pointsManager.points});
     }, [pointsManager.points])
+
     return (
         <GameContext.Provider value={{
             ...state,
-            insertFicha
+            insertFicha,
+            useHammerComodin,
+            useDeleteComodin,
+            toggleHammer,
+            toggleDelete,
+            canUseComodin,
+            comodins: {hammerComodin, deleteComodin}
         }}>
             {children}
         </GameContext.Provider>

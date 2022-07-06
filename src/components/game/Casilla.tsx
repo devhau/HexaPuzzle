@@ -1,4 +1,5 @@
 import { FC, useContext, useState, useEffect } from 'react';
+import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import { GameContext, ThemeContext } from '../../context';
 import { DragAndDropContext } from '../../context/DragAndDropContext';
 import { Colors } from '../../helpers';
@@ -11,7 +12,7 @@ interface Props {
 export const Casilla: FC<Props> = ({casilla}) => {
   const {mode} = useContext(ThemeContext);
   const {piezaSelected,fichaDragging} = useContext(DragAndDropContext);
-  const {insertFicha} = useContext(GameContext);
+  const {insertFicha,isUsingHammer,useHammerComodin} = useContext(GameContext);
   const [color, setColor] = useState('grey');
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const Casilla: FC<Props> = ({casilla}) => {
 
   return (
     <div
+      onClick={() => isUsingHammer && !casilla?.estaVacia() && useHammerComodin(casilla)}
       onDrop={onDrop} 
       onDragOver={allowDrop}
       style={{
@@ -40,9 +42,24 @@ export const Casilla: FC<Props> = ({casilla}) => {
         height: '75px',
         backgroundColor: color,
         margin: '0 -20px',
-        transition: 'background-color ease .25s'
+        transition: 'background-color ease .25s',
+        cursor: isUsingHammer && !casilla?.estaVacia() ? 'pointer' : 'default'
       }}
-    ></div>
+    >
+      {
+        isUsingHammer && !casilla?.estaVacia() && 
+        <HighlightOffTwoToneIcon
+          fontSize='large'
+          color='error'
+          style={{
+            position: 'absolute',
+            top: '20px',
+            left: '25px',
+            zIndex: 1000
+          }}
+        />
+      }
+    </div>
   )
   
 }

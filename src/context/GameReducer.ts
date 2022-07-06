@@ -1,11 +1,13 @@
-import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
 import { GameState } from './';
+import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 
 type GameAction =
 |{ type: 'setTablero', payload: CasillaTriangular[] }
 |{ type: 'setFichas', payload: FichaHexagonal[] }
 |{ type: 'setPoints', payload: number }
+|{ type: 'toggleHammer' }
+|{ type: 'toggleDelete' }
 
 export const GameReducer = (state: GameState, action: GameAction) => {
     switch (action.type) {
@@ -23,6 +25,16 @@ export const GameReducer = (state: GameState, action: GameAction) => {
             return {
                 ...state,
                 points: action.payload
+            } 
+        case 'toggleHammer':
+            return {
+                ...state,
+                isUsingHammer: !state.isUsingHammer
+            }
+        case 'toggleDelete':
+            return {
+                ...state,
+                isUsingDelete: !state.isUsingDelete
             }
         default:
             return state;

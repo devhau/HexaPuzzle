@@ -9,6 +9,9 @@ import { Hexagons } from '../helpers';
 import { RestrictionManager } from '../logic/classes/RestrictionManager';
 import { CasillaRestriction } from '../logic/classes/CasillaRestriction';
 import { PointsManager } from '../logic/classes/PointsManager';
+import { Comodin } from '../logic/interfaces';
+import { HammerComodin } from '../logic/classes/HammerComodin';
+import { DeleteComodin } from '../logic/classes/DeleteComodin';
 
 export const useGame = (tableroFormat: {[key: number]: number}) => {
     const inventory = useMemo(() => new Inventory<FichaHexagonal>(new FichaHexagonalFactory(),3),[]);
@@ -22,7 +25,8 @@ export const useGame = (tableroFormat: {[key: number]: number}) => {
     return {
         tablero,
         inventory,
-        pointsManager
+        pointsManager,
+        comodines: getComodines(inventory)
     }
 }
 
@@ -36,4 +40,13 @@ const setGameActors = (tablero: CasillaTriangular[], pointsManager: PointsManage
         restrictionManager.addRestriction(restriction);
         hexagonCasillas.forEach(casilla => casilla.addRestriction(restriction));
     })
+}
+
+const getComodines = (inventory: Inventory<FichaHexagonal>) => {
+    const hammerComodin = useMemo(() => new HammerComodin(108),[]);
+    const deleteComodin = useMemo(() => new DeleteComodin<FichaHexagonal>(inventory,216),[]);
+    return {
+        hammerComodin,
+        deleteComodin
+    }
 }

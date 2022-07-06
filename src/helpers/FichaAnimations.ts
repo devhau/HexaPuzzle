@@ -4,9 +4,8 @@ export const getFichaAnimation = (ficha: FichaHexagonal, img: HTMLImageElement |
     let transform: string = '';
     let animation: string = '';
     let remove: string = '';
-    let miliseconds: number = 0;
+    let miliseconds: number = 350;
     if (ficha.numberOfPiezas === 1){
-        miliseconds = 500;
         if(ficha.piezas[0].rotacion === 'VERTEXDOWN'){
           remove = 'rotar0to180';
           transform = 'rotar180to360';
@@ -17,7 +16,6 @@ export const getFichaAnimation = (ficha: FichaHexagonal, img: HTMLImageElement |
           animation = 'rotar0to180-anim';
         }
     }else {
-        miliseconds = 350;
         if(ficha.rotationStage === 1){
             remove = 'rotar300to360';
             transform = 'rotar0to60';

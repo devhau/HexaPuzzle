@@ -1,5 +1,6 @@
 import { FC, useContext } from 'react';
-import { DragAndDropContext } from '../../context';
+import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
+import { DragAndDropContext, GameContext } from '../../context';
 import { useFicha } from '../../hooks';
 import { FichaHexagonal } from '../../logic/classes/FichaHexagonal';
 import { getPiezaSelected } from '../../helpers/PiezaSelected';
@@ -10,6 +11,7 @@ interface Props {
 
 export const Ficha: FC<Props> = ({fichaInfo}) => {
   const {startDragging,stopDragging} = useContext(DragAndDropContext);
+  const {isUsingHammer,isUsingDelete,useDeleteComodin} = useContext(GameContext);
   const {ficha, rotate, imagePath, refImg} = useFicha(fichaInfo);
   
   const onDragStart = (e: any) => {
@@ -25,23 +27,38 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
   const onDragEnd = (e: React.DragEvent<HTMLImageElement>) => stopDragging();
 
   return (
-    <img
-      ref={refImg}
-      alt="Ficha"
-      src={`../../${imagePath}`}
-      draggable
-      onClick={rotate}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      style={{
-        width: ficha.numberOfPiezas === 1 ? '85.5px' : 
-        ficha.numberOfPiezas === 2 ? '85.5px' : 
-        ficha.numberOfPiezas === 3 ? '171px' :
-        ficha.numberOfPiezas === 4 ? '128.25px' : '171px',
-        height: ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? '75px' : '150px',
-        objectFit: 'contain',
-        cursor: 'pointer'
-      }}
-    />
+    <>
+      <img
+        ref={refImg}
+        alt="Ficha"
+        src={`../../${imagePath}`}
+        draggable={!isUsingHammer && !isUsingDelete}
+        onClick={() => isUsingDelete ? useDeleteComodin(fichaInfo) : rotate()}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        style={{
+          width: ficha.numberOfPiezas === 1 ? '85.5px' : 
+          ficha.numberOfPiezas === 2 ? '85.5px' : 
+          ficha.numberOfPiezas === 3 ? '171px' :
+          ficha.numberOfPiezas === 4 ? '128.25px' : '171px',
+          height: ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? '75px' : '150px',
+          objectFit: 'contain',
+          cursor: 'pointer'
+        }}
+      />
+      {
+        isUsingDelete && 
+        <HighlightOffTwoToneIcon
+          onClick={() => useDeleteComodin(fichaInfo)}
+          fontSize='large'
+          color='error'
+          style={{
+            cursor: 'pointer',
+            position: 'absolute',
+            zIndex: 1000
+          }}
+        />
+      }
+    </>
   )
 }

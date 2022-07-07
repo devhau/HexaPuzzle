@@ -9,6 +9,7 @@ import { Tablero } from '../components/game/Tablero'
 import { Comodin } from '../components/game/Comodin';
 
 export const GameScreen = () => {
+  console.log(window.innerHeight);
   const navigate = useNavigate()
   const {isDragging} = useContext(DragAndDropContext);
   const {
@@ -34,15 +35,17 @@ export const GameScreen = () => {
       }}
       flexDirection="column"
       width="100vw"
-      height="100vh"
-      justifyContent="center"
-      alignItems="center"
+      minHeight='850px'
+      height='100vh'
+      justifyContent='center'
+      alignItems='center'
+      gap={window.innerHeight >= 900 ? 0 : 5}
     >
       <Tablero/>
       <Inventory/>
       <Box
         display='flex'
-        position='absolute'
+        position='fixed'
         bottom='50px'
         left='50px'
         gap={2}

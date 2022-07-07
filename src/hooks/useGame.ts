@@ -12,6 +12,7 @@ import { PointsManager } from '../logic/classes/PointsManager';
 import { Comodin } from '../logic/interfaces';
 import { HammerComodin } from '../logic/classes/HammerComodin';
 import { DeleteComodin } from '../logic/classes/DeleteComodin';
+import { OutOfMovesRestriction } from '../logic/classes/OutOfMovesRestriction';
 
 export const useGame = (tableroFormat: {[key: number]: number}) => {
     const inventory = useMemo(() => new Inventory<FichaHexagonal>(new FichaHexagonalFactory(),3),[]);
@@ -22,11 +23,13 @@ export const useGame = (tableroFormat: {[key: number]: number}) => {
         setGameActors(tablero, pointsManager);
         return tablero;
     }, []);
+    const outOfMovesRestriction = useMemo(() => new OutOfMovesRestriction(inventory,tablero), []);
     return {
         tablero,
         inventory,
         pointsManager,
-        comodines: getComodines(inventory)
+        comodines: getComodines(inventory),
+        outOfMovesRestriction
     }
 }
 

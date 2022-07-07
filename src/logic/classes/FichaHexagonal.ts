@@ -11,11 +11,15 @@ export class FichaHexagonal extends Ficha<PiezaTriangular> {
  
     get numberOfPiezas(){
         return this._numberOfPiezas;
-    }
+    };
 
     get rotationStage() {
         return this._rotationStage;
     };
+
+    get possibleRotations(): number {
+        return this.numberOfPiezas === 1 ? 2 : 6;
+    }
 
     public rotar(): void {
         if(this.numberOfPiezas === 1){

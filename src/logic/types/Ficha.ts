@@ -3,7 +3,8 @@ import { Color,PiezaType } from './';
 export type FichaType = {
     color: Color;
     piezas: PiezaType[];
-    rotar(): void;
+    rotar?(): void;
     numberOfPiezas?: number;
     rotationStage?: any;
+    possibleRotations?: number;
 }

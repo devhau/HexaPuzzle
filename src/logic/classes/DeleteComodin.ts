@@ -16,10 +16,6 @@ export class DeleteComodin<T> implements Comodin{
         return this._costo;
     }
 
-    get name(): string {
-        return 'Delete';
-    }
-
     set pointsManager(pointsManager: PointsManagerType){
         this._pointsManager = pointsManager;
     }

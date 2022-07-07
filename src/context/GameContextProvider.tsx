@@ -1,4 +1,5 @@
 import { FC, useEffect, useReducer } from 'react';
+import Cookies from 'js-cookie';
 import { GameContext,GameReducer } from './';
 import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
@@ -13,6 +14,7 @@ export interface GameState {
     fichas: FichaHexagonal[];
     isUsingHammer: boolean;
     isUsingDelete: boolean;
+    gameOver: boolean;
 }
 
 const tableroFormat = {
@@ -30,7 +32,8 @@ const initialState: GameState = {
     tableroFormat,
     fichas: [],
     isUsingHammer: false,
-    isUsingDelete: false
+    isUsingDelete: false,
+    gameOver: false
 }
 
 interface Props {
@@ -40,8 +43,18 @@ interface Props {
 export const GameContextProvider: FC<Props> = ({children}) => {
 
     const [state,dispatch] = useReducer(GameReducer, initialState);
-    const {inventory,tablero,pointsManager,comodines} = useGame(tableroFormat);
+    const {inventory,tablero,pointsManager,comodines,outOfMovesRestriction} = useGame(tableroFormat);
     const {hammerComodin, deleteComodin} = comodines;
+
+    const checkGameOver = () => {
+        if(!outOfMovesRestriction.cumple) return;
+        Cookies.set('lastPoints', pointsManager.points.toString());
+        if(!Cookies.get('highestPoints')) Cookies.set('highestPoints', pointsManager.points.toString());      
+        else if(Number(Cookies.get('highestPoints')) < pointsManager.points){
+            Cookies.set('highestPoints', pointsManager.points.toString());
+        }
+        dispatch({type: 'gameOver'});
+    }
 
     const insertFicha = (ficha: FichaHexagonal,pieza: PiezaTriangular, casilla: CasillaTriangular) => {
         if(!casilla.canInsert(pieza)) return;
@@ -50,6 +63,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         inventory.addItem();
         dispatch({type: 'setFichas', payload: inventory.items});
         setTimeout(() => dispatch({type: 'setTablero', payload: tablero}),200);
+        checkGameOver();
     }
     const useHammerComodin = (casilla: CasillaTriangular) => {
         if(!pointsManager.canUse(hammerComodin)) return;
@@ -73,9 +87,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         if(!pointsManager.canUse(deleteComodin)) return;
         dispatch({type: 'toggleDelete'});
     }
-    const canUseComodin = (comodin: Comodin) => {
-        return pointsManager.canUse(comodin);
-    }
+    const canUseComodin = (comodin: Comodin) => pointsManager.canUse(comodin);
     
     useEffect(() => {
       dispatch({type: 'setTablero', payload: tablero});

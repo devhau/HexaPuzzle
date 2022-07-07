@@ -22,9 +22,9 @@ export class RestrictionManager<R extends Restriction> implements Manager<R> {
             });
             for (const event in events) {
                 this._pointsManager.update({
-                    type: event as Event['type'],
+                    type: event,
                     payload: events[event]
-                })
+                } as Event);
             }
         }
     }

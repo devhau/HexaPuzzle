@@ -16,6 +16,7 @@ export class CasillaTriangular extends Casilla<AdyacenciaTriangular,RotationTria
         for(let adyacente of Object.keys(pieza.adyacentes)) {
             if(adyacente === 'bottom' || adyacente === 'top' || adyacente === 'left' || adyacente === 'right') {
                 if(visitados.includes(this.adyacentes[adyacente])) continue;
+                if(!this.adyacentes[adyacente]){encaja = false; break;}
                 encaja = this.adyacentes[adyacente].canInsert(pieza.adyacentes[adyacente],visitados);
                 if(!encaja) break;
             }

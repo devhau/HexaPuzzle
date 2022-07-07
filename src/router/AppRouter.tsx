@@ -1,4 +1,5 @@
-import { GameScreen, MenuScreen } from '../screens';
+import { GameScreen, MenuScreen, GameOverScreen } from '../screens';
+
 import {
     BrowserRouter,
     Routes,
@@ -12,6 +13,7 @@ export const AppRouter = () => {
         <Routes>
             <Route path="/" element={<MenuScreen />} />
             <Route path="/game" element={<GameScreen/>} />
+            <Route path="/game-over" element={<GameOverScreen/>} />
             <Route path="*" element={<Navigate to={'/'} />} />
         </Routes>
     </BrowserRouter>

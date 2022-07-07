@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import GavelRoundedIcon from '@mui/icons-material/GavelRounded';
@@ -8,9 +9,23 @@ import { Tablero } from '../components/game/Tablero'
 import { Comodin } from '../components/game/Comodin';
 
 export const GameScreen = () => {
+  const navigate = useNavigate()
   const {isDragging} = useContext(DragAndDropContext);
-  const {toggleHammer,toggleDelete,isUsingHammer,isUsingDelete,canUseComodin,comodins} = useContext(GameContext);
+  const {
+    toggleHammer,
+    toggleDelete,
+    isUsingHammer,
+    isUsingDelete,
+    canUseComodin,
+    comodins,
+    gameOver
+  } = useContext(GameContext);
   const {hammerComodin,deleteComodin} = comodins;
+
+  useEffect(() => {
+    if(gameOver) navigate('/game-over');
+  },[gameOver]);
+
   return (
     <Box
       display={{

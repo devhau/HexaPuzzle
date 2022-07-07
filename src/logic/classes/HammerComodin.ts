@@ -14,11 +14,7 @@ export class HammerComodin implements Comodin {
     get costo(): number {
         return this._costo;
     }
-
-    get name(): string {
-        return 'Hammer';
-    }
-
+    
     set pointsManager(pointsManager: PointsManagerType){
         this._pointsManager = pointsManager;
     }

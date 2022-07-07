@@ -8,6 +8,7 @@ type GameAction =
 |{ type: 'setPoints', payload: number }
 |{ type: 'toggleHammer' }
 |{ type: 'toggleDelete' }
+|{ type: 'gameOver' }
 
 export const GameReducer = (state: GameState, action: GameAction) => {
     switch (action.type) {
@@ -35,6 +36,11 @@ export const GameReducer = (state: GameState, action: GameAction) => {
             return {
                 ...state,
                 isUsingDelete: !state.isUsingDelete
+            }
+        case 'gameOver':
+            return {
+                ...state,
+                gameOver: true
             }
         default:
             return state;

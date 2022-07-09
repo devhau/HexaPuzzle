@@ -9,12 +9,13 @@ export const Navbar = () => {
     return (
         <AppBar
             style={{
-                paddingTop: '10px',
+                paddingBottom: '10px'
             }}
         >
             <Toolbar>
                 <Box
                     display="flex"
+                    alignItems="center"
                     width="100vw" 
                 >
                     <Typography variant="h6" sx={{
@@ -30,13 +31,19 @@ export const Navbar = () => {
                         }}/> 
                         {points}
                     </Typography>
-                    <Box flex={{xs: 1.2, md: 0.67}} />
-                    <Typography variant="h1" sx={{
-                        fontSize: {
-                            md: '36px',
-                        }
-                    }}>HexaPuzzle</Typography>
-                    <Box flex={{xs: 1, md: 0.62}} />
+                    <Box flex={{xs: 1.2, md: 0.7}} />
+                    <Typography 
+                        variant="h1" 
+                        className='animatedText'
+                        sx={{
+                            fontSize: {
+                                md: '36px',
+                            }
+                        }}
+                    >
+                        HexaPuzzle
+                    </Typography>
+                    <Box flex={{xs: 1, md: 0.6}} />
                     <ThemeSwitcher/>
                 </Box>
             </Toolbar>

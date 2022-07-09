@@ -8,6 +8,45 @@ body {
   transition: all ease .25s;
 }
 
+.fadeIn {
+  -webkit-animation-duration: 0.25s;
+  animation-duration: 0.25s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+} 
+
+@-webkit-keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.animatedText{
+  animation: animatedText 7.5s ease-in-out infinite;
+  -webkit-animation: animatedText 7.5s ease-in-out infinite;
+}
+@keyframes animatedText {
+  0% {color: #38b6ff}
+  20% {color: #0be4e4}
+  40% {color: #ff8200}
+  60% {color: #ff5757}
+  80% {color: #cb6ce6}
+  100% {color: #38b6ff}
+} 
+@-webkit-keyframes animatedText {
+  0% {color: #38b6ff}
+  20% {color: #0be4e4}
+  40% {color: #ff8200}
+  60% {color: #ff5757}
+  80% {color: #cb6ce6}
+  100% {color: #38b6ff}
+}
+
 .rotar0to180-anim{
     animation: rotate0to180 .5s;
    -webkit-animation: rotate0to180 .5s;

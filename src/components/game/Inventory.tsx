@@ -25,7 +25,7 @@ export const Inventory = () => {
             alignItems='center' 
             justifyContent='center' 
           >
-            <Ficha fichaInfo={item}/>
+            <Ficha fichaInfo={item} key={i}/>
           </Grid>
         ))
       }

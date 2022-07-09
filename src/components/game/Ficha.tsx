@@ -43,12 +43,14 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
           ficha.numberOfPiezas === 4 ? '128.25px' : '171px',
           height: ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? '75px' : '150px',
           objectFit: 'contain',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          zIndex: 1000
         }}
       />
       {
         isUsingDelete && 
         <HighlightOffTwoToneIcon
+          className='fadeIn'      
           onClick={() => useDeleteComodin(fichaInfo)}
           fontSize='large'
           color='error'

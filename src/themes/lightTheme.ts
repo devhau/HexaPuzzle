@@ -21,16 +21,6 @@ export const lightTheme = createTheme({
     }
   },
   components: {
-    MuiLink: {
-      defaultProps: {
-        underline: 'none'
-      },
-      styleOverrides: {
-        root: {
-          cursor: 'pointer'
-        }
-      }
-    },
     MuiAppBar: {
       defaultProps: {
         elevation: 0,
@@ -99,18 +89,6 @@ export const lightTheme = createTheme({
             backgroundColor: '#274494',
             color: 'rgba(250,250,250,0.95)'
           }
-        }
-      }
-    },
-  
-    MuiCard: {
-      defaultProps: {
-        elevation: 0
-      },
-      styleOverrides: {
-        root: {
-          backgroundColor: 'transparent',
-          cursor: 'pointer',
         }
       }
     }

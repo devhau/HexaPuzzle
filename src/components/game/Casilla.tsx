@@ -32,6 +32,7 @@ export const Casilla: FC<Props> = ({casilla}) => {
 
   return (
     <div
+      className='fadeIn'
       onClick={() => isUsingHammer && !casilla?.estaVacia() && useHammerComodin(casilla)}
       onDrop={onDrop} 
       onDragOver={allowDrop}
@@ -49,6 +50,7 @@ export const Casilla: FC<Props> = ({casilla}) => {
       {
         isUsingHammer && !casilla?.estaVacia() && 
         <HighlightOffTwoToneIcon
+          className='fadeIn'
           fontSize='large'
           color='error'
           style={{

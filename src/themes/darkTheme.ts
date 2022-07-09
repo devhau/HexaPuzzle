@@ -24,17 +24,6 @@ export const darkTheme = createTheme({
     }
   },
   components: {
-    MuiLink: {
-      defaultProps: {
-        underline: 'none',
-        color: 'inherit',
-      },
-      styleOverrides: {
-        root: {
-          cursor: 'pointer'
-        }
-      }
-    },
     MuiAppBar: {
       defaultProps: {
         elevation: 0,
@@ -87,7 +76,7 @@ export const darkTheme = createTheme({
             backgroundColor: 'rgba(90,90,90,0.5)',
             color: '#EEEEEE',
             transition: 'all 0.3s ease-in-out'
-          },
+          }
         },
         containedSecondary: {
           borderRadius: '30px',
@@ -99,18 +88,6 @@ export const darkTheme = createTheme({
           ":hover": {
             color: '#F21361'
           }
-        }
-      }
-    },
-  
-    MuiCard: {
-      defaultProps: {
-        elevation: 0
-      },
-      styleOverrides: {
-        root: {
-          backgroundColor: 'transparent',
-          cursor: 'pointer'
         }
       }
     }

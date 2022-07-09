@@ -16,9 +16,6 @@ export const useFicha = (fichaInfo: FichaHexagonal) => {
 
     useEffect(() => {
         if(refImg.current) refImg.current.className = '';
-    }, [fichaInfo])
-
-    useEffect(() => {
         setFicha(fichaInfo);
         setImagePath(getFichaPath(fichaInfo));
     }, [fichaInfo])

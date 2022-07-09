@@ -1,10 +1,17 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
+import Particles from 'react-tsparticles';
+import { loadFull } from "tsparticles";
 
 export const MenuScreen = () => {
   const navigate = useNavigate();
   return (
     <>
+      <Particles
+        id="tsparticles"
+        url='./src/helpers/particles.json'
+        init={loadFull}
+      />
       <Box
         display={{
           xs: 'none',
@@ -20,13 +27,15 @@ export const MenuScreen = () => {
         <Button
           size='large'
           onClick={() => navigate('/game')}
+          variant="contained"
+          color="secondary"
+          style={{
+            fontSize: '2rem',
+            fontWeight: 800,
+            padding: '0.5rem 2rem'
+          }}
         >
-          Jugar
-        </Button>
-        <Button
-          size='large'
-        >
-          Otra opcion
+          Start Game
         </Button>
       </Box>
       <Box

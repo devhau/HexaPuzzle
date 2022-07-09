@@ -1,4 +1,4 @@
-{
+export default JSON.parse(JSON.stringify({
     "background": {
         "color": {
             "value": "transparent"
@@ -238,4 +238,4 @@
             }
         }
     }
-}
+}))

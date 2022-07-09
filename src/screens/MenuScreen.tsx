@@ -2,6 +2,7 @@ import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
 import Particles from 'react-tsparticles';
 import { loadFull } from "tsparticles";
+import ParticlesConfig from '../helpers/Particles';
 
 export const MenuScreen = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ export const MenuScreen = () => {
     <>
       <Particles
         id="tsparticles"
-        url='./src/helpers/particles.json'
+        options={ParticlesConfig}
         init={loadFull}
       />
       <Box

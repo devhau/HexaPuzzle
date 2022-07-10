@@ -32,7 +32,7 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
         ref={refImg}
         alt="Ficha"
         src={`../../${imagePath}`}
-        draggable={!isUsingHammer && !isUsingDelete}
+        draggable={!isUsingHammer && !isUsingDelete && !ficha.blocked}
         onClick={() => isUsingDelete ? useDeleteComodin(fichaInfo) : rotate()}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}

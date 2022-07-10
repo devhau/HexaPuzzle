@@ -7,9 +7,7 @@ import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
 import { SameColorRestriction } from '../logic/classes/SameColorRestriction';
 import { Hexagons } from '../helpers';
 import { RestrictionManager } from '../logic/classes/RestrictionManager';
-import { CasillaRestriction } from '../logic/classes/CasillaRestriction';
 import { PointsManager } from '../logic/classes/PointsManager';
-import { Comodin } from '../logic/interfaces';
 import { HammerComodin } from '../logic/classes/HammerComodin';
 import { DeleteComodin } from '../logic/classes/DeleteComodin';
 import { OutOfMovesRestriction } from '../logic/classes/OutOfMovesRestriction';
@@ -35,7 +33,7 @@ export const useGame = (tableroFormat: {[key: number]: number}) => {
 
 const setGameActors = (tablero: CasillaTriangular[], pointsManager: PointsManager) => {
     tablero.forEach(casilla => casilla.pointsManager = pointsManager);
-    const restrictionManager = new RestrictionManager<CasillaRestriction>();
+    const restrictionManager = new RestrictionManager();
     restrictionManager.pointsManager = pointsManager;
     Hexagons.forEach(hexagon => {
         const hexagonCasillas = hexagon.map(index => tablero[index-1]);

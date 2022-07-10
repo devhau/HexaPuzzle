@@ -23,7 +23,8 @@ export const GameScreen = () => {
   const {hammerComodin,deleteComodin} = comodins;
 
   useEffect(() => {
-    if(gameOver) navigate('/game-over');
+    if(gameOver) alert ('Game Over');
+    //navigate('/game-over');
   },[gameOver]);
 
   return (

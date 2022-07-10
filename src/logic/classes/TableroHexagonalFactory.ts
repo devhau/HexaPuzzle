@@ -1,6 +1,7 @@
 import { AdyacenciaTriangular, RotationTriangular } from '../types';
 import { CasillaTriangular } from './CasillaTriangular';
 import { TableroFactory } from './TableroFactory';
+import { TriangularShape } from './TriangularShape';
 
 export class TableroHexagonalFactory extends TableroFactory<CasillaTriangular>{
 
@@ -28,10 +29,7 @@ export class TableroHexagonalFactory extends TableroFactory<CasillaTriangular>{
                         : rotacion = 'VERTEXDOWN';
                     }
                 }
-                const casilla = new CasillaTriangular({
-                    id,
-                    rotacion
-                })
+                const casilla = new CasillaTriangular(id, new TriangularShape(rotacion,{}));
                 tablero.push(casilla);
                 id++;
             }

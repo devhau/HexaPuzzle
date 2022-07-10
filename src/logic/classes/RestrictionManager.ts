@@ -1,13 +1,12 @@
-import { Restriction, Manager } from '../interfaces/Restriction';
+import { PointsManagerType,Restriction,Manager } from '../interfaces';
 import { Event } from '../types';
-import { PointsManager } from './PointsManager';
 
-export class RestrictionManager<R extends Restriction> implements Manager<R> {
+export class RestrictionManager implements Manager {
 
-    private _restrictions: R[] = [];
-    private _pointsManager?: PointsManager;
+    private _restrictions: Restriction[] = [];
+    private _pointsManager?: PointsManagerType;
 
-    public addRestriction(restriction: R){
+    public addRestriction(restriction: Restriction){
         this._restrictions.push(restriction);
     }
 
@@ -20,10 +19,10 @@ export class RestrictionManager<R extends Restriction> implements Manager<R> {
                 if(!restriction.eventType) return;
                 events[restriction.eventType] = (events[restriction.eventType] || 0) + 1;
             });
-            for (const event in events) {
+            for (const event of Object.keys(events)) {
                 this._pointsManager.update({
                     type: event,
-                    payload: events[event]
+                    payload: events[event] 
                 } as Event);
             }
         }
@@ -33,7 +32,7 @@ export class RestrictionManager<R extends Restriction> implements Manager<R> {
         return this._restrictions;
     }
 
-    set pointsManager(pointsManager: PointsManager){
+    set pointsManager(pointsManager: PointsManagerType){
         this._pointsManager = pointsManager;
     }
     

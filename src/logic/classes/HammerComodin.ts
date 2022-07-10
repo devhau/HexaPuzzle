@@ -1,5 +1,4 @@
-import { PointsManagerType,Comodin } from '../interfaces';
-import { CasillaType } from '../types';
+import { PointsManagerType,Comodin,CasillaType } from '../interfaces';
 
 export class HammerComodin implements Comodin {
     private _pointsManager?: PointsManagerType;

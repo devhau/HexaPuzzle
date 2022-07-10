@@ -35,10 +35,7 @@ export class FichaHexagonal extends Ficha<PiezaTriangular> {
             pieza.rotar();
             pieza.adyacentes = {};
         });
-        this.updateAdyacentes();
-    }
-
-    private updateAdyacentes(){
+        
         if(this.numberOfPiezas === 2){
             if(this.rotationStage === 1){
                 this.piezas[0].adyacentes = {bottom: this.piezas[1]};
@@ -160,5 +157,4 @@ export class FichaHexagonal extends Ficha<PiezaTriangular> {
             }
         }
     }
-
 }

@@ -1,5 +1,4 @@
-import { CasillaType } from '../types';
-import { Factory } from '../interfaces';
+import { CasillaType, Factory } from '../interfaces';
 
 type TableroFormat = {
     [rowIndex: number]: number

@@ -9,13 +9,32 @@ export const useFicha = (fichaInfo: FichaHexagonal) => {
     const refImg = useRef<HTMLImageElement>(null);
     const isRotating = useRef(false);
 
-    const rotar = () => {
-        fichaInfo.rotar();
-        setFicha(fichaInfo);
-    }
+    const rotar = () => fichaInfo.rotar();
+
 
     useEffect(() => {
-        if(refImg.current) refImg.current.className = '';
+        if(refImg.current){
+            switch(fichaInfo.rotationStage){
+                case 1:
+                    refImg.current.className = '';
+                break;
+                case 2:
+                    refImg.current.className = ficha.numberOfPiezas === 1 ? 'rotar0to180' : 'rotar0to60';
+                break;
+                case 3:
+                    refImg.current.className = 'rotar60to120';
+                break;
+                case 4:
+                    refImg.current.className = 'rotar120to180';
+                break;
+                case 5:
+                    refImg.current.className = 'rotar180to240';
+                break;
+                case 6:
+                    refImg.current.className = 'rotar240to300';
+                break;
+            }
+        }
         setFicha(fichaInfo);
         setImagePath(getFichaPath(fichaInfo));
     }, [fichaInfo])

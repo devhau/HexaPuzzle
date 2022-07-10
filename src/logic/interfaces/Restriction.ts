@@ -4,11 +4,11 @@ import { Subscriber } from './Subscription';
 export interface Restriction extends Subscriber{
     cumple: boolean;
     eventType?: Event['type'];
-    manager?: Manager<Restriction>;
+    manager?: Manager;
     triggerAction(): void;
 }
 
-export interface Manager<R extends Restriction> {
-    restrictions: R[];
+export interface Manager {
+    restrictions: Restriction[];
     check(): void;
 }

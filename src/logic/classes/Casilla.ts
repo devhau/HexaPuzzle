@@ -1,24 +1,21 @@
-import { Color,CasillaType } from '../types';
-import { PointsManagerType, Subscription } from '../interfaces';
 import { Pieza } from './Pieza';
-import { CasillaRestriction } from './CasillaRestriction';
+import { Color, ShapeType } from '../types';
+import { CasillaType, PointsManagerType, Subscription,Restriction } from '../interfaces';
 
-export abstract class Casilla <A,R> implements CasillaType, Subscription {
-    private _adyacentes: A;
+export abstract class Casilla<S extends ShapeType> implements CasillaType,Subscription {
     private _color?: Color;
-    private _restrictions: CasillaRestriction[] = [];
+    private _restrictions: Restriction[] = [];
     private _pointsManager?: PointsManagerType;
+    private _shape: S;
     private readonly _id: number;
-    private readonly _rotacion: R;
 
-    constructor({id,rotacion,adyacentes}: {id: number,rotacion: R,adyacentes?: A}) {
-        this._adyacentes = adyacentes || {} as A;
+    constructor(id: number, shape: S) {
         this._id = id;
-        this._rotacion = rotacion;
+        this._shape = shape;
     }
     
-    public abstract canInsert(pieza: Pieza<A,R>): boolean;
-    public abstract insertPieza(pieza: Pieza<A,R>): void;
+    public abstract canInsert(pieza: Pieza<S>): boolean;
+    public abstract insertPieza(pieza: Pieza<S>): void;
     
     public estaVacia = (): boolean => !this._color;
     public vaciar = (): void => this._color = undefined;
@@ -28,19 +25,22 @@ export abstract class Casilla <A,R> implements CasillaType, Subscription {
         this._pointsManager?.update({type: 'insert_pieza', payload: 1});
     }
 
-    public addRestriction(restriction: CasillaRestriction){
+    get adyacentes(): S['adyacentes'] {
+        return this._shape.adyacentes;
+    }
+    set adyacentes(adyacentes: S['adyacentes']){
+        this._shape.adyacentes = adyacentes;
+    }
+    get rotacion(): S['rotacion'] {
+        return this._shape.rotacion;
+    }
+
+    public addRestriction(restriction: Restriction): void {
         this._restrictions.push(restriction);
     }
 
     set pointsManager(pointsManager: PointsManagerType){
         this._pointsManager = pointsManager;
-    }
-
-    set adyacentes(adyacentes: A){
-        this._adyacentes = adyacentes;
-    }
-    get adyacentes(){
-        return this._adyacentes;
     }
 
     get color(){
@@ -52,10 +52,6 @@ export abstract class Casilla <A,R> implements CasillaType, Subscription {
 
     get id(){
         return this._id;
-    }
-
-    get rotacion(){
-        return this._rotacion;
     }
 
     get restrictions(){

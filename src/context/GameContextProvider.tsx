@@ -47,6 +47,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     const {hammerComodin, deleteComodin} = comodines;
 
     const checkGameOver = () => {
+        outOfMovesRestriction.update();
         if(!outOfMovesRestriction.cumple) return;
         Cookies.set('lastPoints', pointsManager.points.toString());
         if(!Cookies.get('highestPoints')) Cookies.set('highestPoints', pointsManager.points.toString());      
@@ -62,8 +63,10 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         inventory.removeItem(ficha);
         inventory.addItem();
         dispatch({type: 'setFichas', payload: inventory.items});
-        setTimeout(() => dispatch({type: 'setTablero', payload: tablero}),200);
-        checkGameOver();
+        setTimeout(() => {
+            dispatch({type: 'setTablero', payload: tablero});
+            checkGameOver();
+        },200);
     }
     const useHammerComodin = (casilla: CasillaTriangular) => {
         if(!pointsManager.canUse(hammerComodin)) return;

@@ -1,5 +1,4 @@
-import { Factory } from '../interfaces';
-import { InventoryType } from '../types';
+import { Factory, InventoryType } from '../interfaces';
 
 export class Inventory<T> implements InventoryType<T> {
     private _items: T[] = [];

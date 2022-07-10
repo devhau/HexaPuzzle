@@ -1,8 +1,10 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Confetti from 'react-confetti';
 
 export const GameOverScreen = () => {
+  const navigate = useNavigate();
   return (
     <Box
       display={{
@@ -19,15 +21,30 @@ export const GameOverScreen = () => {
         <Confetti/>
         <Typography variant="h1">Game Over</Typography>
         {
+          (!Cookies.get('highestPoints')) || (Cookies.get('highestPoints') && Cookies.get('lastPoints') &&
+          Number(Cookies.get('highestPoints')) === Number(Cookies.get('lastPoints'))) &&
+          <Typography variant="h6">New high score!</Typography>
+        }
+        {
             Cookies.get('lastPoints') ?
             <Typography variant="h2">Last match points: {Cookies.get('lastPoints')}</Typography>
             : <Typography variant="h2">No Last match points recorded</Typography>
         }
         {
             Cookies.get('highestPoints') ?
-            <Typography variant="h2">Best score: {Cookies.get('highestPoints')}</Typography>
-            : <Typography variant="h2">No best score recorded</Typography>
+            <Typography variant="h2">High score: {Cookies.get('highestPoints')}</Typography>
+            : <Typography variant="h2">No high score recorded</Typography>
         }
+        <Button
+          size='large'
+          color='primary'
+          onClick={() => {
+            navigate('/');
+            setTimeout(() => window.location.reload(), 100);
+          }}
+        >
+          Back to menu
+        </Button>
     </Box>
   )
 }

@@ -1,5 +1,5 @@
-import { Restriction } from '../interfaces';
-import { CasillaType, FichaType, InventoryType } from '../types';
+import { CasillaType, InventoryType, Restriction } from '../interfaces';
+import { FichaType } from '../types';
 
 export class OutOfMovesRestriction implements Restriction{
     
@@ -9,42 +9,34 @@ export class OutOfMovesRestriction implements Restriction{
         return this.outOfMoves();
     }
 
+    private outOfMoves(): boolean {
+        return this._inventory.items.every(ficha => ficha.blocked);
+    }
+
+    private encajable(ficha: FichaType): boolean {
+        let encaja = false;
+        const rotations = ficha.possibleRotations || 1;
+        for (let i = 0; i < rotations; i++) {
+            for(const pieza of ficha.piezas){
+                if(encaja) continue;
+                for(const casilla of this._tablero){
+                    if(casilla.canInsert(pieza)) encaja = true;
+                }
+            }
+            ficha.rotar?.();
+        }
+        return encaja;
+    }
+
     triggerAction(): void {
-        return;
+        this._inventory.items.forEach(ficha => {
+            if(!this.encajable(ficha)) ficha.blocked = true;
+            else ficha.blocked = false;
+        })
     }
 
     update(): void {
-        return;
-    }
-
-    private outOfMoves(): boolean {
-        let outOfMoves = true;
-        for(const ficha of this._inventory.items){
-            const fichaCopy = {...ficha, piezas: [...ficha.piezas]};
-            if(fichaCopy.possibleRotations && fichaCopy.rotar){
-                for (let i = 1; i < fichaCopy.possibleRotations; i++) {
-                    fichaCopy.rotar();
-                    for(const pieza of fichaCopy.piezas){
-                        for (const casilla of this._tablero) {
-                            if(casilla.canInsert(pieza)) outOfMoves = false;
-                            if(!outOfMoves) break;
-                        }
-                        if(!outOfMoves) break;
-                    }
-                    if(!outOfMoves) break;
-                }
-            }else{
-                for(const pieza of ficha.piezas){
-                    for (const casilla of this._tablero) {
-                        if(casilla.canInsert(pieza)) outOfMoves = false;
-                        if(!outOfMoves) break;
-                    }
-                    if(!outOfMoves) break;
-                }
-            }
-            if(!outOfMoves) break;
-        }
-        return outOfMoves;
+        this.triggerAction();
     }
 
 }

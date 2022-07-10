@@ -33,7 +33,8 @@ export const darkTheme = createTheme({
         root: {
           backgroundColor: 'transparent',
           backdropFilter: 'blur(10px)',
-          height: 60
+          height: 60,
+          zIndex: 100,
         },
       },
     },

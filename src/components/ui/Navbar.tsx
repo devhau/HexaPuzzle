@@ -37,7 +37,7 @@ export const Navbar = () => {
                         className='animatedText'
                         sx={{
                             fontSize: {
-                                md: '36px',
+                                md: '40px',
                             }
                         }}
                     >

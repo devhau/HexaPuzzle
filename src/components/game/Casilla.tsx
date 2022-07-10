@@ -2,7 +2,7 @@ import { FC, useContext, useState, useEffect } from 'react';
 import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import { GameContext, ThemeContext } from '../../context';
 import { DragAndDropContext } from '../../context/DragAndDropContext';
-import { Colors } from '../../helpers';
+import { Colors, Toast } from '../../helpers';
 import { CasillaTriangular } from '../../logic/classes/CasillaTriangular';
 
 interface Props {
@@ -25,7 +25,10 @@ export const Casilla: FC<Props> = ({casilla}) => {
   }, [mode]);
   
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    if(!casilla.estaVacia()) return;
+    if(!casilla.estaVacia()) return Toast.fire({
+      icon: 'error',
+      title: 'No se puede insertar'
+    });
     if(piezaSelected && fichaDragging) insertFicha(fichaDragging,piezaSelected,casilla);
   }
   const allowDrop = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();

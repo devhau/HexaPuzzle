@@ -31,6 +31,7 @@ export const lightTheme = createTheme({
           backgroundColor: 'transparent',
           backdropFilter: 'blur(10px)',
           height: 60,
+          zIndex: 100,
         },
       }
     },

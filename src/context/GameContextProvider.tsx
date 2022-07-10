@@ -6,6 +6,7 @@ import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { PiezaTriangular } from '../logic/classes/PiezaTriangular';
 import { useGame } from '../hooks';
 import { Comodin } from '../logic/interfaces';
+import { Toast } from '../helpers';
 
 export interface GameState {
     tablero: CasillaTriangular[];
@@ -49,16 +50,19 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     const checkGameOver = () => {
         outOfMovesRestriction.update();
         if(!outOfMovesRestriction.cumple) return;
-        Cookies.set('lastPoints', pointsManager.points.toString());
-        if(!Cookies.get('highestPoints')) Cookies.set('highestPoints', pointsManager.points.toString());      
+        Cookies.set('lastPoints', pointsManager.points.toString(),{expires: 7});
+        if(!Cookies.get('highestPoints')) Cookies.set('highestPoints', pointsManager.points.toString(),{expires: 7});      
         else if(Number(Cookies.get('highestPoints')) < pointsManager.points){
-            Cookies.set('highestPoints', pointsManager.points.toString());
+            Cookies.set('highestPoints', pointsManager.points.toString(),{expires: 7});
         }
         dispatch({type: 'gameOver'});
     }
 
     const insertFicha = (ficha: FichaHexagonal,pieza: PiezaTriangular, casilla: CasillaTriangular) => {
-        if(!casilla.canInsert(pieza)) return;
+        if(!casilla.canInsert(pieza)) return Toast.fire({
+            icon: 'error',
+            title: 'No se puede insertar'
+        });
         casilla.insertPieza(pieza);
         inventory.removeItem(ficha);
         inventory.addItem();

@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box } from '@mui/material'
+import { Box, useTheme } from '@mui/material';
+import Swal from 'sweetalert2'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import GavelRoundedIcon from '@mui/icons-material/GavelRounded';
 import { DragAndDropContext, GameContext } from '../context';
@@ -22,9 +23,27 @@ export const GameScreen = () => {
   } = useContext(GameContext);
   const {hammerComodin,deleteComodin} = comodins;
 
+  const theme = useTheme();
   useEffect(() => {
-    if(gameOver) alert ('Game Over');
-    //navigate('/game-over');
+    if(gameOver){
+      Swal.fire({
+        title: 'Game Over',
+        text: 'No puedes encajar mas piezas',
+        allowOutsideClick: false,
+        confirmButtonText: 'Exit',
+        confirmButtonColor: theme.palette.secondary.main,
+        width: 400,
+        color: theme.palette.primary.main,
+        background: theme.palette.info.main,
+        imageUrl: 'https://i.giphy.com/media/iO4ptP2iuV29yui3mx/giphy.webp',
+        imageWidth: 300,
+        backdrop: true,
+        position: 'top-right',
+        customClass: {
+          title: 'text'
+        }
+      }).then(() => navigate('/game-over'))
+    } 
   },[gameOver]);
 
   return (

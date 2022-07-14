@@ -1,9 +1,10 @@
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { PiezaTriangular } from '../logic/classes/PiezaTriangular';
+import { Color } from '../logic/types';
 import { DragAndDropState } from './';
 
 type DragAndDropAction =
-|{ type: 'startDragging', payload: {ficha: FichaHexagonal, pieza: PiezaTriangular} }
+|{ type: 'startDragging', payload: {ficha: FichaHexagonal<Color>, pieza: PiezaTriangular<Color>} }
 |{ type: 'stopDragging' };
 
 export const DragAndDropReducer = (state: DragAndDropState, action: DragAndDropAction) => {

@@ -2,15 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { getFichaPath } from '../helpers/FichaPaths';
 import { getFichaAnimation } from '../helpers';
+import { Color } from '../logic/types';
 
-export const useFicha = (fichaInfo: FichaHexagonal) => {
+export const useFicha = (fichaInfo: FichaHexagonal<Color>) => {
     const [ficha, setFicha] = useState(fichaInfo);
     const [imagePath, setImagePath] = useState(getFichaPath(fichaInfo));
     const refImg = useRef<HTMLImageElement>(null);
     const isRotating = useRef(false);
 
     const rotar = () => fichaInfo.rotar();
-
 
     useEffect(() => {
         if(refImg.current){

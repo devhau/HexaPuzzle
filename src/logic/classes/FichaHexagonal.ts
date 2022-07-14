@@ -1,12 +1,11 @@
-import { Color } from '../types';
 import { Ficha } from './Ficha';
 import { PiezaTriangular } from './PiezaTriangular';
 
-export class FichaHexagonal extends Ficha<PiezaTriangular> {
+export class FichaHexagonal<V> extends Ficha<PiezaTriangular<V>> {
     private _rotationStage: 1 | 2 | 3 | 4 | 5 | 6 = 1;
 
-    constructor(color: Color, private readonly _numberOfPiezas: 1 | 2 | 3 | 4 | 5) {
-        super(color);
+    constructor(private readonly _numberOfPiezas: 1 | 2 | 3 | 4 | 5) {
+        super();
     }
  
     get numberOfPiezas(){

@@ -1,6 +1,7 @@
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
+import { Color } from '../logic/types';
 
-export const getPiezaSelected = (ficha: FichaHexagonal, x: number, y: number) => {
+export const getPiezaSelected = (ficha: FichaHexagonal<Color>, x: number, y: number) => {
     switch (ficha.numberOfPiezas) {
         case 1:
             return ficha.piezas[0];

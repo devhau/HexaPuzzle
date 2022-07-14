@@ -1,11 +1,10 @@
 import { Pieza } from './Pieza';
-import { Color } from '../types';
 import { TriangularShape } from './TriangularShape';
 
-export class PiezaTriangular extends Pieza<TriangularShape> {
+export class PiezaTriangular<V> extends Pieza<TriangularShape,V> {
 
-    constructor(color: Color, shape: TriangularShape) {
-        super(color,shape);
+    constructor(value: V, shape: TriangularShape) {
+        super(value,shape);
     }
 
     public rotar(): void {

@@ -1,9 +1,9 @@
 import { Pieza } from './Pieza';
-import { Color, ShapeType } from '../types';
+import { ShapeType } from '../types';
 import { CasillaType, PointsManagerType, Subscription,Restriction } from '../interfaces';
 
-export abstract class Casilla<S extends ShapeType> implements CasillaType,Subscription {
-    private _color?: Color;
+export abstract class Casilla<S extends ShapeType,V> implements CasillaType,Subscription {
+    private _value?: V;
     private _restrictions: Restriction[] = [];
     private _pointsManager?: PointsManagerType;
     private _shape: S;
@@ -14,11 +14,11 @@ export abstract class Casilla<S extends ShapeType> implements CasillaType,Subscr
         this._shape = shape;
     }
     
-    public abstract canInsert(pieza: Pieza<S>): boolean;
-    public abstract insertPieza(pieza: Pieza<S>): void;
+    public abstract canInsert(pieza: Pieza<S,V>): boolean;
+    public abstract insertPieza(pieza: Pieza<S,V>): void;
     
-    public estaVacia = (): boolean => !this._color;
-    public vaciar = (): void => this._color = undefined;
+    public estaVacia = (): boolean => !this._value;
+    public vaciar = (): void => this._value = undefined;
 
     public notify(): void {
         this._restrictions.forEach(restriction => restriction.update());
@@ -43,11 +43,11 @@ export abstract class Casilla<S extends ShapeType> implements CasillaType,Subscr
         this._pointsManager = pointsManager;
     }
 
-    get color(){
-        return this._color;
+    get value(){
+        return this._value;
     }
-    set color(color: Color | undefined){
-        this._color = color;
+    set value(value: V | undefined){
+        this._value = value;
     }
 
     get id(){

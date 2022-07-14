@@ -1,10 +1,11 @@
 import { GameState } from './';
 import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
+import { Color } from '../logic/types';
 
 type GameAction =
-|{ type: 'setTablero', payload: CasillaTriangular[] }
-|{ type: 'setFichas', payload: FichaHexagonal[] }
+|{ type: 'setTablero', payload: CasillaTriangular<Color>[] }
+|{ type: 'setFichas', payload: FichaHexagonal<Color>[] }
 |{ type: 'setPoints', payload: number }
 |{ type: 'toggleHammer' }
 |{ type: 'toggleDelete' }

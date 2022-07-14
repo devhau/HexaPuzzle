@@ -3,10 +3,10 @@ import { CasillaTriangular } from './CasillaTriangular';
 import { TableroFactory } from './TableroFactory';
 import { TriangularShape } from './TriangularShape';
 
-export class TableroHexagonalFactory extends TableroFactory<CasillaTriangular>{
+export class TableroHexagonalFactory<V> extends TableroFactory<CasillaTriangular<V>>{
 
-    public generate(): CasillaTriangular[] {
-        const tablero: CasillaTriangular[] = [];
+    public generate(): CasillaTriangular<V>[] {
+        const tablero: CasillaTriangular<V>[] = [];
         const { format } = this;
         let id = 1;
         for (const rowIndex in format) {
@@ -29,7 +29,7 @@ export class TableroHexagonalFactory extends TableroFactory<CasillaTriangular>{
                         : rotacion = 'VERTEXDOWN';
                     }
                 }
-                const casilla = new CasillaTriangular(id, new TriangularShape(rotacion,{}));
+                const casilla = new CasillaTriangular<V>(id, new TriangularShape(rotacion,{}));
                 tablero.push(casilla);
                 id++;
             }
@@ -38,7 +38,7 @@ export class TableroHexagonalFactory extends TableroFactory<CasillaTriangular>{
         return tablero;
     }
 
-    private setAdyacentes(tablero: CasillaTriangular[]): void{
+    private setAdyacentes(tablero: CasillaTriangular<V>[]): void{
         const { format } = this;
         for (const casilla of tablero) {
             const adyacentes: AdyacenciaTriangular = {

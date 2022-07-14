@@ -1,59 +1,43 @@
-import { Color, RotationTriangular } from '../types';
+import { RotationTriangular } from '../types';
 import { FichaFactory } from './FichaFactory';
 import { FichaHexagonal } from './FichaHexagonal';
 import { PiezaTriangular } from './PiezaTriangular';
 import { TriangularShape } from './TriangularShape';
 
-export class FichaHexagonalFactory extends FichaFactory<FichaHexagonal>{
+export class FichaHexagonalFactory<V> extends FichaFactory<FichaHexagonal<V>,V>{
 
-    constructor() {
-        super(6);
+    constructor(possibleValues: V[],private sameValues: boolean = true) {
+        super(6,possibleValues);
     }
 
-    public generate(): FichaHexagonal {
-        const numberOfPiezas = Math.floor(Math.random() * (this.numberOfPiezas-1)) + 1;
-        let color: Color;
-        switch(Math.floor(Math.random() * 5) + 1){
-            case 1:
-                color = 'rojo';
-            break;
-            case 2:
-                color = 'azul';
-            break;
-            case 3:
-                color = 'cyan';
-            break;
-            case 4:
-                color = 'naranja';
-            break;
-            case 5:
-                color = 'morado';
-            break;
-        }
-        const ficha = new FichaHexagonal(color!,numberOfPiezas as 1 | 2 | 3 | 4 | 5);
+    public generate(): FichaHexagonal<V> {
+        const numberOfPiezas = Math.floor(Math.random() * (this.maxNumberOfPiezas-1)) + 1;
+        const ficha = new FichaHexagonal<V>(numberOfPiezas as 1 | 2 | 3 | 4 | 5);
         ficha.piezas = this.generatePiezas(ficha);
         return ficha;
     }
 
-    private generatePiezas(ficha: FichaHexagonal): PiezaTriangular[] {
-        const piezas: PiezaTriangular[] = [];
+    private generatePiezas(ficha: FichaHexagonal<V>): PiezaTriangular<V>[] {
+        const piezas: PiezaTriangular<V>[] = [];
+        let value: V = this.possibleValues[Math.floor(Math.random() * this.possibleValues.length)];
 
         if(ficha.numberOfPiezas === 1){
-            piezas.push(new PiezaTriangular(ficha.color, new TriangularShape('VERTEXUP',{})));
+            piezas.push(new PiezaTriangular(value, new TriangularShape('VERTEXUP',{})));
             return piezas;
         }
 
         let rotacion: RotationTriangular = ficha.numberOfPiezas === 2 ? 'VERTEXUP' : 'VERTEXDOWN';
         for(let i = 1; i <= ficha.numberOfPiezas; i++){
-            piezas.push(new PiezaTriangular(ficha.color, new TriangularShape(rotacion,{})));
+            piezas.push(new PiezaTriangular(value, new TriangularShape(rotacion,{})));
             rotacion = (rotacion === 'VERTEXUP') ? 'VERTEXDOWN' : 'VERTEXUP';
+            if(!this.sameValues) value = this.possibleValues[Math.floor(Math.random() * this.possibleValues.length)];
         }
 
         this.setAdyacentes(piezas);
         return piezas;
     }
 
-    private setAdyacentes(piezas: PiezaTriangular[]): void {
+    private setAdyacentes(piezas: PiezaTriangular<V>[]): void {
         switch(piezas.length){
             case 2:
                 piezas[0].adyacentes = {bottom: piezas[1]};

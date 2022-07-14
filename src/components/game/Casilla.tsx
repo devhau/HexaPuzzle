@@ -4,9 +4,10 @@ import { GameContext, ThemeContext } from '../../context';
 import { DragAndDropContext } from '../../context/DragAndDropContext';
 import { Colors, Toast } from '../../helpers';
 import { CasillaTriangular } from '../../logic/classes/CasillaTriangular';
+import { Color } from '../../logic/types';
 
 interface Props {
-  casilla: CasillaTriangular;
+  casilla: CasillaTriangular<Color>;
 }
 
 export const Casilla: FC<Props> = ({casilla}) => {
@@ -16,9 +17,9 @@ export const Casilla: FC<Props> = ({casilla}) => {
   const [color, setColor] = useState('grey');
 
   useEffect(() => {
-    if(!casilla?.estaVacia()) setColor(Colors[casilla?.color!]);
+    if(!casilla?.estaVacia()) setColor(Colors[casilla?.value!]);
     else setColor(Colors[mode === 'dark' ? 'darkGrey' : 'lightGrey'])
-  }, [casilla?.color]);
+  }, [casilla?.value]);
   useEffect(() => {
     if(casilla?.estaVacia())
     setColor(Colors[mode === 'dark' ? 'darkGrey' : 'lightGrey']);

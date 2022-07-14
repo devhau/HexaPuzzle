@@ -1,9 +1,9 @@
-import { Color, ShapeType } from '../types';
+import { ShapeType } from '../types';
 import { PiezaType } from './';
 import { Restriction } from './Restriction';
 
 export interface CasillaType extends ShapeType {
-    color?: Color;
+    value?: any;
     id: number;
     restrictions: Restriction[];
     canInsert(pieza: PiezaType): boolean;

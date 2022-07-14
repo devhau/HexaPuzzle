@@ -24,10 +24,11 @@ import FichaNaranja2 from '../assets/Fichas-naranja/2.png';
 import FichaNaranja3 from '../assets/Fichas-naranja/3.png';
 import FichaNaranja4 from '../assets/Fichas-naranja/4.png';
 import FichaNaranja5 from '../assets/Fichas-naranja/5.png';
+import { Color } from '../logic/types';
 
-export const getFichaPath = (ficha: FichaHexagonal): string => {
+export const getFichaPath = (ficha: FichaHexagonal<Color>): string => {
 
-    switch (ficha.color) {
+    switch (ficha.piezas[0].value) {
         case 'azul':
             switch (ficha.numberOfPiezas) {
                 case 1:

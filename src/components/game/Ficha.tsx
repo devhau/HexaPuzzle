@@ -4,9 +4,10 @@ import { DragAndDropContext, GameContext } from '../../context';
 import { useFicha } from '../../hooks';
 import { FichaHexagonal } from '../../logic/classes/FichaHexagonal';
 import { getPiezaSelected } from '../../helpers/PiezaSelected';
+import { Color } from '../../logic/types';
 
 interface Props {
-  fichaInfo: FichaHexagonal;
+  fichaInfo: FichaHexagonal<Color>;
 }
 
 export const Ficha: FC<Props> = ({fichaInfo}) => {

@@ -1,7 +1,7 @@
 import { Event } from '../types';
 import { CasillaType, Manager, Restriction } from '../interfaces';
 
-export class SameColorRestriction implements Restriction {
+export class SameValueRestriction implements Restriction {
 
     private _processingCheck: boolean = false;
 
@@ -17,15 +17,13 @@ export class SameColorRestriction implements Restriction {
     }
 
     get cumple(): boolean {
-        return this.isSameColor();
+        return this.isSameValue();
     }
 
-    private isSameColor(): boolean {
-        return this.casillas.every(casilla => casilla.color === 'azul')
-        || this.casillas.every(casilla => casilla.color === 'rojo')
-        || this.casillas.every(casilla => casilla.color === 'naranja')
-        || this.casillas.every(casilla => casilla.color === 'cyan')
-        || this.casillas.every(casilla => casilla.color === 'morado');
+    private isSameValue(): boolean {
+        const value = this._casillas[0].value;
+        if(!value) return false;
+        return this._casillas.every(casilla => casilla.value === value);
     }
 
     public triggerAction(): void {

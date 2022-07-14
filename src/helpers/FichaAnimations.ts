@@ -1,6 +1,7 @@
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
+import { Color } from '../logic/types';
 
-export const getFichaAnimation = (ficha: FichaHexagonal, img: HTMLImageElement | null) => {
+export const getFichaAnimation = (ficha: FichaHexagonal<Color>, img: HTMLImageElement | null) => {
     let transform: string = '';
     let animation: string = '';
     let remove: string = '';

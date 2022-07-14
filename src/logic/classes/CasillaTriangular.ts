@@ -2,13 +2,13 @@ import { Casilla } from './Casilla';
 import { Pieza } from './Pieza';
 import { TriangularShape } from './TriangularShape';
 
-export class CasillaTriangular extends Casilla<TriangularShape>{
+export class CasillaTriangular<V> extends Casilla<TriangularShape,V>{
     
     constructor(id: number, shape: TriangularShape) {
         super(id,shape);
     }
     
-    public canInsert(pieza: Pieza<TriangularShape>,visitados: CasillaTriangular[] = []): boolean {
+    public canInsert(pieza: Pieza<TriangularShape,V>,visitados: CasillaTriangular<V>[] = []): boolean {
         if(!this.estaVacia()) return false;
         if(this.rotacion !== pieza.rotacion) return false;
         visitados.push(this);
@@ -24,11 +24,11 @@ export class CasillaTriangular extends Casilla<TriangularShape>{
         return encaja;
     }
 
-    public insertPieza(pieza: Pieza<TriangularShape>): void {
-        this.color = pieza.color;
+    public insertPieza(pieza: Pieza<TriangularShape,V>): void {
+        this.value = pieza.value;
         for(let adyacente of Object.keys(pieza.adyacentes)) {
             if(adyacente === 'bottom' || adyacente === 'top' || adyacente === 'left' || adyacente === 'right') {
-                if(!this.adyacentes[adyacente].color) 
+                if(!this.adyacentes[adyacente].value)
                 this.adyacentes[adyacente].insertPieza(pieza.adyacentes[adyacente]);
             }
         }

@@ -7,12 +7,13 @@ import { PiezaTriangular } from '../logic/classes/PiezaTriangular';
 import { useGame } from '../hooks';
 import { Comodin } from '../logic/interfaces';
 import { Toast } from '../helpers';
+import { Color } from '../logic/types';
 
 export interface GameState {
-    tablero: CasillaTriangular[];
+    tablero: CasillaTriangular<Color>[];
     points: number;
     tableroFormat: {[key: number]: number};
-    fichas: FichaHexagonal[];
+    fichas: FichaHexagonal<Color>[];
     isUsingHammer: boolean;
     isUsingDelete: boolean;
     gameOver: boolean;
@@ -58,7 +59,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         dispatch({type: 'gameOver'});
     }
 
-    const insertFicha = (ficha: FichaHexagonal,pieza: PiezaTriangular, casilla: CasillaTriangular) => {
+    const insertFicha = (ficha: FichaHexagonal<Color>,pieza: PiezaTriangular<Color>, casilla: CasillaTriangular<Color>) => {
         if(!casilla.canInsert(pieza)) return Toast.fire({
             icon: 'error',
             title: 'No se puede insertar'
@@ -72,14 +73,14 @@ export const GameContextProvider: FC<Props> = ({children}) => {
             checkGameOver();
         },200);
     }
-    const useHammerComodin = (casilla: CasillaTriangular) => {
+    const useHammerComodin = (casilla: CasillaTriangular<Color>) => {
         if(!pointsManager.canUse(hammerComodin)) return;
         hammerComodin.use(casilla);
         pointsManager.update({type: 'use_comodin', payload: hammerComodin});
         dispatch({type: 'toggleHammer'});
         dispatch({type: 'setTablero', payload: tablero});
     }
-    const useDeleteComodin = (ficha: FichaHexagonal) => {
+    const useDeleteComodin = (ficha: FichaHexagonal<Color>) => {
         if(!pointsManager.canUse(deleteComodin)) return;
         deleteComodin.use(ficha);
         pointsManager.update({type: 'use_comodin', payload: deleteComodin});

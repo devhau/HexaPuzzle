@@ -1,13 +1,13 @@
 import { PiezaType } from '../interfaces';
-import { Color, ShapeType } from '../types';
+import { ShapeType } from '../types';
 
-export abstract class Pieza<S extends ShapeType> implements PiezaType{
-    private _color: Color;
+export abstract class Pieza<S extends ShapeType,V> implements PiezaType{
+    private _value: V;
     private _shape: S;
 
-    constructor(color: Color, shape: S) {
+    constructor(value: V, shape: S) {
         this._shape = shape;
-        this._color = color;
+        this._value = value;
     }
 
     public abstract rotar(): void;
@@ -26,11 +26,11 @@ export abstract class Pieza<S extends ShapeType> implements PiezaType{
         this._shape.adyacentes = adyacentes;
     }
 
-    set color (color: Color) {
-        this._color = color;
+    set value (value: V) {
+        this._value = value;
     }
-    get color(): Color{
-        return this._color;
+    get value(): V{
+        return this._value;
     }
     
 }

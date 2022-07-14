@@ -1,3 +1,5 @@
+import { Color } from '../logic/types'
+
 export const Colors = {
     rojo: '#ff5757',
     azul: '#38b6ff',
@@ -7,3 +9,11 @@ export const Colors = {
     darkGrey: '#737373',
     lightGrey: '#a6a6a6',
 }
+
+export const ColorsArray: Color[] = [
+    'rojo',
+    'azul',
+    'naranja',
+    'cyan',
+    'morado',
+]

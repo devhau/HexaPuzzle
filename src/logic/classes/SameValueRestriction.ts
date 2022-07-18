@@ -1,20 +1,9 @@
 import { Event } from '../types';
-import { CasillaType, Manager, Restriction } from '../interfaces';
+import { CasillaType, Restriction } from '../interfaces';
 
-export class SameValueRestriction implements Restriction {
+export class SameValueRestriction<V> implements Restriction<Event> {
 
-    private _processingCheck: boolean = false;
-
-    constructor(private _casillas: CasillaType[], private _manager: Manager) { }
-
-    public update(): void {
-        if(this._processingCheck || !this.cumple) return;
-        this._processingCheck = true;
-        setTimeout(() => {
-            this._manager.check();
-            this._processingCheck = false;
-        },100);
-    }
+    constructor(private _casillas: CasillaType<V>[]) { }
 
     get cumple(): boolean {
         return this.isSameValue();
@@ -27,15 +16,13 @@ export class SameValueRestriction implements Restriction {
     }
 
     public triggerAction(): void {
-        this.vaciarCasillas();
-    }
-
-    private vaciarCasillas(){
         this._casillas.forEach(casilla => casilla.vaciar());
     }
 
-    get eventType(): Event['type'] {
-        return 'make_hexagon';
+    get event(): Event {
+        return {
+            type: 'make_hexagon'
+        }
     }
 
     get casillas(){

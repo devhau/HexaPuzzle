@@ -45,12 +45,11 @@ interface Props {
 export const GameContextProvider: FC<Props> = ({children}) => {
 
     const [state,dispatch] = useReducer(GameReducer, initialState);
-    const {inventory,tablero,pointsManager,comodines,outOfMovesRestriction} = useGame(tableroFormat);
+    const {inventory,tablero,pointsManager,comodines,gameOverFlag} = useGame(tableroFormat);
     const {hammerComodin, deleteComodin} = comodines;
 
     const checkGameOver = () => {
-        outOfMovesRestriction.update();
-        if(!outOfMovesRestriction.cumple) return;
+        if(!gameOverFlag.isGameOver()) return;
         Cookies.set('lastPoints', pointsManager.points.toString(),{expires: 7});
         if(!Cookies.get('highestPoints')) Cookies.set('highestPoints', pointsManager.points.toString(),{expires: 7});      
         else if(Number(Cookies.get('highestPoints')) < pointsManager.points){
@@ -64,28 +63,21 @@ export const GameContextProvider: FC<Props> = ({children}) => {
             icon: 'error',
             title: 'No se puede insertar'
         });
-        casilla.insertPieza(pieza);
         inventory.removeItem(ficha);
         inventory.addItem();
-        dispatch({type: 'setFichas', payload: inventory.items});
-        setTimeout(() => {
-            dispatch({type: 'setTablero', payload: tablero});
-            checkGameOver();
-        },200);
+        casilla.insertPieza(pieza);
+        dispatch({type: 'setTablero', payload: tablero})
+        checkGameOver();
     }
     const useHammerComodin = (casilla: CasillaTriangular<Color>) => {
         if(!pointsManager.canUse(hammerComodin)) return;
         hammerComodin.use(casilla);
-        pointsManager.update({type: 'use_comodin', payload: hammerComodin});
         dispatch({type: 'toggleHammer'});
-        dispatch({type: 'setTablero', payload: tablero});
     }
     const useDeleteComodin = (ficha: FichaHexagonal<Color>) => {
         if(!pointsManager.canUse(deleteComodin)) return;
         deleteComodin.use(ficha);
-        pointsManager.update({type: 'use_comodin', payload: deleteComodin});
         dispatch({type: 'toggleDelete'});
-        dispatch({type: 'setFichas', payload: inventory.items});
     }
     const toggleHammer = () => {
         if(!pointsManager.canUse(hammerComodin)) return;
@@ -102,7 +94,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     }, [])
     useEffect(() => {
         dispatch({type: 'setFichas', payload: inventory.items});
-    }, [])
+    }, [inventory.items])
     useEffect(() => {
         dispatch({type: 'setPoints', payload: pointsManager.points});
     }, [pointsManager.points])

@@ -47,7 +47,7 @@ export const Casilla: FC<Props> = ({casilla}) => {
         height: '75px',
         backgroundColor: color,
         margin: '0 -20px',
-        transition: 'background-color ease .25s',
+        transition: 'background-color ease .2s',
         cursor: isUsingHammer && !casilla?.estaVacia() ? 'pointer' : 'default'
       }}
     >

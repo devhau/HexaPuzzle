@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Theme, ThemeProvider } from '@mui/material';
 import Cookies from 'js-cookie';
 import { ThemeContext, ThemeMode, ThemeString } from './ThemeContext';

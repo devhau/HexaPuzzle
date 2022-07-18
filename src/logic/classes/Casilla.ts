@@ -1,46 +1,55 @@
 import { Pieza } from './Pieza';
-import { ShapeType } from '../types';
-import { CasillaType, PointsManagerType, Subscription,Restriction } from '../interfaces';
+import { Shape } from './Shape';
+import { CasillaType, EventManagerType } from '../interfaces';
+import { Event } from '../types';
 
-export abstract class Casilla<S extends ShapeType,V> implements CasillaType,Subscription {
+export abstract class Casilla<A,R,V> extends Shape<A,R,Casilla<A,R,V>> implements CasillaType<V> {
     private _value?: V;
-    private _restrictions: Restriction[] = [];
-    private _pointsManager?: PointsManagerType;
-    private _shape: S;
     private readonly _id: number;
+    private _eventManager?: EventManagerType<Event>;
 
-    constructor(id: number, shape: S) {
+    constructor(id: number,rotacion: R, adyacentes: Map<A,Casilla<A,R,V>>) {
+        super(rotacion,adyacentes);
         this._id = id;
-        this._shape = shape;
     }
-    
-    public abstract canInsert(pieza: Pieza<S,V>): boolean;
-    public abstract insertPieza(pieza: Pieza<S,V>): void;
-    
+
     public estaVacia = (): boolean => !this._value;
     public vaciar = (): void => this._value = undefined;
 
-    public notify(): void {
-        this._restrictions.forEach(restriction => restriction.update());
-        this._pointsManager?.update({type: 'insert_pieza', payload: 1});
+    protected abstract validatePieza(pieza: Pieza<A,R,V>): boolean;
+    protected abstract consumePieza(pieza: Pieza<A,R,V>): void;
+
+    public canInsert(pieza: Pieza<A,R,V>,visitados: Casilla<A,R,V>[] = []): boolean {
+        if(!this.validatePieza(pieza)) return false;
+        visitados.push(this);
+        let encaja: boolean = true;
+        for(let entry of pieza.adyacentes.entries()) {
+            const [adyacencia, adyacente] = entry;
+            const casillaAdyacente = this.adyacentes.get(adyacencia);
+            if(!casillaAdyacente){
+                encaja = false; 
+                break;
+            }
+            if(visitados.includes(casillaAdyacente)) continue;
+            encaja = casillaAdyacente.canInsert(adyacente,visitados);
+            if(!encaja) break;
+        }
+        return encaja;
     }
 
-    get adyacentes(): S['adyacentes'] {
-        return this._shape.adyacentes;
-    }
-    set adyacentes(adyacentes: S['adyacentes']){
-        this._shape.adyacentes = adyacentes;
-    }
-    get rotacion(): S['rotacion'] {
-        return this._shape.rotacion;
-    }
-
-    public addRestriction(restriction: Restriction): void {
-        this._restrictions.push(restriction);
+    public insertPieza(pieza: Pieza<A,R,V>,casillaInicial: Casilla<A,R,V> = this, cont = 0): void {
+        this.consumePieza(pieza);
+        cont++;
+        for(let entry of pieza.adyacentes.entries()) {
+            const [adyacencia, adyacente] = entry;
+            if(this.adyacentes.get(adyacencia)?.validatePieza(adyacente))
+            this.adyacentes.get(adyacencia)?.insertPieza(adyacente,casillaInicial);
+        }
+        if(this === casillaInicial) this._eventManager?.notify({type: 'insert_ficha', payload: cont});
     }
 
-    set pointsManager(pointsManager: PointsManagerType){
-        this._pointsManager = pointsManager;
+    setEventManager(pointsManager: EventManagerType<Event>){
+        this._eventManager = pointsManager;
     }
 
     get value(){
@@ -54,7 +63,4 @@ export abstract class Casilla<S extends ShapeType,V> implements CasillaType,Subs
         return this._id;
     }
 
-    get restrictions(){
-        return this._restrictions;
-    }
 }

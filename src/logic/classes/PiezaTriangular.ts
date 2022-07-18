@@ -1,10 +1,10 @@
+import { AdyacenciaTriangular, RotationTriangular } from '../types';
 import { Pieza } from './Pieza';
-import { TriangularShape } from './TriangularShape';
 
-export class PiezaTriangular<V> extends Pieza<TriangularShape,V> {
+export class PiezaTriangular<V> extends Pieza<AdyacenciaTriangular,RotationTriangular,V> {
 
-    constructor(value: V, shape: TriangularShape) {
-        super(value,shape);
+    constructor(value: V, rotacion: RotationTriangular, adyacentes: Map<AdyacenciaTriangular,PiezaTriangular<V>>) {
+        super(value,rotacion,adyacentes);
     }
 
     public rotar(): void {

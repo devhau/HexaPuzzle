@@ -1,6 +1,6 @@
-export class Shape<A,R>{
+export class Shape<A,R,T extends Shape<A,R,T>>{
     
-    constructor(private _rotacion: R, private _adyacentes: A){}
+    constructor(private _rotacion: R, private _adyacentes: Map<A,T>){}
 
     get rotacion(): R{
         return this._rotacion;
@@ -8,10 +8,11 @@ export class Shape<A,R>{
     set rotacion(rotacion: R){
         this._rotacion = rotacion;
     }
-    get adyacentes(): A{
+    get adyacentes(): Map<A,T>{
         return this._adyacentes;
     }
-    set adyacentes(adyacentes: A){
-        this._adyacentes = adyacentes;
+    addAdyacente(adyacencia: A, adyacente: T){
+        this._adyacentes.set(adyacencia,adyacente);
     }
+    
 }

@@ -4,17 +4,14 @@ import { getFichaPath } from '../helpers/FichaPaths';
 import { getFichaAnimation } from '../helpers';
 import { Color } from '../logic/types';
 
-export const useFicha = (fichaInfo: FichaHexagonal<Color>) => {
-    const [ficha, setFicha] = useState(fichaInfo);
-    const [imagePath, setImagePath] = useState(getFichaPath(fichaInfo));
+export const useFicha = (ficha: FichaHexagonal<Color>) => {
+    const [imagePath, setImagePath] = useState(getFichaPath(ficha));
     const refImg = useRef<HTMLImageElement>(null);
     const isRotating = useRef(false);
 
-    const rotar = () => fichaInfo.rotar();
-
     useEffect(() => {
         if(refImg.current){
-            switch(fichaInfo.rotationStage){
+            switch(ficha.rotationStage){
                 case 1:
                     refImg.current.className = '';
                 break;
@@ -35,9 +32,8 @@ export const useFicha = (fichaInfo: FichaHexagonal<Color>) => {
                 break;
             }
         }
-        setFicha(fichaInfo);
-        setImagePath(getFichaPath(fichaInfo));
-    }, [fichaInfo])
+        setImagePath(getFichaPath(ficha));
+    }, [ficha]);
 
     const rotate = () => {
         if(isRotating.current) return;
@@ -47,16 +43,15 @@ export const useFicha = (fichaInfo: FichaHexagonal<Color>) => {
         refImg.current?.classList.add(transform);
         refImg.current?.classList.add(animation);
         setTimeout(() => {
-        refImg.current?.classList.remove(animation);
-        isRotating.current = false;
+            refImg.current?.classList.remove(animation);
+            isRotating.current = false;
         },miliseconds);
-        rotar();
+        ficha.rotar();
     };
 
     return {
-        ficha,
         rotate,
         imagePath,
-        refImg
+        refImg,
     }
 }

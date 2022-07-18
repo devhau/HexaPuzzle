@@ -1,14 +1,10 @@
-import { Event } from '../types';
-import { Subscriber } from './Subscription';
-
-export interface Restriction extends Subscriber{
+export interface Restriction<E>{
     cumple: boolean;
-    eventType?: Event['type'];
-    manager?: Manager;
+    event: E;
     triggerAction(): void;
 }
 
-export interface Manager {
-    restrictions: Restriction[];
+export interface RestrictionManagerType<E> {
+    restrictions: {restriction: Restriction<E>, order: number}[];
     check(): void;
 }

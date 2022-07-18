@@ -3,4 +3,4 @@ export * from './Color';
 export * from './Event';
 export * from './Ficha';
 export * from './RotationTriangular';
-export * from './Shape';
+export * from './TableroFormat';

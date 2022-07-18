@@ -1,6 +1,4 @@
-import { ShapeType } from '../types';
-
-export interface PiezaType extends ShapeType {
-    value: any;
+export interface PiezaType<V = any> {
+    value: V;
     rotar?(): void;
 }

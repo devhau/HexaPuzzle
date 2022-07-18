@@ -1,7 +1,7 @@
 import { CasillaType, InventoryType, Restriction } from '../interfaces';
-import { FichaType } from '../types';
+import { Event, FichaType } from '../types';
 
-export class OutOfMovesRestriction implements Restriction{
+export class OutOfMovesRestriction implements Restriction<Event>{
     
     constructor(private _inventory: InventoryType<FichaType>, private _tablero: CasillaType[]){ }
 
@@ -10,6 +10,10 @@ export class OutOfMovesRestriction implements Restriction{
     }
 
     private outOfMoves(): boolean {
+        this._inventory.items.forEach(ficha => {
+            if(!this.encajable(ficha)) ficha.blocked = true;
+            else ficha.blocked = false;
+        });
         return this._inventory.items.every(ficha => ficha.blocked);
     }
 
@@ -29,14 +33,13 @@ export class OutOfMovesRestriction implements Restriction{
     }
 
     triggerAction(): void {
-        this._inventory.items.forEach(ficha => {
-            if(!this.encajable(ficha)) ficha.blocked = true;
-            else ficha.blocked = false;
-        })
+        console.log('game over');
     }
 
-    update(): void {
-        this.triggerAction();
+    get event(): Event {
+        return {
+            type: 'game_over'
+        }
     }
 
 }

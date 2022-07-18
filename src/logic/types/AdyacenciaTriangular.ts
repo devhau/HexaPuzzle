@@ -1,6 +1,1 @@
-export type AdyacenciaTriangular = {
-    top?: any,
-    bottom?: any,
-    left?: any,
-    right?: any 
-}
+export type AdyacenciaTriangular = 'left' | 'right' | 'top' | 'bottom';

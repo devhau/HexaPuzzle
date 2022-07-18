@@ -3,52 +3,70 @@ import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { FichaHexagonalFactory } from '../logic/classes/FichaHexagonalFactory';
 import { Inventory } from '../logic/classes/Inventory';
 import { TableroHexagonalFactory } from '../logic/classes/TableroHexagonalFactory';
-import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
 import { ColorsArray, Hexagons } from '../helpers';
 import { RestrictionManager } from '../logic/classes/RestrictionManager';
 import { PointsManager } from '../logic/classes/PointsManager';
 import { HammerComodin } from '../logic/classes/HammerComodin';
 import { DeleteComodin } from '../logic/classes/DeleteComodin';
 import { OutOfMovesRestriction } from '../logic/classes/OutOfMovesRestriction';
-import { Color } from '../logic/types';
+import { Color, Event } from '../logic/types';
 import { SameValueRestriction } from '../logic/classes/SameValueRestriction';
+import { GamePointSystem } from '../logic/classes/GamePointSystem';
+import { EventManager } from '../logic/classes/EventManager';
+import { GameOverFlag } from '../logic/classes/GameOverFlag';
 
 export const useGame = (tableroFormat: {[key: number]: number}) => {
-    const inventory = useMemo(() => new Inventory<FichaHexagonal<Color>>(new FichaHexagonalFactory<Color>(ColorsArray),3),[]);
+
     const tableroFactory = useMemo(() => new TableroHexagonalFactory<Color>(tableroFormat), []);
-    const pointsManager = useMemo(() => new PointsManager(1,18,0.5), []);
-    const tablero = useMemo(() =>{
+    const inventory = useMemo(() => new Inventory<FichaHexagonal<Color>>(new FichaHexagonalFactory<Color>(ColorsArray),3),[]);
+    const gameOverFlag = useMemo(() => new GameOverFlag,[]);
+    const pointsManager = useMemo(() => new PointsManager<Event>(new GamePointSystem(1,18,0.5)), []);
+
+    const eventManager = useMemo(() => {
+        const eventManager = new EventManager<Event>()
+        eventManager.subscribe(pointsManager, 'insert_ficha');
+        eventManager.subscribe(pointsManager, 'make_hexagon');
+        eventManager.subscribe(pointsManager, 'use_comodin');
+        eventManager.subscribe(gameOverFlag, 'game_over');
+        return eventManager;
+    }, []);
+
+    const restrictionManager = useMemo(() => {
+        const restrictionManager = new RestrictionManager();
+        eventManager.subscribe(restrictionManager, 'insert_ficha');
+        eventManager.subscribe(restrictionManager, 'use_comodin');
+        restrictionManager.setEventManager(eventManager);
+        return restrictionManager;
+    }, []);
+
+    const tablero = useMemo(() => {
         const tablero = tableroFactory.generate();
-        setGameActors(tablero, pointsManager);
+        tablero.forEach(casilla => casilla.setEventManager(eventManager));
+        Hexagons.forEach(hexagon => {
+            const hexagonCasillas = hexagon.map(index => tablero[index-1]);
+            restrictionManager.addRestriction(new SameValueRestriction<Color>(hexagonCasillas),0);
+        })
+        restrictionManager.addRestriction(new OutOfMovesRestriction(inventory,tablero),1);
         return tablero;
     }, []);
-    const outOfMovesRestriction = useMemo(() => new OutOfMovesRestriction(inventory,tablero), []);
+
+    const hammerComodin = useMemo(() => {
+        const comodin = new HammerComodin(108);
+        comodin.setEventManager(eventManager);
+        return comodin;
+    },[]);
+
+    const deleteComodin = useMemo(() => {
+        const comodin = new DeleteComodin<FichaHexagonal<Color>>(inventory,216);
+        comodin.setEventManager(eventManager);
+        return comodin;
+    },[]);
+    
     return {
         tablero,
         inventory,
         pointsManager,
-        comodines: getComodines(inventory),
-        outOfMovesRestriction
-    }
-}
-
-const setGameActors = (tablero: CasillaTriangular<Color>[], pointsManager: PointsManager) => {
-    tablero.forEach(casilla => casilla.pointsManager = pointsManager);
-    const restrictionManager = new RestrictionManager();
-    restrictionManager.pointsManager = pointsManager;
-    Hexagons.forEach(hexagon => {
-        const hexagonCasillas = hexagon.map(index => tablero[index-1]);
-        const restriction = new SameValueRestriction(hexagonCasillas,restrictionManager);
-        restrictionManager.addRestriction(restriction);
-        hexagonCasillas.forEach(casilla => casilla.addRestriction(restriction));
-    })
-}
-
-const getComodines = (inventory: Inventory<FichaHexagonal<Color>>) => {
-    const hammerComodin = useMemo(() => new HammerComodin(108),[]);
-    const deleteComodin = useMemo(() => new DeleteComodin<FichaHexagonal<Color>>(inventory,216),[]);
-    return {
-        hammerComodin,
-        deleteComodin
+        comodines: {hammerComodin,deleteComodin},
+        gameOverFlag
     }
 }

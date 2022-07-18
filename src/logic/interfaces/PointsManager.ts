@@ -1,7 +1,6 @@
 import { Comodin } from './Comodin';
-import { Subscriber } from './Subscription';
 
-export interface PointsManagerType extends Subscriber{
+export interface PointsManagerType{
     points: number;
     canUse(comodin: Comodin): boolean;
 }

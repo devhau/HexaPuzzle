@@ -1,37 +1,19 @@
+import { AdyacenciaTriangular, RotationTriangular } from '../types';
 import { Casilla } from './Casilla';
 import { Pieza } from './Pieza';
-import { TriangularShape } from './TriangularShape';
 
-export class CasillaTriangular<V> extends Casilla<TriangularShape,V>{
+export class CasillaTriangular<V> extends Casilla<AdyacenciaTriangular,RotationTriangular,V>{
     
-    constructor(id: number, shape: TriangularShape) {
-        super(id,shape);
+    constructor(id: number, rotacion: RotationTriangular, adyacentes: Map<AdyacenciaTriangular,CasillaTriangular<V>>) {
+        super(id,rotacion,adyacentes);
     }
     
-    public canInsert(pieza: Pieza<TriangularShape,V>,visitados: CasillaTriangular<V>[] = []): boolean {
-        if(!this.estaVacia()) return false;
-        if(this.rotacion !== pieza.rotacion) return false;
-        visitados.push(this);
-        let encaja: boolean = true;
-        for(let adyacente of Object.keys(pieza.adyacentes)) {
-            if(adyacente === 'bottom' || adyacente === 'top' || adyacente === 'left' || adyacente === 'right') {
-                if(visitados.includes(this.adyacentes[adyacente])) continue;
-                if(!this.adyacentes[adyacente]){encaja = false; break;}
-                encaja = this.adyacentes[adyacente].canInsert(pieza.adyacentes[adyacente],visitados);
-                if(!encaja) break;
-            }
-        }
-        return encaja;
+    protected validatePieza(pieza: Pieza<AdyacenciaTriangular,RotationTriangular,V>): boolean {
+        return this.estaVacia() && this.rotacion === pieza.rotacion;
     }
 
-    public insertPieza(pieza: Pieza<TriangularShape,V>): void {
+    protected consumePieza(pieza: Pieza<AdyacenciaTriangular,RotationTriangular,V>): void {
         this.value = pieza.value;
-        for(let adyacente of Object.keys(pieza.adyacentes)) {
-            if(adyacente === 'bottom' || adyacente === 'top' || adyacente === 'left' || adyacente === 'right') {
-                if(!this.adyacentes[adyacente].value)
-                this.adyacentes[adyacente].insertPieza(pieza.adyacentes[adyacente]);
-            }
-        }
-        this.notify();
     }
+    
 }

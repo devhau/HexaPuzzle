@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useEffect, useMemo, useState } from 'react';
 import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import { DragAndDropContext, GameContext } from '../../context';
 import { useFicha } from '../../hooks';
@@ -7,13 +7,13 @@ import { getPiezaSelected } from '../../helpers/PiezaSelected';
 import { Color } from '../../logic/types';
 
 interface Props {
-  fichaInfo: FichaHexagonal<Color>;
+  ficha: FichaHexagonal<Color>;
 }
 
-export const Ficha: FC<Props> = ({fichaInfo}) => {
+export const Ficha: FC<Props> = ({ficha}) => {
   const {startDragging,stopDragging} = useContext(DragAndDropContext);
   const {isUsingHammer,isUsingDelete,useDeleteComodin} = useContext(GameContext);
-  const {ficha, rotate, imagePath, refImg} = useFicha(fichaInfo);
+  const {rotate, imagePath, refImg} = useFicha(ficha);
   
   const onDragStart = (e: any) => {
     const rect = e.target.getBoundingClientRect();
@@ -22,10 +22,15 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
     const height = ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? 75 : 150;
     const x = (e.clientX/width - rect.left/width) * 100; 
     const y = (e.clientY/height - rect.top/height) * 100; 
-    startDragging(fichaInfo,getPiezaSelected(ficha,x,y));
+    startDragging(ficha,getPiezaSelected(ficha,x,y));
   }
 
   const onDragEnd = (e: React.DragEvent<HTMLImageElement>) => stopDragging();
+
+  const draggable = useMemo(
+    () => !ficha.blocked && !isUsingHammer && !isUsingDelete,
+    [ficha.blocked,isUsingHammer,isUsingDelete]
+  );
 
   return (
     <>
@@ -33,8 +38,8 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
         ref={refImg}
         alt="Ficha"
         src={`../../${imagePath}`}
-        draggable={!isUsingHammer && !isUsingDelete && !ficha.blocked}
-        onClick={() => isUsingDelete ? useDeleteComodin(fichaInfo) : rotate()}
+        draggable={draggable}
+        onClick={() => isUsingDelete ? useDeleteComodin(ficha) : rotate()}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         style={{
@@ -44,15 +49,14 @@ export const Ficha: FC<Props> = ({fichaInfo}) => {
           ficha.numberOfPiezas === 4 ? '128.25px' : '171px',
           height: ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? '75px' : '150px',
           objectFit: 'contain',
-          cursor: 'pointer',
-          zIndex: 1000
+          cursor: 'pointer'
         }}
       />
       {
         isUsingDelete && 
         <HighlightOffTwoToneIcon
           className='fadeIn'      
-          onClick={() => useDeleteComodin(fichaInfo)}
+          onClick={() => useDeleteComodin(ficha)}
           fontSize='large'
           color='error'
           style={{

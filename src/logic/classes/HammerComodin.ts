@@ -1,20 +1,21 @@
-import { PointsManagerType,Comodin,CasillaType } from '../interfaces';
+import { Comodin,CasillaType, EventManagerType } from '../interfaces';
+import { Event } from '../types';
 
 export class HammerComodin implements Comodin {
-    private _pointsManager?: PointsManagerType;
+    private _eventManager?: EventManagerType<Event>;
 
     constructor(private _costo: number) { }
 
     use(casilla: CasillaType): void {
         casilla.vaciar();
-        this._pointsManager?.update({type: 'use_comodin', payload: this});
+        this._eventManager?.notify({type: 'use_comodin', payload: this});
     }
     
     get costo(): number {
         return this._costo;
     }
     
-    set pointsManager(pointsManager: PointsManagerType){
-        this._pointsManager = pointsManager;
+    setEventManager(pointsManager: EventManagerType<Event>){
+        this._eventManager = pointsManager;
     }
 }

@@ -1,13 +1,9 @@
-import { ShapeType } from '../types';
 import { PiezaType } from './';
-import { Restriction } from './Restriction';
 
-export interface CasillaType extends ShapeType {
-    value?: any;
-    id: number;
-    restrictions: Restriction[];
-    canInsert(pieza: PiezaType): boolean;
-    insertPieza(pieza: PiezaType): void;
+export interface CasillaType<V = any> {
+    value?: V;
+    canInsert(pieza: PiezaType<V>): boolean;
+    insertPieza(pieza: PiezaType<V>): void;
     estaVacia(): boolean;
     vaciar(): void;
 }

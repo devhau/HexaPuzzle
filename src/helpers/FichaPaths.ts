@@ -1,4 +1,5 @@
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
+import { Color } from '../logic/types';
 import FichaAzul1 from '../assets/Fichas-azul/1.png';
 import FichaAzul2 from '../assets/Fichas-azul/2.png';
 import FichaAzul3 from '../assets/Fichas-azul/3.png';
@@ -24,7 +25,6 @@ import FichaNaranja2 from '../assets/Fichas-naranja/2.png';
 import FichaNaranja3 from '../assets/Fichas-naranja/3.png';
 import FichaNaranja4 from '../assets/Fichas-naranja/4.png';
 import FichaNaranja5 from '../assets/Fichas-naranja/5.png';
-import { Color } from '../logic/types';
 
 export const getFichaPath = (ficha: FichaHexagonal<Color>): string => {
 

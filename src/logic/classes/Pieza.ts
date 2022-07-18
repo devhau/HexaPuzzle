@@ -1,30 +1,15 @@
 import { PiezaType } from '../interfaces';
-import { ShapeType } from '../types';
+import { Shape } from './Shape';
 
-export abstract class Pieza<S extends ShapeType,V> implements PiezaType{
+export abstract class Pieza<A,R,V> extends Shape<A,R,Pieza<A,R,V>> implements PiezaType<V>{
     private _value: V;
-    private _shape: S;
 
-    constructor(value: V, shape: S) {
-        this._shape = shape;
+    constructor(value: V, rotacion: R, adyacentes: Map<A,Pieza<A,R,V>>) {
+        super(rotacion,adyacentes);
         this._value = value;
     }
 
     public abstract rotar(): void;
-
-    get rotacion(): S['rotacion'] {
-        return this._shape.rotacion;
-    }
-    set rotacion (rotacion: S['rotacion']) {
-        this._shape.rotacion = rotacion;
-    }
-
-    get adyacentes(): S['adyacentes'] {
-        return this._shape.adyacentes;
-    }
-    set adyacentes(adyacentes: S['adyacentes']){
-        this._shape.adyacentes = adyacentes;
-    }
 
     set value (value: V) {
         this._value = value;

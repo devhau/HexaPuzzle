@@ -1,39 +1,39 @@
-import { PointsManagerType,Restriction,Manager } from '../interfaces';
+import { Restriction, RestrictionManagerType, EventManagerType, Subscriber } from '../interfaces';
 import { Event } from '../types';
 
-export class RestrictionManager implements Manager {
+export class RestrictionManager implements RestrictionManagerType<Event>,Subscriber<Event> {
 
-    private _restrictions: Restriction[] = [];
-    private _pointsManager?: PointsManagerType;
+    private _restrictions: {restriction: Restriction<Event>, order: number}[] = [];
+    private _eventManager?: EventManagerType<Event>;
 
-    public addRestriction(restriction: Restriction){
-        this._restrictions.push(restriction);
+    public addRestriction(restriction: Restriction<Event>, order: number): void {
+        if(order < 0 || order > 1) throw new Error('order must be between 0 and 1');
+        this._restrictions.push({restriction, order});
     }
 
     public check(): void {
-        const restrictionsMatched = this._restrictions.filter(restriction => restriction.cumple);
-        restrictionsMatched.forEach(restriction => restriction.triggerAction());
-        if(restrictionsMatched.length > 0 && this._pointsManager){
-            const events: {[type: string]: number} = {};
-            restrictionsMatched.forEach(restriction => {
-                if(!restriction.eventType) return;
-                events[restriction.eventType] = (events[restriction.eventType] || 0) + 1;
-            });
-            for (const event of Object.keys(events)) {
-                this._pointsManager.update({
-                    type: event,
-                    payload: events[event] 
-                } as Event);
+        for (let i = 0; i <= 1; i++) {
+            const restrictions = this._restrictions.filter(restriction => restriction.order === i);
+            const restrictionsMatched = restrictions.filter(({restriction})=> restriction.cumple);
+            if(restrictionsMatched.length > 0){
+                restrictionsMatched.forEach(({restriction}) => {
+                    restriction.triggerAction();
+                    if(this._eventManager) this._eventManager.notify(restriction.event);
+                });
             }
         }
+    }
+
+    public update(): void {
+        this.check();
     }
 
     get restrictions(){
         return this._restrictions;
     }
 
-    set pointsManager(pointsManager: PointsManagerType){
-        this._pointsManager = pointsManager;
+    setEventManager(pointsManager: EventManagerType<Event>){
+        this._eventManager = pointsManager;
     }
     
 }

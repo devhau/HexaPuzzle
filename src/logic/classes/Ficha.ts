@@ -22,4 +22,8 @@ export abstract class Ficha<P extends PiezaType> implements FichaType {
     set piezas(piezas: P[]){
         this._piezas = piezas;
     }
+
+    get numberOfPiezas(){
+        return this._piezas.length;
+    };
 }

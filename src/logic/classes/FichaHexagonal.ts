@@ -2,15 +2,10 @@ import { Ficha } from './Ficha';
 import { PiezaTriangular } from './PiezaTriangular';
 
 export class FichaHexagonal<V> extends Ficha<PiezaTriangular<V>> {
-    private _rotationStage: 1 | 2 | 3 | 4 | 5 | 6 = 1;
-
-    constructor(private readonly _numberOfPiezas: 1 | 2 | 3 | 4 | 5) {
+    
+    constructor(private _rotationStage: number) {
         super();
     }
- 
-    get numberOfPiezas(){
-        return this._numberOfPiezas;
-    };
 
     get rotationStage() {
         return this._rotationStage;

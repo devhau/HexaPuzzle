@@ -1,7 +1,8 @@
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { Color } from '../logic/types';
+import { PiezaTriangular } from '../logic/classes/PiezaTriangular';
 
-export const getPiezaSelected = (ficha: FichaHexagonal<Color>, x: number, y: number) => {
+export const getPiezaSelected = (ficha: FichaHexagonal<Color>, x: number, y: number): PiezaTriangular<Color> => {
     switch (ficha.numberOfPiezas) {
         case 1:
             return ficha.piezas[0];
@@ -93,5 +94,6 @@ export const getPiezaSelected = (ficha: FichaHexagonal<Color>, x: number, y: num
                     if(x <= 63) return y < 1.93 * x - 47.2 ? ficha.piezas[1] : ficha.piezas[0];
                     return y < -1.94 * x + 193 ? ficha.piezas[1] : ficha.piezas[2];
             }
+        default: return ficha.piezas[0];
     }
 }

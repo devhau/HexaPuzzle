@@ -1,18 +1,11 @@
+import { RotationTriangular } from '../types';
 import { Ficha } from './Ficha';
 import { PiezaTriangular } from './PiezaTriangular';
 
-export class FichaHexagonal<V> extends Ficha<PiezaTriangular<V>> {
+export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
     
-    constructor(private _rotationStage: number) {
-        super();
-    }
-
-    get rotationStage() {
-        return this._rotationStage;
-    };
-
-    get possibleRotations(): number {
-        return this.numberOfPiezas === 1 ? 2 : 6;
+    constructor(rotationStage: number, piezasValues: V[]) {
+        super(rotationStage,piezasValues);
     }
 
     public rotar(): void {
@@ -21,15 +14,23 @@ export class FichaHexagonal<V> extends Ficha<PiezaTriangular<V>> {
             pieza.adyacentes.clear();
         });
         this._rotationStage++;
-        if(this.numberOfPiezas === 1){
-            if(this.rotationStage > 2) this._rotationStage = 1;
-            return;
-        }
-        if(this.rotationStage > 6) this._rotationStage = 1;
+        if(this.rotationStage > this.possibleRotations) this._rotationStage = 1;
         this.updateAdyacentes();
     }
 
-    public updateAdyacentes(): void {
+    protected setPiezas(piezasValues: V[]): void {
+        this.piezas = [];
+        let rotacion: RotationTriangular = piezasValues.length <= 2 ? 
+        this._rotationStage % 2 === 1 ? 'VERTEXUP' : 'VERTEXDOWN' :
+        this._rotationStage % 2 === 1 ? 'VERTEXDOWN' : 'VERTEXUP';
+
+        for(let i = 0; i < piezasValues.length; i++){
+            this.piezas.push(new PiezaTriangular(piezasValues[i], rotacion, new Map()));
+            rotacion = (rotacion === 'VERTEXUP') ? 'VERTEXDOWN' : 'VERTEXUP';
+        }
+    }
+
+    protected updateAdyacentes(): void {
         if(this.numberOfPiezas === 2){
             if(this.rotationStage === 1){
                 this.piezas[0].addAdyacente('bottom',this.piezas[1])
@@ -178,4 +179,9 @@ export class FichaHexagonal<V> extends Ficha<PiezaTriangular<V>> {
             }
         }
     }
+
+    get possibleRotations(): number {
+        return this.numberOfPiezas === 1 ? 2 : 6;
+    }
+
 }

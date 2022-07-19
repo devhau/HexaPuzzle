@@ -2,7 +2,7 @@ import { PiezaType } from '../interfaces';
 import { Shape } from './Shape';
 
 export abstract class Pieza<A,R,V> extends Shape<A,R,Pieza<A,R,V>> implements PiezaType<V>{
-    private _value: V;
+    private _value?: V;
 
     constructor(value: V, rotacion: R, adyacentes: Map<A,Pieza<A,R,V>>) {
         super(rotacion,adyacentes);
@@ -11,10 +11,10 @@ export abstract class Pieza<A,R,V> extends Shape<A,R,Pieza<A,R,V>> implements Pi
 
     public abstract rotar(): void;
 
-    set value (value: V) {
+    set value (value: V | undefined) {
         this._value = value;
     }
-    get value(): V{
+    get value(): V | undefined {
         return this._value;
     }
     

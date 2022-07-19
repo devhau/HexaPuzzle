@@ -1,11 +1,18 @@
 import { PiezaType } from '../interfaces';
 import { FichaType } from '../types';
 
-export abstract class Ficha<P extends PiezaType> implements FichaType {
+export abstract class Ficha<V,P extends PiezaType<V>> implements FichaType {
     private _piezas: P[] = [];
     private _blocked: boolean = false;
+
+    constructor(protected _rotationStage: number, piezasValues: V[]){
+        this.setPiezas(piezasValues);
+        this.updateAdyacentes();
+    }
     
     public abstract rotar(): void;
+    protected abstract setPiezas(piezasValues: V[]): void;
+    protected abstract updateAdyacentes(): void;
 
     get blocked(){
         return this._blocked;
@@ -18,12 +25,16 @@ export abstract class Ficha<P extends PiezaType> implements FichaType {
     get piezas(){
         return this._piezas;
     }
-    
-    set piezas(piezas: P[]){
+    protected set piezas(piezas: P[]){
         this._piezas = piezas;
     }
 
     get numberOfPiezas(){
-        return this._piezas.length;
-    };
+        return this._piezas.filter(pieza => pieza.value).length;
+    }
+
+    get rotationStage() {
+        return this._rotationStage;
+    }
+    
 }

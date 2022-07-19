@@ -1,4 +1,4 @@
 export interface PiezaType<V = any> {
-    value: V;
+    value?: V;
     rotar?(): void;
 }

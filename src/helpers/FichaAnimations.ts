@@ -1,13 +1,13 @@
 import { FichaHexagonal } from '../logic/classes/FichaHexagonal';
 import { Color } from '../logic/types';
 
-export const getFichaAnimation = (ficha: FichaHexagonal<Color>, img: HTMLImageElement | null) => {
+export const getFichaAnimation = (ficha: FichaHexagonal<Color>) => {
     let transform: string = '';
     let animation: string = '';
     let remove: string = '';
     let miliseconds: number = 350;
-    if (ficha.numberOfPiezas === 1){
-        if(ficha.piezas[0].rotacion === 'VERTEXDOWN'){
+    if (ficha.possibleRotations === 2) {
+        if(ficha.rotationStage === 2){
           remove = 'rotar0to180';
           transform = 'rotar180to360';
           animation = 'rotar180to360-anim';

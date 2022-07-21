@@ -26,7 +26,7 @@ export const Casilla: FC<Props> = ({casilla}) => {
   }, [mode]);
   
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    if(!casilla.estaVacia()) return Toast.fire({
+    if(!casilla.estaVacia() && piezaSelected?.value) return Toast.fire({
       icon: 'error',
       title: 'No se puede insertar'
     });

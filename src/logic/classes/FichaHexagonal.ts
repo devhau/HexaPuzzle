@@ -4,8 +4,8 @@ import { PiezaTriangular } from './PiezaTriangular';
 
 export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
     
-    constructor(rotationStage: number, piezasValues: V[]) {
-        super(rotationStage,piezasValues);
+    constructor(rotationStage: number, piezasValues: V[], hasSpaces: boolean) {
+        super(rotationStage,piezasValues,hasSpaces);
     }
 
     public rotar(): void {
@@ -20,18 +20,21 @@ export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
 
     protected setPiezas(piezasValues: V[]): void {
         this.piezas = [];
-        let rotacion: RotationTriangular = piezasValues.length <= 2 ? 
+
+        let rotacion: RotationTriangular = 
+        (piezasValues.length <= 2 && !this._hasSpaces) || (piezasValues.length === 6 && this._hasSpaces) ? 
         this._rotationStage % 2 === 1 ? 'VERTEXUP' : 'VERTEXDOWN' :
         this._rotationStage % 2 === 1 ? 'VERTEXDOWN' : 'VERTEXUP';
 
         for(let i = 0; i < piezasValues.length; i++){
-            this.piezas.push(new PiezaTriangular(piezasValues[i], rotacion, new Map()));
+            this.piezas.push(new PiezaTriangular(rotacion, new Map(),piezasValues[i]));
             rotacion = (rotacion === 'VERTEXUP') ? 'VERTEXDOWN' : 'VERTEXUP';
         }
+
     }
 
     protected updateAdyacentes(): void {
-        if(this.numberOfPiezas === 2){
+        if(this.numberOfPiezas === 2 && !this._hasSpaces){
             if(this.rotationStage === 1){
                 this.piezas[0].addAdyacente('bottom',this.piezas[1])
                 this.piezas[1].addAdyacente('top',this.piezas[0])
@@ -45,7 +48,7 @@ export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
                 this.piezas[0].addAdyacente('right',this.piezas[1])
                 this.piezas[1].addAdyacente('left',this.piezas[0])
             }
-        }else if(this.numberOfPiezas === 3){
+        }else if((this.numberOfPiezas === 3 && !this._hasSpaces) || (this.numberOfPiezas === 2 && this._hasSpaces)){
             if(this.rotationStage === 1){
                 this.piezas[0].addAdyacente('right',this.piezas[1])
                 this.piezas[1].addAdyacente('left',this.piezas[0])
@@ -177,11 +180,40 @@ export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
                 this.piezas[3].addAdyacente('left',this.piezas[4])
                 this.piezas[4].addAdyacente('right',this.piezas[3])
             }
+        }else if(this.numberOfPiezas === 3 && this._hasSpaces){
+            if(this.rotationStage === 1){
+                this.piezas[0].addAdyacente('right',this.piezas[1]);
+                this.piezas[0].addAdyacente('bottom',this.piezas[5]);
+                this.piezas[1].addAdyacente('left',this.piezas[0]);
+                this.piezas[1].addAdyacente('right',this.piezas[2]);
+                this.piezas[2].addAdyacente('left',this.piezas[1]);
+                this.piezas[2].addAdyacente('bottom',this.piezas[3]);
+                this.piezas[3].addAdyacente('top',this.piezas[2]);
+                this.piezas[3].addAdyacente('left',this.piezas[4]);
+                this.piezas[4].addAdyacente('right',this.piezas[3]);
+                this.piezas[4].addAdyacente('left',this.piezas[5]);
+                this.piezas[5].addAdyacente('right',this.piezas[4]);
+                this.piezas[5].addAdyacente('top',this.piezas[0]);
+            }else{
+                this.piezas[0].addAdyacente('right',this.piezas[1]);
+                this.piezas[0].addAdyacente('left',this.piezas[5]);
+                this.piezas[1].addAdyacente('left',this.piezas[0]);
+                this.piezas[1].addAdyacente('bottom',this.piezas[2]);
+                this.piezas[2].addAdyacente('top',this.piezas[1]);
+                this.piezas[2].addAdyacente('left',this.piezas[3]);
+                this.piezas[3].addAdyacente('right',this.piezas[2]);
+                this.piezas[3].addAdyacente('left',this.piezas[4]);
+                this.piezas[4].addAdyacente('right',this.piezas[3]);
+                this.piezas[4].addAdyacente('top',this.piezas[5]);
+                this.piezas[5].addAdyacente('bottom',this.piezas[4]);
+                this.piezas[5].addAdyacente('right',this.piezas[0]);
+            }
         }
     }
 
     get possibleRotations(): number {
-        return this.numberOfPiezas === 1 ? 2 : 6;
+        return this.numberOfPiezas === 1 || (this.numberOfPiezas === 3 && this._hasSpaces)
+        ? 2 : 6;
     }
 
 }

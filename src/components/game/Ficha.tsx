@@ -17,9 +17,9 @@ export const Ficha: FC<Props> = ({ficha}) => {
   
   const onDragStart = (e: any) => {
     const rect = e.target.getBoundingClientRect();
-    const width = ficha.numberOfPiezas <= 2 ? 85.5 : 
-    ficha.numberOfPiezas === 3 || ficha.numberOfPiezas === 5 ? 171 : 128.25;
-    const height = ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? 75 : 150;
+    const width = ficha.numberOfPiezas <= 2 && !ficha.hasSpaces ? 85.5 : 
+    ficha.numberOfPiezas === 3 || ficha.numberOfPiezas === 5 || ficha.hasSpaces ? 171 : 128.25;
+    const height = ficha.numberOfPiezas === 1 || (ficha.numberOfPiezas === 3 && !ficha.hasSpaces) ? 75 : 150;
     const x = (e.clientX/width - rect.left/width) * 100; 
     const y = (e.clientY/height - rect.top/height) * 100; 
     startDragging(ficha,getPiezaSelected(ficha,x,y));
@@ -43,11 +43,10 @@ export const Ficha: FC<Props> = ({ficha}) => {
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         style={{
-          width: ficha.numberOfPiezas === 1 ? '85.5px' : 
-          ficha.numberOfPiezas === 2 ? '85.5px' : 
+          width: 
+          ficha.numberOfPiezas <= 2 && !ficha.hasSpaces ? '85.5px' : 
           ficha.numberOfPiezas === 3 ? '171px' :
           ficha.numberOfPiezas === 4 ? '128.25px' : '171px',
-          height: ficha.numberOfPiezas === 1 || ficha.numberOfPiezas === 3 ? '75px' : '150px',
           objectFit: 'contain',
           cursor: 'pointer'
         }}

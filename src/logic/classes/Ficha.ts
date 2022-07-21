@@ -5,7 +5,7 @@ export abstract class Ficha<V,P extends PiezaType<V>> implements FichaType {
     private _piezas: P[] = [];
     private _blocked: boolean = false;
 
-    constructor(protected _rotationStage: number, piezasValues: V[]){
+    constructor(protected _rotationStage: number, piezasValues: V[], protected _hasSpaces: boolean) {
         this.setPiezas(piezasValues);
         this.updateAdyacentes();
     }
@@ -35,6 +35,10 @@ export abstract class Ficha<V,P extends PiezaType<V>> implements FichaType {
 
     get rotationStage() {
         return this._rotationStage;
+    }
+
+    get hasSpaces() {
+        return this._hasSpaces;
     }
     
 }

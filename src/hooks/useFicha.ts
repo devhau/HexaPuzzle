@@ -16,7 +16,7 @@ export const useFicha = (ficha: FichaHexagonal<Color>) => {
                     refImg.current.className = '';
                 break;
                 case 2:
-                    refImg.current.className = ficha.numberOfPiezas === 1 ? 'rotar0to180' : 'rotar0to60';
+                    refImg.current.className = ficha.possibleRotations === 2 ? 'rotar0to180' : 'rotar0to60';
                 break;
                 case 3:
                     refImg.current.className = 'rotar60to120';
@@ -38,7 +38,7 @@ export const useFicha = (ficha: FichaHexagonal<Color>) => {
     const rotate = () => {
         if(isRotating.current) return;
         isRotating.current = true;
-        const {transform,animation,remove,miliseconds} = getFichaAnimation(ficha,refImg.current);
+        const {transform,animation,remove,miliseconds} = getFichaAnimation(ficha);
         refImg.current?.classList.remove(remove);
         refImg.current?.classList.add(transform);
         refImg.current?.classList.add(animation);

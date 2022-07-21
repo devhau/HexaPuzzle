@@ -3,8 +3,8 @@ import { Pieza } from './Pieza';
 
 export class PiezaTriangular<V> extends Pieza<AdyacenciaTriangular,RotationTriangular,V> {
 
-    constructor(value: V, rotacion: RotationTriangular, adyacentes: Map<AdyacenciaTriangular,PiezaTriangular<V>>) {
-        super(value,rotacion,adyacentes);
+    constructor(rotacion: RotationTriangular, adyacentes: Map<AdyacenciaTriangular,PiezaTriangular<V>>,value?: V) {
+        super(rotacion,adyacentes,value);
     }
 
     public rotar(): void {

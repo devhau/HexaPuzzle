@@ -4,7 +4,7 @@ import { Shape } from './Shape';
 export abstract class Pieza<A,R,V> extends Shape<A,R,Pieza<A,R,V>> implements PiezaType<V>{
     private _value?: V;
 
-    constructor(value: V, rotacion: R, adyacentes: Map<A,Pieza<A,R,V>>) {
+    constructor(rotacion: R, adyacentes: Map<A,Pieza<A,R,V>>,value?: V, ) {
         super(rotacion,adyacentes);
         this._value = value;
     }

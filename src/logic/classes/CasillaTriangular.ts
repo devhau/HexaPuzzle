@@ -9,11 +9,12 @@ export class CasillaTriangular<V> extends Casilla<AdyacenciaTriangular,RotationT
     }
     
     protected validatePieza(pieza: Pieza<AdyacenciaTriangular,RotationTriangular,V>): boolean {
-        return this.estaVacia() && this.rotacion === pieza.rotacion;
+        if(!pieza.value) return true;
+        return (this.estaVacia() && this.rotacion === pieza.rotacion);
     }
 
     protected consumePieza(pieza: Pieza<AdyacenciaTriangular,RotationTriangular,V>): void {
-        this.value = pieza.value;
+        if(pieza.value) this.value = pieza.value;
     }
     
 }

@@ -37,15 +37,14 @@ export abstract class Casilla<A,R,V> extends Shape<A,R,Casilla<A,R,V>> implement
         return encaja;
     }
 
-    public insertPieza(pieza: Pieza<A,R,V>,casillaInicial: Casilla<A,R,V> = this, cont = 0): void {
+    public insertPieza(pieza: Pieza<A,R,V>,casillaInicial: Casilla<A,R,V> = this): void {
         this.consumePieza(pieza);
-        cont++;
         for(let entry of pieza.adyacentes.entries()) {
             const [adyacencia, adyacente] = entry;
             if(this.adyacentes.get(adyacencia)?.validatePieza(adyacente))
             this.adyacentes.get(adyacencia)?.insertPieza(adyacente,casillaInicial);
         }
-        if(this === casillaInicial) this._eventManager?.notify({type: 'insert_ficha', payload: cont});
+        if(this === casillaInicial) this._eventManager?.notify({type: 'insert_ficha', payload: pieza.container})
     }
 
     setEventManager(pointsManager: EventManagerType<Event>){

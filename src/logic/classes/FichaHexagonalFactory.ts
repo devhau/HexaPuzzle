@@ -13,7 +13,7 @@ export class FichaHexagonalFactory<V> implements Factory<FichaHexagonal<V>>{
     public generate(): FichaHexagonal<V> {
 
         let numberOfPiezas = Math.floor(Math.random() * (this._maxNumberOfPiezas)) + 1;
-        const hasSpaces: boolean = (numberOfPiezas === 2 || numberOfPiezas === 3) && Math.random() <= 0.25;
+        const hasSpaces: boolean = (numberOfPiezas === 2 || numberOfPiezas === 3) && Math.random() <= 0.35;
 
         let rotationStage = numberOfPiezas === 1 || (numberOfPiezas === 3 && hasSpaces)
         ? Math.floor(Math.random() * 2) + 1

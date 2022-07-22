@@ -15,7 +15,7 @@ export class GamePointSystem implements PointSystem<Event>{
     getEventPoints(event: Event): number {
        switch (event.type) {
             case 'insert_ficha':
-                return this._pointsPerPieza * event.payload;
+                return this._pointsPerPieza * event.payload.numberOfPiezas;
             case 'make_hexagon':
                 this._hexagonsInRow++;
                 if(!this._isTimerActive){

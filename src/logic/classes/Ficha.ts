@@ -6,6 +6,7 @@ export abstract class Ficha<V,P extends PiezaType<V>> implements FichaType {
     private _blocked: boolean = false;
 
     constructor(protected _rotationStage: number, piezasValues: V[], protected _hasSpaces: boolean) {
+        if(piezasValues.length <= 0) throw new Error('No se puede crear una ficha sin piezas');
         this.setPiezas(piezasValues);
         this.updateAdyacentes();
     }
@@ -29,7 +30,7 @@ export abstract class Ficha<V,P extends PiezaType<V>> implements FichaType {
         this._piezas = piezas;
     }
 
-    get numberOfPiezas(){
+    get numberOfPiezas(): number{
         return this._piezas.filter(pieza => pieza.value).length;
     }
 

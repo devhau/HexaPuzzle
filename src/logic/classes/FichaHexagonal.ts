@@ -27,7 +27,7 @@ export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
         this._rotationStage % 2 === 1 ? 'VERTEXDOWN' : 'VERTEXUP';
 
         for(let i = 0; i < piezasValues.length; i++){
-            this.piezas.push(new PiezaTriangular(rotacion, new Map(),piezasValues[i]));
+            this.piezas.push(new PiezaTriangular<V>(rotacion, new Map(),this,piezasValues[i]));
             rotacion = (rotacion === 'VERTEXUP') ? 'VERTEXDOWN' : 'VERTEXUP';
         }
 

@@ -1,14 +1,13 @@
-import { Comodin,EventManagerType,InventoryType } from '../interfaces';
+import { Comodin,EventManagerType,FichaType } from '../interfaces';
 import { Event } from '../types';
 
-export class DeleteComodin<T> implements Comodin{
+export class TrashComodin implements Comodin<FichaType>{
     private _eventManager?: EventManagerType<Event>;
 
-    constructor(private _inventory: InventoryType<T>, private _costo: number) { }
+    constructor(private _costo: number) { }
 
-    use(item: T): void {
-        this._inventory.removeItem(item);
-        this._inventory.addItem();
+    use(ficha: FichaType): void {
+        this._eventManager?.notify({type: 'remove_ficha', payload: ficha});
         this._eventManager?.notify({type: 'use_comodin', payload: this});
     }
 

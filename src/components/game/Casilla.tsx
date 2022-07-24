@@ -12,8 +12,8 @@ interface Props {
 
 export const Casilla: FC<Props> = ({casilla}) => {
   const {mode} = useContext(ThemeContext);
-  const {piezaSelected,fichaDragging} = useContext(DragAndDropContext);
-  const {insertFicha,isUsingHammer,useHammerComodin} = useContext(GameContext);
+  const {piezaSelected} = useContext(DragAndDropContext);
+  const {insertPieza,isUsingHammer,useHammerComodin} = useContext(GameContext);
   const [color, setColor] = useState('grey');
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const Casilla: FC<Props> = ({casilla}) => {
       icon: 'error',
       title: 'No se puede insertar'
     });
-    if(piezaSelected && fichaDragging) insertFicha(fichaDragging,piezaSelected,casilla);
+    if(piezaSelected) insertPieza(piezaSelected,casilla);
   }
   const allowDrop = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 

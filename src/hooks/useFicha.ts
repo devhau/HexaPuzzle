@@ -10,6 +10,7 @@ export const useFicha = (ficha: FichaHexagonal<Color>) => {
     const isRotating = useRef(false);
 
     useEffect(() => {
+        refImg.current!.style.display = 'none';
         if(refImg.current){
             switch(ficha.rotationStage){
                 case 1:
@@ -33,6 +34,7 @@ export const useFicha = (ficha: FichaHexagonal<Color>) => {
             }
         }
         setImagePath(getFichaPath(ficha));
+        refImg.current!.style.display = 'block';
     }, [ficha]);
 
     const rotate = () => {
@@ -53,5 +55,6 @@ export const useFicha = (ficha: FichaHexagonal<Color>) => {
         rotate,
         imagePath,
         refImg,
+        setImagePath
     }
 }

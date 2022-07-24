@@ -1,5 +1,4 @@
-import { PiezaType } from '../interfaces';
-import { FichaType } from '../types';
+import { PiezaType,FichaType } from '../interfaces';
 
 export abstract class Ficha<V,P extends PiezaType<V>> implements FichaType {
     private _piezas: P[] = [];
@@ -12,6 +11,7 @@ export abstract class Ficha<V,P extends PiezaType<V>> implements FichaType {
     }
     
     public abstract rotar(): void;
+    public abstract get possibleRotations(): number;
     protected abstract setPiezas(piezasValues: V[]): void;
     protected abstract updateAdyacentes(): void;
 

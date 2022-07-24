@@ -9,10 +9,7 @@ export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
     }
 
     public rotar(): void {
-        this.piezas.forEach(pieza => {
-            pieza.rotar();
-            pieza.adyacentes.clear();
-        });
+        this.piezas.forEach(pieza => pieza.rotar());
         this._rotationStage++;
         if(this.rotationStage > this.possibleRotations) this._rotationStage = 1;
         this.updateAdyacentes();
@@ -33,7 +30,13 @@ export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
 
     }
 
+    get possibleRotations(): number {
+        return this.numberOfPiezas === 1 || (this.numberOfPiezas === 3 && this._hasSpaces)
+        ? 2 : 6;
+    }
+
     protected updateAdyacentes(): void {
+        this.piezas.forEach(pieza => pieza.adyacentes.clear());
         if(this.numberOfPiezas === 2 && !this._hasSpaces){
             if(this.rotationStage === 1){
                 this.piezas[0].addAdyacente('bottom',this.piezas[1])
@@ -209,11 +212,6 @@ export class FichaHexagonal<V> extends Ficha<V,PiezaTriangular<V>> {
                 this.piezas[5].addAdyacente('right',this.piezas[0]);
             }
         }
-    }
-
-    get possibleRotations(): number {
-        return this.numberOfPiezas === 1 || (this.numberOfPiezas === 3 && this._hasSpaces)
-        ? 2 : 6;
     }
 
 }

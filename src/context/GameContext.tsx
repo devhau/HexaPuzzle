@@ -7,13 +7,13 @@ import { Comodin } from '../logic/interfaces';
 import { Color } from '../logic/types';
 
 interface ContextProps extends GameState {
-    insertFicha: (ficha: FichaHexagonal<Color>,pieza: PiezaTriangular<Color>, casilla: CasillaTriangular<Color>) => void;
+    insertPieza: (pieza: PiezaTriangular<Color>, casilla: CasillaTriangular<Color>) => void;
     useHammerComodin: (casilla: CasillaTriangular<Color>) => void;
-    useDeleteComodin: (ficha: FichaHexagonal<Color>) => void; 
+    useTrashComodin: (ficha: FichaHexagonal<Color>) => void; 
     toggleHammer: () => void;
     toggleDelete: () => void;
-    canUseComodin: (comodin: Comodin) => boolean;
-    comodins: {hammerComodin: Comodin, deleteComodin: Comodin};
+    canUseComodin: (comodin: Comodin<any>) => boolean;
+    comodins: {hammerComodin: Comodin<CasillaTriangular<Color>>, trashComodin: Comodin<FichaHexagonal<Color>>};
 }
 
 export const GameContext = createContext({} as ContextProps);

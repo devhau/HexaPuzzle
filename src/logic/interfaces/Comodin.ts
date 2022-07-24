@@ -1,4 +1,4 @@
-export interface Comodin {
-    use(element?: any): void;
+export interface Comodin<T> {
+    use(element: T): void;
     costo: number;
 }

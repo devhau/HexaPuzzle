@@ -21,7 +21,7 @@ export const GameScreen = () => {
     comodins,
     gameOver
   } = useContext(GameContext);
-  const {hammerComodin,deleteComodin} = comodins;
+  const {hammerComodin,trashComodin} = comodins;
 
   const theme = useTheme();
   useEffect(() => {
@@ -78,8 +78,8 @@ export const GameScreen = () => {
         <Comodin
           icon={<DeleteTwoToneIcon fontSize='inherit'/>}
           onClick={toggleDelete}
-          disabled={!canUseComodin(deleteComodin) || isUsingHammer || isDragging}
-          cost={deleteComodin.costo}
+          disabled={!canUseComodin(trashComodin) || isUsingHammer || isDragging}
+          cost={trashComodin.costo}
         />
       </Box>
     </Box>

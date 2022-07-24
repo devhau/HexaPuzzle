@@ -1,11 +1,10 @@
-import { CasillaType, InventoryType, Restriction } from '../interfaces';
-import { Event, FichaType } from '../types';
+import { CasillaType, Condition, InventoryType,FichaType } from '../interfaces';
 
-export class OutOfMovesRestriction implements Restriction<Event>{
-    
+export class OutOfMovesCondition implements Condition{
+
     constructor(private _inventory: InventoryType<FichaType>, private _tablero: CasillaType[]){ }
 
-    get cumple(){
+    get cumple(): boolean {
         return this.outOfMoves();
     }
 
@@ -32,14 +31,8 @@ export class OutOfMovesRestriction implements Restriction<Event>{
         return encaja;
     }
 
-    triggerAction(): void {
+    public action(): void {
         console.log('game over');
-    }
-
-    get event(): Event {
-        return {
-            type: 'game_over'
-        }
     }
 
 }

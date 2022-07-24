@@ -46,7 +46,7 @@ export const GameContextProvider: FC<Props> = ({children}) => {
 
     const [state,dispatch] = useReducer(GameReducer, initialState);
     const {inventory,tablero,pointsManager,comodines,gameOverFlag} = useGame(tableroFormat);
-    const {hammerComodin, deleteComodin} = comodines;
+    const {hammerComodin, trashComodin} = comodines;
 
     const checkGameOver = () => {
         if(!gameOverFlag.isGameOver()) return;
@@ -58,13 +58,11 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         dispatch({type: 'gameOver'});
     }
 
-    const insertFicha = (ficha: FichaHexagonal<Color>,pieza: PiezaTriangular<Color>, casilla: CasillaTriangular<Color>) => {
+    const insertPieza = (pieza: PiezaTriangular<Color>, casilla: CasillaTriangular<Color>) => {
         if(!casilla.canInsert(pieza)) return Toast.fire({
             icon: 'error',
             title: 'No se puede insertar'
         });
-        inventory.removeItem(ficha);
-        inventory.addItem();
         casilla.insertPieza(pieza);
         dispatch({type: 'setTablero', payload: tablero})
         checkGameOver();
@@ -74,9 +72,9 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         hammerComodin.use(casilla);
         dispatch({type: 'toggleHammer'});
     }
-    const useDeleteComodin = (ficha: FichaHexagonal<Color>) => {
-        if(!pointsManager.canUse(deleteComodin)) return;
-        deleteComodin.use(ficha);
+    const useTrashComodin = (ficha: FichaHexagonal<Color>) => {
+        if(!pointsManager.canUse(trashComodin)) return;
+        trashComodin.use(ficha);
         dispatch({type: 'toggleDelete'});
     }
     const toggleHammer = () => {
@@ -84,10 +82,10 @@ export const GameContextProvider: FC<Props> = ({children}) => {
         dispatch({type: 'toggleHammer'});
     }
     const toggleDelete = () => {
-        if(!pointsManager.canUse(deleteComodin)) return;
+        if(!pointsManager.canUse(trashComodin)) return;
         dispatch({type: 'toggleDelete'});
     }
-    const canUseComodin = (comodin: Comodin) => pointsManager.canUse(comodin);
+    const canUseComodin = (comodin: Comodin<any>) => pointsManager.canUse(comodin);
     
     useEffect(() => {
       dispatch({type: 'setTablero', payload: tablero});
@@ -102,13 +100,13 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     return (
         <GameContext.Provider value={{
             ...state,
-            insertFicha,
+            insertPieza,
             useHammerComodin,
-            useDeleteComodin,
+            useTrashComodin,
             toggleHammer,
             toggleDelete,
             canUseComodin,
-            comodins: {hammerComodin, deleteComodin}
+            comodins: {hammerComodin, trashComodin}
         }}>
             {children}
         </GameContext.Provider>

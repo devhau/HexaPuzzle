@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useMemo, useState } from 'react';
+import { FC, useContext, useMemo } from 'react';
 import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import { DragAndDropContext, GameContext } from '../../context';
 import { useFicha } from '../../hooks';
@@ -12,7 +12,7 @@ interface Props {
 
 export const Ficha: FC<Props> = ({ficha}) => {
   const {startDragging,stopDragging} = useContext(DragAndDropContext);
-  const {isUsingHammer,isUsingDelete,useDeleteComodin} = useContext(GameContext);
+  const {isUsingHammer,isUsingDelete,useTrashComodin} = useContext(GameContext);
   const {rotate, imagePath, refImg} = useFicha(ficha);
   
   const onDragStart = (e: any) => {
@@ -22,7 +22,7 @@ export const Ficha: FC<Props> = ({ficha}) => {
     const height = ficha.numberOfPiezas === 1 || (ficha.numberOfPiezas === 3 && !ficha.hasSpaces) ? 75 : 150;
     const x = (e.clientX/width - rect.left/width) * 100; 
     const y = (e.clientY/height - rect.top/height) * 100; 
-    startDragging(ficha,getPiezaSelected(ficha,x,y));
+    startDragging(getPiezaSelected(ficha,x,y));
   }
 
   const onDragEnd = (e: React.DragEvent<HTMLImageElement>) => stopDragging();
@@ -39,7 +39,7 @@ export const Ficha: FC<Props> = ({ficha}) => {
         alt="Ficha"
         src={`../../${imagePath}`}
         draggable={draggable}
-        onClick={() => isUsingDelete ? useDeleteComodin(ficha) : rotate()}
+        onClick={() => isUsingDelete ? useTrashComodin(ficha) : rotate()}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         style={{
@@ -55,7 +55,7 @@ export const Ficha: FC<Props> = ({ficha}) => {
         isUsingDelete && 
         <HighlightOffTwoToneIcon
           className='fadeIn'      
-          onClick={() => useDeleteComodin(ficha)}
+          onClick={() => useTrashComodin(ficha)}
           fontSize='large'
           color='error'
           style={{

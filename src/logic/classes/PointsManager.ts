@@ -12,11 +12,12 @@ export class PointsManager<E extends {type: string}> implements PointsManagerTyp
         this._points += this._pointSystem.getEventPoints(event);
     }
 
-    public canUse(comodin: Comodin): boolean {
+    public canUse(comodin: Comodin<any>): boolean {
         return this._points >= comodin.costo;
     }
 
     get points(): number {
         return this._points;
     }
+    
 }

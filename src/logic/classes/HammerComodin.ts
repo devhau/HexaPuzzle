@@ -1,7 +1,7 @@
 import { Comodin,CasillaType, EventManagerType } from '../interfaces';
 import { Event } from '../types';
 
-export class HammerComodin implements Comodin {
+export class HammerComodin implements Comodin<CasillaType> {
     private _eventManager?: EventManagerType<Event>;
 
     constructor(private _costo: number) { }

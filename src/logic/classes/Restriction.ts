@@ -5,9 +5,9 @@ export class Restriction<E extends {type: string}> {
 
     constructor(private _condition: Condition, private _event: E) { }
 
-    public validate(): Restriction<E>[] {
-        if(this.cumple) return [this, ...(this._next ? this._next.validate() : [])];
-        else return [...(this._next ? this._next.validate() : [])];
+    public getMatchingRestrictions(): Restriction<E>[] {
+        if(this.cumple) return [this, ...(this._next ? this._next.getMatchingRestrictions() : [])];
+        else return [...(this._next ? this._next.getMatchingRestrictions() : [])];
     }
 
     get cumple(): boolean {

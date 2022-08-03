@@ -24,31 +24,33 @@ export abstract class Casilla<A,R,V> extends Shape<A,R,Casilla<A,R,V>> implement
         visitados.push(this);
         let encaja: boolean = true;
         for(let entry of pieza.adyacentes.entries()) {
-            const [adyacencia, adyacente] = entry;
+            const [adyacencia, piezaAdyacente] = entry;
             const casillaAdyacente = this.adyacentes.get(adyacencia);
             if(!casillaAdyacente){
                 encaja = false; 
                 break;
             }
             if(visitados.includes(casillaAdyacente)) continue;
-            encaja = casillaAdyacente.canInsert(adyacente,visitados);
+            encaja = casillaAdyacente.canInsert(piezaAdyacente,visitados);
             if(!encaja) break;
         }
         return encaja;
     }
 
-    public insertPieza(pieza: Pieza<A,R,V>,casillaInicial: Casilla<A,R,V> = this): void {
+    public insertPieza(pieza: Pieza<A,R,V>,casillaInicial: Casilla<A,R,V> = this,visitados: Casilla<A,R,V>[] = []): void {
         this.consumePieza(pieza);
+        visitados.push(this);
         for(let entry of pieza.adyacentes.entries()) {
-            const [adyacencia, adyacente] = entry;
-            if(this.adyacentes.get(adyacencia)?.validatePieza(adyacente))
-            this.adyacentes.get(adyacencia)?.insertPieza(adyacente,casillaInicial);
+            const [adyacencia, piezaAdyacente] = entry;
+            const casillaAdyacente = this.adyacentes.get(adyacencia);
+            if(casillaAdyacente?.validatePieza(piezaAdyacente) && !visitados.includes(casillaAdyacente))
+            this.adyacentes.get(adyacencia)?.insertPieza(piezaAdyacente,casillaInicial,visitados);
         }
         if(this === casillaInicial) this._eventManager?.notify({type: 'insert_ficha', payload: pieza.container})
     }
 
-    setEventManager(pointsManager: EventManagerType<Event>){
-        this._eventManager = pointsManager;
+    setEventManager(eventManager: EventManagerType<Event>){
+        this._eventManager = eventManager;
     }
 
     get value(){

@@ -1,8 +1,9 @@
 import { PiezaType } from '.';
 
-export type FichaType = {
+export interface FichaType<V = any> {
     blocked: boolean;
-    piezas: PiezaType[];
+    piezas: PiezaType<V>[];
+    hasSpaces: boolean;
     numberOfPiezas: number;
     rotationStage?: any;
     possibleRotations: number;

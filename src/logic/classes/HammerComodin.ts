@@ -1,4 +1,4 @@
-import { Comodin,CasillaType, EventManagerType } from '../interfaces';
+import { Comodin, CasillaType, EventManagerType } from '../interfaces';
 import { Event } from '../types';
 
 export class HammerComodin implements Comodin<CasillaType> {
@@ -18,4 +18,5 @@ export class HammerComodin implements Comodin<CasillaType> {
     setEventManager(pointsManager: EventManagerType<Event>){
         this._eventManager = pointsManager;
     }
+
 }

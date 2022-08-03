@@ -1,4 +1,4 @@
-import { CasillaType, Condition, InventoryType,FichaType } from '../interfaces';
+import { CasillaType, Condition, InventoryType, FichaType } from '../interfaces';
 
 export class OutOfMovesCondition implements Condition{
 

@@ -7,10 +7,10 @@ export class SameValueCondition<V> implements Condition{
     }
 
     get cumple(): boolean {
-        return this.isSameValue();
+        return this.haveSameValue();
     }
 
-    private isSameValue(): boolean {
+    private haveSameValue(): boolean {
         const value = this._casillas[0].value;
         if(!value) return false;
         return this._casillas.every(casilla => casilla.value === value);

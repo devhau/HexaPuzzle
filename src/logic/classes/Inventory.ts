@@ -3,8 +3,6 @@ import { InventoryType,Factory } from '../interfaces';
 export class Inventory<T> implements InventoryType<T>{
     private _items: T[] = [];
 
-    constructor(){}
-
     public addItem(item: T){
         this._items.push(item);
     }

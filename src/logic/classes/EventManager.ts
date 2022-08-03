@@ -15,4 +15,5 @@ export class EventManager<E extends {type: string}> implements EventManagerType<
     get subscribers(): Map<E['type'],Subscriber<E>[]> {
         return this._subscribers;
     }
+    
 }

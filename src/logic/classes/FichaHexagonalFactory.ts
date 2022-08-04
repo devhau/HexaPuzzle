@@ -7,13 +7,16 @@ export class FichaHexagonalFactory<V> implements Factory<FichaHexagonal<V>>{
 
     constructor(
         private readonly _possibleValues: V[],
+        private readonly _altProbability: number,
         private readonly _sameValues: boolean = true
-    ) { }
+    ) { 
+        if(this._altProbability < 0 || this._altProbability > 1) throw new Error('Probability must be between 0 and 1');
+    }
 
     public generate(): FichaHexagonal<V> {
 
         let numberOfPiezas = Math.floor(Math.random() * (this._maxNumberOfPiezas)) + 1;
-        const hasSpaces: boolean = (numberOfPiezas === 2 || numberOfPiezas === 3) && Math.random() <= 0.35;
+        const hasSpaces: boolean = (numberOfPiezas === 2 || numberOfPiezas === 3) && Math.random() <= this._altProbability;
 
         let rotationStage = numberOfPiezas === 1 || (numberOfPiezas === 3 && hasSpaces)
         ? Math.floor(Math.random() * 2) + 1

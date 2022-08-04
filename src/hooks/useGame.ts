@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { FichaHexagonalFactory } from '../logic/classes/FichaHexagonalFactory';
 import { TableroHexagonalFactory } from '../logic/classes/TableroHexagonalFactory';
-import { ColorsArray, Hexagons } from '../helpers';
+import { ColorsArray, Hexagons, HexagonsBig } from '../helpers';
 import { RestrictionManager } from '../logic/classes/RestrictionManager';
 import { PointsManager } from '../logic/classes/PointsManager';
 import { HammerComodin } from '../logic/classes/HammerComodin';
@@ -16,7 +16,7 @@ import { OutOfMovesCondition } from '../logic/classes/OutOfMovesCondition';
 import { TrashComodin } from '../logic/classes/TrashComodin';
 import { FichaHexagonalInventory } from '../logic/classes/FichaHexagonalInventory';
 
-export const useGame = (tableroFormat: {[key: number]: number}) => {
+export const useGame = (tableroFormat: {[key: number]: number}, sameValues: boolean) => {
 
     const eventManager = useMemo(() => new EventManager<Event>(), []);
 
@@ -36,14 +36,14 @@ export const useGame = (tableroFormat: {[key: number]: number}) => {
 
     const factory = useMemo(() => { 
         const gameFactory = new HexaGameFactory(
-            new FichaHexagonalFactory<Color>(ColorsArray),
+            new FichaHexagonalFactory<Color>(ColorsArray,0.35,sameValues),
             new TableroHexagonalFactory<Color>(tableroFormat)
         )
         eventManager.subscribe(gameFactory, 'insert_ficha');
         eventManager.subscribe(gameFactory, 'remove_ficha');
         gameFactory.setEventManager(eventManager);
         return gameFactory;
-    }, []);
+    }, [sameValues,tableroFormat]);
 
     const inventory = useMemo(() =>{
         const fichaInventory = new FichaHexagonalInventory<Color>();
@@ -52,7 +52,7 @@ export const useGame = (tableroFormat: {[key: number]: number}) => {
         eventManager.subscribe(fichaInventory, 'insert_ficha');
         eventManager.subscribe(fichaInventory, 'remove_ficha');
         return fichaInventory;
-    },[]);
+    },[sameValues]);
 
     const restrictionManager = useMemo(() => {
         const restrictionManager = new RestrictionManager();
@@ -67,7 +67,8 @@ export const useGame = (tableroFormat: {[key: number]: number}) => {
         tablero.forEach(casilla => casilla.setEventManager(eventManager));
         let setHead: Restriction<Event> | undefined = undefined;
         let prev: Restriction<Event> | undefined = undefined;
-        Hexagons.forEach(hexagon => {
+        const hexagons = Object.keys(tableroFormat).length > 6 ? HexagonsBig : Hexagons;
+        hexagons.forEach(hexagon => {
             const hexagonCasillas = hexagon.map(index => tablero[index-1]);
             const condition = new SameValueCondition(hexagonCasillas);
             const restriction = new Restriction<Event>(condition, {type: 'make_hexagon'});
@@ -79,16 +80,16 @@ export const useGame = (tableroFormat: {[key: number]: number}) => {
         const restriction = new Restriction<Event>(new OutOfMovesCondition(inventory,tablero), {type: 'game_over'});
         restrictionManager.setNext(restriction);
         return tablero;
-    }, []);
+    }, [sameValues,tableroFormat]);
 
     const hammerComodin = useMemo(() => {
-        const comodin = new HammerComodin(108);
+        const comodin = new HammerComodin(sameValues ? 108 : 1);
         comodin.setEventManager(eventManager);
         return comodin;
     },[]);
 
     const trashComodin = useMemo(() => {
-        const comodin = new TrashComodin(216);
+        const comodin = new TrashComodin(sameValues ? 216 : 2);
         comodin.setEventManager(eventManager);
         return comodin;
     },[]);

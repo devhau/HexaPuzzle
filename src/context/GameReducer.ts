@@ -5,6 +5,7 @@ import { Color } from '../logic/types';
 
 type GameAction =
 |{ type: 'setTablero', payload: CasillaTriangular<Color>[] }
+| { type: 'setTableroFormat', payload: {[key: number]: number} }
 |{ type: 'setFichas', payload: FichaHexagonal<Color>[] }
 |{ type: 'setPoints', payload: number }
 |{ type: 'toggleHammer' }
@@ -42,6 +43,11 @@ export const GameReducer = (state: GameState, action: GameAction) => {
             return {
                 ...state,
                 gameOver: true
+            }
+        case 'setTableroFormat':    
+            return {
+                ...state,
+                tableroFormat: action.payload
             }
         default:
             return state;

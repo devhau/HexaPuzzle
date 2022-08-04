@@ -14,6 +14,10 @@ export class HammerComodin implements Comodin<CasillaType> {
     get costo(): number {
         return this._costo;
     }
+
+    set costo(costo: number) {
+        this._costo = costo;
+    }
     
     setEventManager(pointsManager: EventManagerType<Event>){
         this._eventManager = pointsManager;

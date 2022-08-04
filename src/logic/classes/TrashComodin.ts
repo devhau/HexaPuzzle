@@ -15,6 +15,10 @@ export class TrashComodin implements Comodin<FichaType>{
         return this._costo;
     }
 
+    set costo(costo: number) {
+        this._costo = costo;
+    }
+
     setEventManager(pointsManager: EventManagerType<Event>){
         this._eventManager = pointsManager;
     }

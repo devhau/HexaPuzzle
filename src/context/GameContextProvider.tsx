@@ -1,4 +1,4 @@
-import { FC, useEffect, useReducer } from 'react';
+import { FC, useEffect, useReducer, useState } from 'react';
 import Cookies from 'js-cookie';
 import { GameContext,GameReducer } from './';
 import { CasillaTriangular } from '../logic/classes/CasillaTriangular';
@@ -28,14 +28,15 @@ const tableroFormat = {
     6: 7
 }
 
-const initialState: GameState = {
-    tablero: [],
-    points: 0,
-    tableroFormat,
-    fichas: [],
-    isUsingHammer: false,
-    isUsingDelete: false,
-    gameOver: false
+const tableroBigFormat = {
+    1: 7,
+    2: 9,
+    3: 11,
+    4: 13,
+    5: 13,
+    6: 11,
+    7: 9,
+    8: 7
 }
 
 interface Props {
@@ -43,9 +44,31 @@ interface Props {
 }
 
 export const GameContextProvider: FC<Props> = ({children}) => {
+    const [gameMode, setGameMode] = useState(Cookies.get('gameMode') || 'normal')
+    const [boardSize, setBoardSize] = useState(Cookies.get('boardSize') || 'normal')
 
-    const [state,dispatch] = useReducer(GameReducer, initialState);
-    const {inventory,tablero,pointsManager,comodines,gameOverFlag} = useGame(tableroFormat);
+    const [state,dispatch] = useReducer(
+        GameReducer,
+        {
+            tablero: [],
+            points: 0,
+            tableroFormat: boardSize === 'normal' ? tableroFormat : tableroBigFormat,
+            fichas: [],
+            isUsingHammer: false,
+            isUsingDelete: false,
+            gameOver: false
+        }
+    );
+    const {
+        inventory,
+        tablero,
+        pointsManager,
+        comodines,
+        gameOverFlag
+    } = useGame(
+        state.tableroFormat,
+        gameMode === 'normal'
+    );
     const {hammerComodin, trashComodin} = comodines;
 
     const checkGameOver = () => {
@@ -70,11 +93,13 @@ export const GameContextProvider: FC<Props> = ({children}) => {
     const useHammerComodin = (casilla: CasillaTriangular<Color>) => {
         if(!pointsManager.canUse(hammerComodin)) return;
         hammerComodin.use(casilla);
+        hammerComodin.costo += gameMode === 'normal' ? 18 : 9;
         dispatch({type: 'toggleHammer'});
     }
     const useTrashComodin = (ficha: FichaHexagonal<Color>) => {
         if(!pointsManager.canUse(trashComodin)) return;
         trashComodin.use(ficha);
+        trashComodin.costo += gameMode === 'normal' ? 36 : 18;
         dispatch({type: 'toggleDelete'});
     }
     const toggleHammer = () => {
